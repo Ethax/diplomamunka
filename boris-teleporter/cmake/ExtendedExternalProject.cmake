@@ -19,7 +19,6 @@ macro(ExternalProject_Generate_Paths name)
     set(${name}_BINARY_DIR ${base}/Build/${name})
     set(${name}_INSTALL_DIR ${base}/Install/${name})
 
-    set(${name}_HEADER_DIR ${base}/Install/${name}/include/${name})
     set(${name}_INCLUDE_DIR ${base}/Install/${name}/include)
     set(${name}_LIBRARY_DIR ${base}/Install/${name}/lib)
 

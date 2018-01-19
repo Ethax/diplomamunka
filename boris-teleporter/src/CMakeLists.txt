@@ -1,6 +1,8 @@
 include(ExtendedExternalProject)
-include(MaxSimultaneousJobs)
+include(ProcessorCount)
 
+ProcessorCount(MAX_JOBS)
+math(EXPR MAX_JOBS "${MAX_JOBS} + 1")
 math(EXPR ADDRESS_MODEL "8 * ${CMAKE_SIZEOF_VOID_P}")
 
 ExternalProject_Generate_Paths(boost)
@@ -9,7 +11,7 @@ ExternalProject_Add(boost
     CONFIGURE_COMMAND ./bootstrap$<$<BOOL:${UNIX}>:.sh>$<$<BOOL:${WIN32}>:.bat>
     BUILD_IN_SOURCE 1
     BUILD_COMMAND ./b2 -j${MAX_JOBS} variant=release address-model=${ADDRESS_MODEL} link=static
-        install --prefix=${boost_INSTALL_DIR} --layout=system
+        install --prefix=${boost_INSTALL_DIR} --layout=system --without-coroutine
     INSTALL_COMMAND ""
 )
 include_directories(${boost_INCLUDE_DIR})
