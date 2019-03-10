@@ -1,7 +1,5 @@
 #include <boris_corrector.h>
 
-using namespace diplomamunka;
-
 namespace
 {
 
@@ -25,6 +23,16 @@ struct path_validator<wchar_t>
 
 } // namespace
 
+using namespace diplomamunka;
+
+bool diplomamunka::is_boris_file(const fs::path &p)
+{
+    static const std::set<fs::path> supported_types{".bmp", ".bsy", ".fab", ".sbl"};
+
+    auto extension = util::to_lower(p.extension().native());
+    return supported_types.count(extension);
+}
+
 boris_corrector::boris_corrector(std::basic_ostream<char_type> &log_out, const fs::path &base)
     : cwd(base), logger(log_out) {}
 
@@ -47,12 +55,4 @@ boris_corrector::correct_paths(const string_type &s, const std::set<fs::path> &f
 int boris_corrector::execute()
 {
     return 0;
-}
-
-bool boris_corrector::is_boris_file(const fs::path &p)
-{
-    static const std::set<fs::path> supported_types{".bmp", ".bsy", ".fab", ".sbl"};
-
-    auto extension = util::to_lower(p.extension().native());
-    return supported_types.count(extension);
 }

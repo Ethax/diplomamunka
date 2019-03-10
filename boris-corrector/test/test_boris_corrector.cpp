@@ -4,7 +4,7 @@
 #include <algorithm>
 
 using namespace Catch;
-using bc = diplomamunka::boris_corrector;
+using namespace diplomamunka;
 
 TEST_CASE("Copy only BORIS-specific files")
 {
@@ -19,7 +19,7 @@ TEST_CASE("Copy only BORIS-specific files")
     };
     std::vector<fs::path> boris_only;
 
-    std::copy_if(mixed.begin(), mixed.end(), std::back_inserter(boris_only), bc::is_boris_file);
+    std::copy_if(mixed.begin(), mixed.end(), std::back_inserter(boris_only), is_boris_file);
 
     REQUIRE_THAT(boris_only, Equals<fs::path>({
         "E:/Projects/BORIS Projects/media/logo.bmp",

@@ -9,6 +9,8 @@
 namespace diplomamunka
 {
 
+bool is_boris_file(const fs::path &p);
+
 class boris_corrector final
 {
 public:
@@ -21,12 +23,11 @@ public:
     std::set<fs::path> search_for_files();
     string_type correct_paths(const string_type &s, const std::set<fs::path> &files);
     int execute();
-
-    static bool is_boris_file(const fs::path &p);
-
+    
 private:
     const fs::path cwd;
     std::basic_ostream<char_type> &logger;
 };
+    
 
 } // namespace diplomamunka
