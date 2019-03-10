@@ -6,13 +6,22 @@
 using namespace Catch;
 using namespace diplomamunka;
 
+TEST_CASE("Append temporary file prefix")
+{
+    const fs::path path = "C:\\Windows\\System32\\cmd.exe";
+
+    const auto temp = add_temp_prefix(path);
+
+    REQUIRE_THAT(temp.string(), Equals("C:\\Windows\\System32\\~$cmd.exe"));
+}
+
 TEST_CASE("Copy only BORIS-specific files")
 {
-    std::vector<fs::path> mixed {
+    const std::vector<fs::path> mixed {
         "E:\\Projects\\BORIS Projects\\media\\logo.bmp",
         "E:\\Projects\\BORIS Projects\\tools\\uploader.exe",
-        "E:\\Projects\\BORIS Projects\\main.bsy",
-        "E:\\Projects\\BORIS Projects\\animation\\anim.fab",
+        "E:\\Projects\\BORIS Projects\\main.BSY",
+        "E:\\Projects\\BORIS Projects\\animation\\anim.FAB",
         "E:\\Projects\\BORIS Projects\\lib\\engine.sbl",
         "E:\\Projects\\BORIS Projects\\documentation\\Project Specification.docx",
         "E:\\Projects\\BORIS Projects\\media\\demo.mp4"
@@ -23,8 +32,8 @@ TEST_CASE("Copy only BORIS-specific files")
 
     REQUIRE_THAT(boris_only, Equals<fs::path>({
         "E:\\Projects\\BORIS Projects\\media\\logo.bmp",
-        "E:\\Projects\\BORIS Projects\\main.bsy",
-        "E:\\Projects\\BORIS Projects\\animation\\anim.fab",
+        "E:\\Projects\\BORIS Projects\\main.BSY",
+        "E:\\Projects\\BORIS Projects\\animation\\anim.FAB",
         "E:\\Projects\\BORIS Projects\\lib\\engine.sbl"
     }));
 }
@@ -46,46 +55,34 @@ TEST_CASE("Replace paths in string to their counterparts.")
 
     SECTION("The whole line is a path")
     {
-        SECTION("Path to a BMP file.")
-        {
-            std::string test {
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\media\\logo.bmp"
-            };
-            test = corrector.correct_paths(test, new_paths);
-            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\media\\logo.bmp"));
-        }
+        struct test_pair { std::string value; std::string expected; };
+        auto test = GENERATE(
+            test_pair { 
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\media\\logo.bmp",
+                "E:\\Diplomamunka\\BORIS\\Emulation\\media\\logo.bmp"
+            },
+            test_pair {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\main.bsy",
+                "E:\\Diplomamunka\\BORIS\\Emulation\\main.bsy"
+            },
+            test_pair {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\anim.fab",
+                "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\anim.fab"
+            },
+            test_pair {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\lib\\engine.sbl",
+                "E:\\Diplomamunka\\BORIS\\Emulation\\lib\\engine.sbl"
+            }
+        );
 
-        SECTION("Path to a BSY file.")
-        {
-            std::string test {
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\main.bsy"
-            };
-            test = corrector.correct_paths(test, new_paths);
-            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\main.bsy"));
-        }
+        const auto result = corrector.correct_paths(test.value, new_paths);
 
-        SECTION("Path to a FAB file.")
-        {
-            std::string test {
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\anim.fab"
-            };
-            test = corrector.correct_paths(test, new_paths);
-            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\animation\\anim.fab"));
-        }
-
-        SECTION("Path to a SBL file.")
-        {
-            std::string test {
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\lib\\engine.sbl"
-            };
-            test = corrector.correct_paths(test, new_paths);
-            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\lib\\engine.sbl"));
-        }
+        REQUIRE_THAT(result, Equals(test.expected));
     }
 
     SECTION("Text mixed with paths")
     {
-        std::string test {
+        std::string text {
             "BMPSEQ\t0\t16777215\t2\t-1\t0\t0\tCell 2: Belt\t425\t390\t375\t80\t2\t5\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_01.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_02.bmp\t"
@@ -94,9 +91,10 @@ TEST_CASE("Replace paths in string to their counterparts.")
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_05.bmp\t"
             "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\cmd.exe"
         };
-        test = corrector.correct_paths(test, new_paths);
+        
+        text = corrector.correct_paths(text, new_paths);
 
-        REQUIRE_THAT(test, Equals({
+        REQUIRE_THAT(text, Equals({
             "BMPSEQ\t0\t16777215\t2\t-1\t0\t0\tCell 2: Belt\t425\t390\t375\t80\t2\t5\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_01.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_02.bmp\t"
