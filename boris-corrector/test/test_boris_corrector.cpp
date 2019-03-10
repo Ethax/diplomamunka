@@ -5,11 +5,6 @@
 
 using namespace Catch;
 using namespace diplomamunka;
-using namespace diplomamunka::literals;
-
-inline std::string to_string(const boris_corrector::string_type &bs) {
-    return { bs.begin(), bs.end() };
-}
 
 TEST_CASE("Copy only BORIS-specific files")
 {
@@ -53,57 +48,62 @@ TEST_CASE("Replace paths in string to their counterparts.")
     {
         SECTION("Path to a BMP file.")
         {
-            const auto s =
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\media\\logo.bmp"_bs;
-            const auto res = to_string(corrector.correct_paths(s, new_paths));
-            REQUIRE_THAT(res, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\media\\logo.bmp"));
+            std::string test {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\media\\logo.bmp"
+            };
+            test = corrector.correct_paths(test, new_paths);
+            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\media\\logo.bmp"));
         }
 
         SECTION("Path to a BSY file.")
         {
-            const auto s =
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\main.bsy"_bs;
-            const auto res = to_string(corrector.correct_paths(s, new_paths));
-            REQUIRE_THAT(res, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\main.bsy"));
+            std::string test {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\main.bsy"
+            };
+            test = corrector.correct_paths(test, new_paths);
+            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\main.bsy"));
         }
 
         SECTION("Path to a FAB file.")
         {
-            const auto s =
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\anim.fab"_bs;
-            const auto res = to_string(corrector.correct_paths(s, new_paths));
-            REQUIRE_THAT(res, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\animation\\anim.fab"));
+            std::string test {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\anim.fab"
+            };
+            test = corrector.correct_paths(test, new_paths);
+            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\animation\\anim.fab"));
         }
 
         SECTION("Path to a SBL file.")
         {
-            const auto s =
-                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\lib\\engine.sbl"_bs;
-            const auto res = to_string(corrector.correct_paths(s, new_paths));
-            REQUIRE_THAT(res, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\lib\\engine.sbl"));
+            std::string test {
+                "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\lib\\engine.sbl"
+            };
+            test = corrector.correct_paths(test, new_paths);
+            REQUIRE_THAT(test, Equals("E:\\Diplomamunka\\BORIS\\Emulation\\lib\\engine.sbl"));
         }
     }
 
     SECTION("Text mixed with paths")
     {
-        const auto test =
+        std::string test {
             "BMPSEQ\t0\t16777215\t2\t-1\t0\t0\tCell 2: Belt\t425\t390\t375\t80\t2\t5\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_01.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_02.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_03.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_04.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_05.bmp\t"
-            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0"_bs;
-        const auto res = to_string(corrector.correct_paths(test, new_paths));
+            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\cmd.exe"
+        };
+        test = corrector.correct_paths(test, new_paths);
 
-        REQUIRE_THAT(res, Equals({
+        REQUIRE_THAT(test, Equals({
             "BMPSEQ\t0\t16777215\t2\t-1\t0\t0\tCell 2: Belt\t425\t390\t375\t80\t2\t5\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_01.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_02.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_03.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_04.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_05.bmp\t"
-            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0"
+            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\cmd.exe"
         }));
     }
 }

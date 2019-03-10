@@ -1,18 +1,16 @@
 #include <boris_corrector.h>
 
 using namespace diplomamunka;
-using namespace diplomamunka::literals;
 
 bool diplomamunka::is_boris_file(const fs::path &p)
 {
-    static const std::set<fs::path> supported_types { ".bmp", ".bsy", ".fab", ".sbl" };
+    static const std::set<std::string> supported_types { ".bmp", ".bsy", ".fab", ".sbl" };
 
-    auto extension = util::to_lower(p.extension().native());
-    return supported_types.count(extension);
+    auto extension = util::to_lower(p.extension().string());
+    return supported_types.count(extension) > 0;
 }
 
-boris_corrector::boris_corrector(const fs::path &base, std::basic_ostream<char_type> &log_out)
-    : cwd(base), logger(log_out) {}
+boris_corrector::boris_corrector(const fs::path &working_dir): cwd(working_dir) {}
 
 std::set<fs::path> boris_corrector::search_for_files()
 {
@@ -23,19 +21,18 @@ std::set<fs::path> boris_corrector::search_for_files()
     return files;
 }
 
-boris_corrector::string_type
-boris_corrector::correct_paths(const string_type &s, const std::set<fs::path> &files)
+std::string boris_corrector::correct_paths(const std::string &s, const std::set<fs::path> &files)
 {
-    static const std::basic_regex<char_type> matcher {
-        "[a-z]:\\\\([^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]+\\.(bmp|bsy|fab|sbl)"_bs,
+    static const std::regex matcher {
+        "[a-z]:\\\\([^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]+\\.(bmp|bsy|fab|sbl)",
         std::regex::ECMAScript | std::regex::icase | std::regex::nosubs | std::regex::optimize
     };
 
-    return util::regex_replace(s, matcher, [this, &files](const string_type &match) {
+    return util::regex_replace(s, matcher, [this, &files](const std::string &match) {
         auto it = std::find_if(files.begin(), files.end(), [this, &match](const fs::path &file) {
             return fs::ends_with(match, fs::relative(file, cwd));
         });
-        return it != files.end() ? it->native() : match;
+        return it != files.end() ? it->string() : match;
     });
 }
 
