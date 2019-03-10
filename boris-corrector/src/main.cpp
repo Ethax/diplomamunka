@@ -1,6 +1,7 @@
-#include <iostream>
- 
-int main() {
-    std::cout << "Hello World!" << std::endl;
-    return 0;
+#include <boris_corrector.h>
+
+int main()
+{
+    diplomamunka::boris_corrector corrector;
+    return corrector.execute();
 }
