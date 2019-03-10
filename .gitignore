@@ -41,6 +41,7 @@ Makefile*
 CMakeLists.txt.user*
 
 # Visual Studio Code
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
