@@ -1,39 +1,17 @@
 #include <boris_corrector.h>
 
-namespace
-{
-
-using namespace std::regex_constants;
-constexpr syntax_option_type options = ECMAScript | icase | nosubs | optimize;
-
-template <typename CharT>
-struct path_validator;
-
-template <>
-struct path_validator<char>
-{
-    static constexpr char pattern[]{""};
-};
-
-template <>
-struct path_validator<wchar_t>
-{
-    static constexpr wchar_t pattern[]{L""};
-};
-
-} // namespace
-
 using namespace diplomamunka;
+using namespace diplomamunka::literals;
 
 bool diplomamunka::is_boris_file(const fs::path &p)
 {
-    static const std::set<fs::path> supported_types{".bmp", ".bsy", ".fab", ".sbl"};
+    static const std::set<fs::path> supported_types { ".bmp", ".bsy", ".fab", ".sbl" };
 
     auto extension = util::to_lower(p.extension().native());
     return supported_types.count(extension);
 }
 
-boris_corrector::boris_corrector(std::basic_ostream<char_type> &log_out, const fs::path &base)
+boris_corrector::boris_corrector(const fs::path &base, std::basic_ostream<char_type> &log_out)
     : cwd(base), logger(log_out) {}
 
 std::set<fs::path> boris_corrector::search_for_files()
@@ -48,8 +26,17 @@ std::set<fs::path> boris_corrector::search_for_files()
 boris_corrector::string_type
 boris_corrector::correct_paths(const string_type &s, const std::set<fs::path> &files)
 {
-    static const std::basic_regex<char_type> rx(path_validator<char_type>::pattern, options);
-    return {};
+    static const std::basic_regex<char_type> matcher {
+        "[a-z]:\\\\([^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]+\\.(bmp|bsy|fab|sbl)"_bs,
+        std::regex::ECMAScript | std::regex::icase | std::regex::nosubs | std::regex::optimize
+    };
+
+    return util::regex_replace(s, matcher, [this, &files](const string_type &match) {
+        auto it = std::find_if(files.begin(), files.end(), [this, &match](const fs::path &file) {
+            return fs::ends_with(match, fs::relative(file, cwd));
+        });
+        return it != files.end() ? it->native() : match;
+    });
 }
 
 int boris_corrector::execute()
