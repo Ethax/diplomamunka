@@ -6,13 +6,13 @@
 using namespace Catch;
 using namespace diplomamunka;
 
+using string_pair = std::pair<std::string, std::string>;
+
 TEST_CASE("Append temporary file prefix")
 {
     const fs::path path = "C:\\Windows\\System32\\cmd.exe";
 
-    const auto temp = add_temp_prefix(path);
-
-    REQUIRE_THAT(temp.string(), Equals("C:\\Windows\\System32\\~$cmd.exe"));
+    REQUIRE_THAT(add_temp_prefix(path).string(), Equals("C:\\Windows\\System32\\~$cmd.exe"));
 }
 
 TEST_CASE("Copy only BORIS-specific files")
@@ -55,29 +55,26 @@ TEST_CASE("Replace paths in string to their counterparts.")
 
     SECTION("The whole line is a path")
     {
-        struct test_pair { std::string value; std::string expected; };
-        auto test = GENERATE(
-            test_pair { 
+        auto [value, expected] = GENERATE(values<string_pair>({
+            { 
                 "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\media\\logo.bmp",
                 "E:\\Diplomamunka\\BORIS\\Emulation\\media\\logo.bmp"
             },
-            test_pair {
+            {
                 "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\main.bsy",
                 "E:\\Diplomamunka\\BORIS\\Emulation\\main.bsy"
             },
-            test_pair {
+            {
                 "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\anim.fab",
                 "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\anim.fab"
             },
-            test_pair {
+            {
                 "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\lib\\engine.sbl",
                 "E:\\Diplomamunka\\BORIS\\Emulation\\lib\\engine.sbl"
             }
-        );
-
-        const auto result = corrector.correct_paths(test.value, new_paths);
-
-        REQUIRE_THAT(result, Equals(test.expected));
+        }));
+        
+        REQUIRE_THAT(corrector.correct_paths(value, new_paths), Equals(expected));
     }
 
     SECTION("Text mixed with paths")
