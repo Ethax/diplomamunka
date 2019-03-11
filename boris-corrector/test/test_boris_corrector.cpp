@@ -89,7 +89,7 @@ TEST_CASE("Replace paths in string to their counterparts.")
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_03.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_04.bmp\t"
             "D:\\Studies\\Diplomamunka\\Emulated System\\Emulation\\animation\\belt_05.bmp\t"
-            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\cmd.exe"
+            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\x64.bmp"
         };
         
         text = corrector.correct_paths(text, new_paths);
@@ -101,7 +101,7 @@ TEST_CASE("Replace paths in string to their counterparts.")
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_03.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_04.bmp\t"
             "E:\\Diplomamunka\\BORIS\\Emulation\\animation\\belt_05.bmp\t"
-            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\cmd.exe"
+            "*.bmp\t*.bmp\t*.bmp\t*.bmp\t*.bmp\t0\t0\t5\t0\tC:\\Windows\\System32\\x64.bmp"
         }));
     }
 }
