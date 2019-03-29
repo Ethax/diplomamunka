@@ -84,7 +84,7 @@ bool boris_corrector::correct_file(const fs::path &f, const std::set<fs::path> &
 {
     const auto temp = add_temp_prefix(f);
 
-    if (std::fstream in(f.string()), out(temp.string()); in && out)
+    if (std::fstream in(f.string(), std::ios::in), out(temp.string(), std::ios::out); in && out)
     {
         for (std::string line; std::getline(in, line);)
             out << correct_paths(line, files) << std::endl;

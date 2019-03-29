@@ -10,12 +10,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options("-Wall" "-Wextra" "-pedantic" "-fexceptions")
-add_compile_options("$<$<CONFIG:Release>:-O3>")
+add_compile_options("$<$<CONFIG:Release>:-O3;-Werror>")
 add_compile_options("$<$<CONFIG:Debug>:-O0;-g3;-ggdb;-fno-inline;-fno-omit-frame-pointer>")
+
+enable_testing()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_subdirectory(src)
 add_subdirectory(test)
-
-enable_testing()
-add_test(NAME unit_test COMMAND test/test_suite)
