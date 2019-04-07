@@ -1,0 +1,217 @@
+[Version]
+7.1.1.313
+[File Access]
+0   
+42449
+! 
+! 
+! 
+! 
+! 
+! Karosszéria gyártósor
+! Miklós Árpád
+! SZTE
+2   1
+OPERAND_A
+14   1
+OPERAND_B
+15   1
+OUTPUT
+16   1
+[Export Parameter Count]
+0
+[Block Count]
+17
+[Block #0]
+383   SUPERBLOCK
+ALU
+400 125 471 209  100
+4
+2
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\common\alu_8bit.SBL
+0
+[Block #1]
+354   LOGIC1
+C_IN: FALSE
+400 250 471 301  100
+0
+1
+1 0 0   0
+2
+[Block #2]
+345   FCT2
+OUT + C_OUT
+500 125 571 176  100
+2
+1
+0 0 0   0
+0
+x+y
+[Block #3]
+306   CONST
+CONST: 0
+150 250 221 301  100
+0
+1
+1 0 0   0
+ 0.00000000000000E+0000  0
+[Block #4]
+306   CONST
+CONST: 255
+275 250 346 301  100
+0
+1
+1 0 0   0
+ 2.55000000000000E+0002  0
+[Block #5]
+345   FCT2
+MAX(X, Y)
+150 175 221 226  100
+2
+1
+0 0 0   0
+9
+x+y
+[Block #6]
+345   FCT2
+MIN(X, Y)
+275 175 346 226  100
+2
+1
+0 0 0   0
+10
+x+y
+[Block #7]
+306   CONST
+CONST: 0
+150 25 221 76  100
+0
+1
+1 0 0   0
+ 0.00000000000000E+0000  0
+[Block #8]
+306   CONST
+CONST: 255
+275 25 346 76  100
+0
+1
+1 0 0   0
+ 2.55000000000000E+0002  0
+[Block #9]
+345   FCT2
+MAX(X, Y)
+150 100 221 151  100
+2
+1
+0 0 0   0
+9
+x+y
+[Block #10]
+345   FCT2
+MIN(X, Y)
+275 100 346 151  100
+2
+1
+0 0 0   0
+10
+x+y
+[Block #11]
+306   CONST
+OP: AND
+400 25 471 76  100
+0
+1
+1 0 0   0
+ 2.00000000000000E+0000  0
+[Block #12]
+0   Text
+Text
+725 25 783 46  100
+0
+0
+0 0 0   0
+Leírás:
+14   0   0   0   16777215   0   0
+ARIAL
+[Block #13]
+0   Text
+Text
+725 50 1277 117  100
+0
+0
+0 0 0   0
+Bitenkénti ÉS mûveletet valósít még két 8-bites egész között.Ez a blokkdiagram leegyszerûsíti a bemenetek értéktartományának korlátozását más,összetettebb blokkdiagramokban, és leköti az ALU mûveletét.
+11   0   0   0   16777215   0   0
+Arial
+[Block #14]
+384   LABEL
+OPERAND_A
+25 25 96 58  100
+1
+1
+0 0 0   0
+[Block #15]
+384   LABEL
+OPERAND_B
+25 275 96 308  100
+1
+1
+0 0 0   0
+[Block #16]
+384   LABEL
+OUTPUT
+600 125 671 158  100
+1
+1
+0 0 0   0
+[Connection Count]
+15
+[Connection #0]
+3   1   5   2   0   -1   -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 
+[Connection #1]
+4   1   6   2   0   -1   -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 
+[Connection #2]
+8   1   10   1   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #3]
+7   1   9   1   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #4]
+1   1   0   4   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #5]
+11   1   0   3   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #6]
+2   1   16   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #7]
+0   1   2   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #8]
+0   2   2   2   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #9]
+5   1   6   1   255   -1   -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 -175 -50 
+[Connection #10]
+9   1   10   2   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #11]
+10   1   0   1   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #12]
+6   1   0   2   255   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #13]
+14   1   9   2   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #14]
+15   1   5   1   255   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Simulation Parameters]
+ 1.00000000000000E+0001    1.00000000000000E-0002   0   2   1  0   1   1   2   0   4   0
+[Logical Levels]
+ 0.00000000000000E+0000    5.00000000000000E+0000    2.50000000000000E+0000
+[Frame Count]
+0
+[Optimization Parameters Count]
+0
+[Optimization Control Parameters]
+20   5   100   3   10   1   10   1   12345
+ 1.00000000000000E+0000    0.00000000000000E+0000    0.00000000000000E+0000
+OPT.DAT
+0
+1
+[Batch Parameters Count]
+0
+[Message Options]
+BORIS.MSG

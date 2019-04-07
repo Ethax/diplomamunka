@@ -1,0 +1,99 @@
+405
+Flexible Animation Builder
+26
+TRACKBAR	0	16777215	1	-1	0	0	OUTPUT	0	0	0	0	O2+O3+O4+O5+O6+O7+O8+O9+O10	O2+O3+O4+O5+O6+O7+O8+O9+O10	1	0	0	0
+SEPARATOR	255	16777215	1	-1	0	0	===================================
+BUTTON	0	12632256	2	-1	0	0	UPLEFT		25	422	35	35	10	2	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_up_left.bmp	1	8	1
+BUTTON	0	12632256	3	-1	0	0	UP		65	422	35	35	8	3	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_up.bmp	1	8	1
+BUTTON	0	12632256	4	-1	0	0	UPRIGHT		105	422	35	35	9	4	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_up_right.bmp	1	8	1
+BUTTON	0	12632256	5	-1	0	0	LEFT		25	462	35	35	2	5	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_left.bmp	1	8	1
+BUTTON	0	12632256	6	-1	0	0	ACT		65	462	35	35	15	6	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_act.bmp	1	8	1
+BUTTON	0	12632256	7	-1	0	0	RIGHT		105	462	35	35	1	7	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_right.bmp	1	8	1
+BUTTON	0	12632256	8	-1	0	0	DOWNLEFT		25	502	35	35	6	8	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_down_left.bmp	1	8	1
+BUTTON	0	12632256	9	-1	0	0	DOWN		65	502	35	35	4	9	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_down.bmp	1	8	1
+BUTTON	0	12632256	10	-1	0	0	DOWNRIGHT		105	502	35	35	5	10	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_down_right.bmp	1	8	1
+SEPARATOR	255	16777215	1	-1	0	0	===================================
+RECTLED	0	65280	1	-1	0	0	UP_LED	183	410	1	(O1 / 8) - (2 * INT((O1 / 8) / 2))
+LABEL	0	16777215	1	-1	0	0	UP_CAPTION	211	410	10	ARIAL	Increasing Y-Coordinate	0	1
+RECTLED	0	65280	1	-1	0	0	DOWN_LED	183	438	1	(O1 / 4) - (2 * INT((O1 / 4) / 2))
+LABEL	0	16777215	1	-1	0	0	DOWN_CAPTION	211	438	10	ARIAL	Decreasing Y-Coordinate	0	1
+RECTLED	0	65280	1	-1	0	0	RIGHT_LED	183	466	1	O1 - (2 * INT(O1 / 2))
+LABEL	0	16777215	1	-1	0	0	RIGHT_CAPTION	211	466	10	ARIAL	Increasing X-Coordinate	0	1
+RECTLED	0	65280	1	-1	0	0	LEFT_LED	183	494	1	(O1 / 2) - (2 * INT((O1 / 2) / 2))
+LABEL	0	16777215	1	-1	0	0	LEFT_CAPTION	211	494	10	ARIAL	Decreasing X-Coordinate	0	1
+SEPARATOR	255	16777215	1	-1	0	0	===================================
+BITMAP	0	16777215	1	-1	0	0	CNC_BASE	25	362	337	337	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_base.bmp
+BITMAP	0	16777215	1	-1	0	0	CNC_X_AXIS	25	321 - (I2 * 13)	337	64	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_x_axis.bmp
+BITMAP	0	16777215	1	-1	0	0	CNC_Y_AXIS	66 + (I1 * 13)	362	64	337	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_y_axis.bmp
+BITMAP	0	16777215	1	-1	0	0	CNC_EFFECTOR	66 + (I1 * 13)	321 - (I2 * 13)	59	59	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_effector.bmp
+BMPSEQ	0	16777215	3	-1	0	0	CNC_DRILL	57 + (I1 * 13)	330 - (I2 * 13)	33	33	3	3	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_drill_1.bmp	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_drill_2.bmp	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_drill_3.bmp	*.BMP	*.BMP	*.BMP	*.BMP	*.BMP	*.BMP	*.BMP	1	0	2	0
+1
+3
+X_VAL
+ 1.00000000000000E+0000
+ 0.00000000000000E+0000
+ 0.00000000000000E+0000
+ 1.50000000000000E+0001
+Y_VAL
+ 1.00000000000000E+0000
+ 0.00000000000000E+0000
+ 0.00000000000000E+0000
+ 1.50000000000000E+0001
+DRILL
+ 1.00000000000000E+0000
+ 0.00000000000000E+0000
+ 0.00000000000000E+0000
+ 2.00000000000000E+0000
+16777215
+ 1.00000000000000E+0001
+ 1.00000000000000E+0001
+ 1.00000000000000E+0001
+1
+1
+1
+1
+393
+556
+1
+COMMAND
+1
+0
+0
+
+0
+0
+0
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+ 0.00000000000000E+0000   
+1
+0
+1
+0
+1
+0
+1
+0
+1
+1
+1
+1
+0
+0

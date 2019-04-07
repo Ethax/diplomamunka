@@ -1,0 +1,417 @@
+[Version]
+7.1.1.313
+[File Access]
+0   
+42464
+! 
+! 
+! 
+! 
+! 
+! Karosszéria gyártósor
+! Miklós Árpád
+! SZTE
+5   5
+POSITION
+16   1
+SLOW_FAST
+17   1
+STOP
+18   1
+IS_ONLINE
+19   1
+TYPE
+20   1
+POSITION_X
+23   1
+POSITION_Y
+24   1
+DONE
+25   1
+SEQUENCE
+29   1
+ERR_INVALID
+30   1
+[Export Parameter Count]
+0
+[Block Count]
+34
+[Block #0]
+383   SUPERBLOCK
+IS_VALID
+275 150 346 216  100
+3
+1
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\robot\robot_position_validator.SBL
+0
+[Block #1]
+383   SUPERBLOCK
+TO_XY_COORD
+525 50 596 101  100
+1
+2
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\robot\robot_position_to_xy.SBL
+0
+[Block #2]
+383   SUPERBLOCK
+CURRENT_POS
+150 150 221 216  100
+3
+1
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\common\latch_8bit.SBL
+0
+[Block #3]
+354   LOGIC1
+NOT_STOP
+275 250 346 301  100
+1
+1
+0 0 0   0
+0
+[Block #4]
+396   LOGIC
+ANIM_ENABLE
+400 250 471 316  100
+3
+1
+0 0 0   0
+0
+[Block #5]
+354   LOGIC1
+NOT_VALID
+275 325 346 376  100
+1
+1
+1 0 0   0
+0
+[Block #6]
+383   SUPERBLOCK
+ANIMATE_X
+650 50 721 116  100
+3
+1
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\common\counter_16bit.SBL
+0
+[Block #7]
+355   LOGIC2
+CLK_ENABLE
+525 125 596 176  100
+2
+1
+0 0 0   0
+0
+[Block #8]
+353   ANASWITCH2
+CLOCK
+275 500 346 576  100
+3
+1
+0 0 0   0
+1
+[Block #9]
+301   GENERATOR
+FAST
+150 475 221 526  100
+0
+1
+0 0 0   0
+1   0
+ 5.00000000000000E+0000    0.00000000000000E+0000    0.00000000000000E+0000
+ 1.00000000000000E+0000    0.00000000000000E+0000
+ 5.00000000000000E-0002    1.00000000000000E-0001    0.00000000000000E+0000    0.00000000000000E+0000
+1.0
+[Block #10]
+301   GENERATOR
+SLOW
+150 550 221 601  100
+0
+1
+0 0 0   0
+1   0
+ 5.00000000000000E+0000    0.00000000000000E+0000    0.00000000000000E+0000
+ 1.00000000000000E+0000    0.00000000000000E+0000
+ 1.00000000000000E-0001    2.00000000000000E-0001    0.00000000000000E+0000    0.00000000000000E+0000
+1.0
+[Block #11]
+383   SUPERBLOCK
+ANIMATE_Y
+650 225 721 291  100
+3
+1
+0 0 0   0
+D:\Current Studies\Diplomamunka\Emulated System\Emulation\common\counter_16bit.SBL
+0
+[Block #12]
+362   COMPARATOR
+SETP == OUTP
+775 50 846 101  100
+2
+1
+0 0 0   0
+2
+[Block #13]
+362   COMPARATOR
+SETP == OUTP
+775 225 846 276  100
+2
+1
+0 0 0   0
+2
+[Block #14]
+354   LOGIC1
+FALSE
+650 150 721 201  100
+0
+1
+1 0 0   0
+2
+[Block #15]
+354   LOGIC1
+UNSIGNED
+150 75 221 126  100
+0
+1
+1 0 0   0
+2
+[Block #16]
+384   LABEL
+POSITION
+25 25 96 58  100
+1
+1
+0 0 0   0
+[Block #17]
+384   LABEL
+SLOW_FAST
+25 525 96 558  100
+1
+1
+0 0 0   0
+[Block #18]
+384   LABEL
+STOP
+25 275 96 308  100
+1
+1
+0 0 0   0
+[Block #19]
+384   LABEL
+IS_ONLINE
+25 325 96 358  100
+1
+1
+0 0 0   0
+[Block #20]
+384   LABEL
+TYPE
+25 225 96 258  100
+1
+1
+0 0 0   0
+[Block #21]
+355   LOGIC2
+ANIM_END
+875 150 946 201  100
+2
+1
+0 0 0   0
+0
+[Block #22]
+355   LOGIC2
+POS_INVALID
+275 400 346 451  100
+2
+1
+0 0 0   0
+0
+[Block #23]
+384   LABEL
+POSITION_X
+1000 100 1071 133  100
+1
+1
+0 0 0   0
+[Block #24]
+384   LABEL
+POSITION_Y
+1000 200 1071 233  100
+1
+1
+0 0 0   0
+[Block #25]
+384   LABEL
+DONE
+1000 150 1071 183  100
+1
+1
+0 0 0   0
+[Block #26]
+384   LABEL
+DONE
+525 325 596 358  100
+1
+1
+1 0 0   0
+[Block #27]
+383   SUPERBLOCK
+SEQUENCE_ID
+275 75 346 126  100
+2
+1
+0 0 0   0
+D:\Current Studies\Diplomamunka\Karosszéria gyártósor - Szimuláció\robot\robot_sequence_identifier.SBL
+0
+[Block #28]
+384   LABEL
+DONE
+875 25 946 58  100
+1
+1
+1 0 0   0
+[Block #29]
+384   LABEL
+SEQUENCE
+1000 375 1071 408  100
+1
+1
+0 0 0   0
+[Block #30]
+384   LABEL
+ERR_INVALID
+1000 425 1071 458  100
+1
+1
+0 0 0   0
+[Block #31]
+384   LABEL
+SEQUENCE
+400 75 471 108  100
+1
+1
+0 0 0   0
+[Block #32]
+0   Text
+Text
+1125 25 1183 46  100
+0
+0
+0 0 0   0
+Leírás:
+14   0   0   0   16777215   0   0
+ARIAL
+[Block #33]
+0   Text
+Text
+1125 50 1668 253  100
+0
+0
+0 0 0   0
+Fogadja az új robotpozíciót, majd érvényesíti azt a korábbi pozíció és a megadotttípus függvényében. Amennyiben az új pozíció érvényes, a megadott konfigurációfüggvényében (lassú-gyors, állj, érvényesítés) elvégzi a robot mozgatását azanimációban.A mozgatás sebességét két különbözõ frekvenciájú órajel-generátor közötti váltássalvalósítja meg. Ezek az órajel-generátorok állandó üzemben mûködnek az animációteljes életciklusa alatt.A bejárt robotpozíciók alapján megkísérli azonosítani a bejárt utat. Amennyiben abejárt pozíciók megegyeznek valamelyik elõre definiált útvonallal, visszaadja annakazonosítószámát a késõbbi ellenõrzésekhez.
+11   0   0   0   16777215   0   0
+Arial
+[Connection Count]
+41
+[Connection #0]
+5   1   22   1   255   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #1]
+15   1   2   1   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #2]
+14   1   6   3   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #3]
+14   1   11   3   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #4]
+21   1   28   1   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #5]
+0   1   5   1   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #6]
+13   1   21   2   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #7]
+12   1   21   1   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #8]
+2   1   0   2   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #9]
+1   1   6   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #10]
+6   1   12   2   12632064   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #11]
+11   1   13   2   12632064   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #12]
+3   1   4   2   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #13]
+21   1   25   1   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #14]
+27   1   31   1   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #15]
+9   1   8   1   0   -1   -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 
+[Connection #16]
+10   1   8   3   0   -1   -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 -150 -1725 
+[Connection #17]
+7   1   6   2   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #18]
+0   1   4   1   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #19]
+2   1   27   1   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #20]
+7   1   11   2   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #21]
+16   1   2   2   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #22]
+4   1   7   1   33023   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #23]
+1   2   11   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #24]
+1   1   12   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #25]
+17   1   8   2   8421504   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #26]
+18   1   3   1   255   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #27]
+20   1   0   3   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #28]
+19   1   22   2   49344   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #29]
+16   1   0   1   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #30]
+1   2   13   1   16711808   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #31]
+8   1   7   2   8421504   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #32]
+6   1   23   1   12632064   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #33]
+11   1   24   1   12632064   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #34]
+19   1   4   3   49344   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #35]
+21   1   26   1   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #36]
+26   1   2   3   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #37]
+16   1   1   1   16711680   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #38]
+31   1   29   1   0   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #39]
+28   1   27   2   32768   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Connection #40]
+22   1   30   1   16711935   -1   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+[Simulation Parameters]
+ 1.00000000000000E+0001    1.00000000000000E-0002   0   2   1  0   1   1   2   0   4   0
+[Logical Levels]
+ 0.00000000000000E+0000    5.00000000000000E+0000    2.50000000000000E+0000
+[Frame Count]
+0
+[Optimization Parameters Count]
+0
+[Optimization Control Parameters]
+20   5   100   3   10   1   10   1   12345
+ 1.00000000000000E+0000    0.00000000000000E+0000    0.00000000000000E+0000
+OPT.DAT
+0
+1
+[Batch Parameters Count]
+0
+[Message Options]
+BORIS.MSG
