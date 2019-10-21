@@ -23,13 +23,13 @@ TEST_CASE("Replace numbers to their names in string using regex")
         return names.count(m) ? names.at(m) : m;
     });
 
-    REQUIRE_THAT(test_string, Equals({
+    REQUIRE_THAT(test_string, Equals(
         "One, Two, Buckle my shoe;"
         "Three, Four, Knock at the door;"
         "Five, Six, Pick up sticks;"
         "Seven, Eight, Lay them straight;"
         "Nine, Ten, A big fat hen;"
-    }));
+    ));
 }
 
 TEST_CASE("Join a set of strings")
@@ -41,9 +41,9 @@ TEST_CASE("Join a set of strings")
 
     std::string result = util::join(test_set.begin(), test_set.end(), ", ");
 
-    REQUIRE_THAT(result, Equals({
+    REQUIRE_THAT(result, Equals(
         "Brown, Davis, Johnson, Jones, Miller, Moore, Smith, Taylor, Williams, Wilson"
-    }));
+    ));
 }
 
 TEST_CASE("Transform string to lowercase")

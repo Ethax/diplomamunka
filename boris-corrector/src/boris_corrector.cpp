@@ -34,9 +34,9 @@ std::set<fs::path> boris_corrector::search_for_files()
 std::string boris_corrector::correct_paths(const std::string &s, const std::set<fs::path> &files)
 {
     static const std::regex matcher{
-        "[a-z]:\\\\([^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]+\\.(bmp|bsy|fab|sbl)",
-        std::regex::ECMAScript | std::regex::icase | std::regex::nosubs | std::regex::optimize};
-
+        R"([a-z]:\\([^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]+\.(bmp|bsy|fab|sbl))",
+        std::regex::ECMAScript | std::regex::icase | std::regex::nosubs | std::regex::optimize
+    };
     return util::regex_replace(s, matcher, [this, &files](const std::string &match) {
         auto it = std::find_if(files.begin(), files.end(), [this, &match](const fs::path &file) {
             return fs::ends_with(match, fs::relative(file, cwd));
