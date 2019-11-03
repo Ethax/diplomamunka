@@ -1,10 +1,13 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
-    FakeBorisLib \
-    FakeBorisTests
+    BorisAccess \
+    BorisAccessTests
 
-FakeBorisLib.file = src/FakeBorisLib.pro
+BorisAccess.file = src/BorisAccess.pro
 
-FakeBorisTests.file = test/FakeBorisTests.pro
-FakeBorisTests.depends = FakeBorisLib
+BorisAccessTests.file = test/BorisAccessTests.pro
+BorisAccessTests.depends = BorisAccess
+
+HEADERS += \
+    include/ConnectionProvider.h
