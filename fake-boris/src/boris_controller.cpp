@@ -1,15 +1,10 @@
+#include <QtCore>
 #include <boris_controller.h>
 
 using namespace diplomamunka;
 
 BorisController::BorisController(ConnectionProvider &connection, QObject *parent)
-    : QObject(parent), m_Connection(connection) {
-    connect(&m_Connection.connection(), &QIODevice::readyRead, this, &BorisController::onReadyRead);
-}
-
-int BorisController::input() const noexcept { return m_input; }
-
-int BorisController::output() const noexcept { return m_output; }
+    : QObject(parent), m_Connection(connection) {}
 
 void BorisController::setOutput(int output) noexcept {
     if (m_output != output) {
@@ -18,19 +13,23 @@ void BorisController::setOutput(int output) noexcept {
     }
 }
 
-void BorisController::setInput(int input) noexcept {
-    if (m_input != input) {
-        m_input = input;
-        emit inputChanged();
+bool BorisController::beginTransaction(const QString &deviceName) {
+    if (m_Connection.connect(deviceName)) {
+        m_TimerId = startTimer(10);
+        return m_TimerId != 0;
     }
+    return false;
 }
 
-void BorisController::onReadyRead() {
-    const auto inputBytes = m_Connection.connection().readAll();
-    if (inputBytes.length() != 2) {
-        return;
-    }
+void BorisController::writeOutput() {
+    QByteArray output;
+    output.append(static_cast<char>((m_output >> 8) & 0xff));
+    output.append(static_cast<char>(m_output & 0xff));
+    m_Connection.connection().write(output);
+}
 
-    bool ok;
-    setInput(inputBytes.toHex().toInt(&ok, 16));
+void BorisController::timerEvent(QTimerEvent *event) {
+    if (event->timerId() == m_TimerId) {
+        writeOutput();
+    }
 }

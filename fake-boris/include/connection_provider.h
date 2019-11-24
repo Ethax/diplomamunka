@@ -8,8 +8,9 @@ namespace diplomamunka {
 class ConnectionProvider {
 public:
     virtual QIODevice &connection() = 0;
-    virtual bool open(const QString &portName) = 0;
-    virtual void close() = 0;
+    virtual QStringList availableDevices() const = 0;
+    virtual bool connect(const QString &deviceName) = 0;
+    virtual void disconnect() = 0;
     virtual ~ConnectionProvider() = default;
 };
 
