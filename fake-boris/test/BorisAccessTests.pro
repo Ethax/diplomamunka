@@ -3,7 +3,7 @@ QT -= gui
 
 TEMPLATE = app
 
-CONFIG += qt console warn_on depend_includepath testcase
+CONFIG += c++17 qt console warn_on depend_includepath testcase
 CONFIG -= app_bundle
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../src/release/ -lBorisAccess
