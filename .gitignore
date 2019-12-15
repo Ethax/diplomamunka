@@ -2,7 +2,6 @@
 multimedia
 
 # C++ objects and libs
-
 *.slo
 *.lo
 *.o
@@ -14,7 +13,6 @@ multimedia
 *.dylib
 
 # Qt-es
-
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -30,7 +28,6 @@ Makefile*
 *build-*
 
 # QtCreator
-
 *.autosave
 
 # QtCtreator Qml
@@ -47,3 +44,11 @@ CMakeLists.txt.user*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Visual Paradigm
+.vpprefdata/
+*.vpp~*
+*.vpp.working
+*.vpp.working-journal
+*.lock
+tmp/*
