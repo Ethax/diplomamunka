@@ -48,6 +48,7 @@ CMakeLists.txt.user*
 # Visual Paradigm
 .vpprefdata/
 *.vpp~*
+*.vpp.bak_*
 *.vpp.working
 *.vpp.working-journal
 *.lock
