@@ -47,6 +47,7 @@ CMakeLists.txt.user*
 
 # Visual Paradigm
 .vpprefdata/
+*.vpp.lck
 *.vpp~*
 *.vpp.bak_*
 *.vpp.working
