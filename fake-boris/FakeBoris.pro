@@ -8,6 +8,3 @@ BorisAccess.file = src/BorisAccess.pro
 
 BorisAccessTests.file = test/BorisAccessTests.pro
 BorisAccessTests.depends = BorisAccess
-
-HEADERS += \
-    include/ConnectionProvider.h

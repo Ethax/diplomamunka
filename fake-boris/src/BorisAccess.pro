@@ -8,7 +8,7 @@ HEADERS += \
     $$PWD/../include/boris_controller.h \
     $$PWD/../include/connection_provider.h \
     $$PWD/../include/abstract_boris_controller.h \
-    $$PWD/../include/property_helper.h
+    $$PWD/../include/property_helper.hpp
 
 SOURCES += boris_controller.cpp \
     abstract_boris_controller.cpp
