@@ -1,5 +1,5 @@
-#include <abstract_boris_controller.h>
+#include <AbstractBorisController.h>
 
-using namespace diplomamunka;
+using namespace Diplomamunka;
 
 AbstractBorisController::AbstractBorisController(QObject *parent) : QObject(parent) {}

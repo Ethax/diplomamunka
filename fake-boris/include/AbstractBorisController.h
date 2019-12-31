@@ -1,10 +1,10 @@
 #ifndef ABSTRACTBORISCONTROLLER_H
 #define ABSTRACTBORISCONTROLLER_H
 
+#include <PropertyHelper.hpp>
 #include <QObject>
-#include <property_helper.hpp>
 
-namespace diplomamunka {
+namespace Diplomamunka {
 
 class AbstractBorisController : public QObject {
     Q_OBJECT
@@ -21,6 +21,6 @@ private:
     static constexpr char WriteCommand = '\xba';
 };
 
-} // namespace diplomamunka
+} // namespace Diplomamunka
 
 #endif // ABSTRACTBORISCONTROLLER_H
