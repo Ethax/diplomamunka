@@ -1,46 +1,91 @@
 #include <PropertyHelper.hpp>
 #include <QCoreApplication>
-#include <QList>
 #include <QMetaProperty>
+#include <QSignalSpy>
 #include <QtTest>
-#include <algorithm>
-
-namespace {
-
-class AutomaticPropertyTester final : public QObject {
-    Q_OBJECT
-    AUTOMATIC_PROPERTY(int, Property) = 0;
-};
-
-class ReadonlyPropertyTester final : public QObject {
-    Q_OBJECT
-    READONLY_PROPERTY(int, Property) = 0;
-};
-
-QMetaProperty GetProperty(QObject *object, const char *name) {
-    const QMetaObject *metaObject = object ? object->metaObject() : nullptr;
-    return metaObject ? metaObject->property(metaObject->indexOfProperty(name)) : QMetaProperty();
-}
-
-} // namespace
 
 class PropertyHelperTests : public QObject {
     Q_OBJECT
+    AUTOMATIC_PROPERTY(int, AutomaticProperty) = 0;
+    READONLY_PROPERTY(int, ReadonlyProperty) = 0;
+
 private slots:
-    void initTestCase_data() {
-        QTest::addColumn<QObject *>("propertyTester");
-        QTest::newRow("Automatic") << static_cast<QObject *>(new AutomaticPropertyTester());
-        QTest::newRow("Readonly") << static_cast<QObject *>(new ReadonlyPropertyTester());
+    void init() {
+        m_AutomaticProperty = 0;
+        m_ReadonlyProperty = 0;
     }
 
-    void test_case1() {
-        QFETCH_GLOBAL(QObject *, propertyTester);
-        const QMetaProperty property = GetProperty(propertyTester, "Property");
+    void AutomaticProperty_Exists_IsReadable() {
+        const QMetaProperty property = GetProperty("AutomaticProperty");
 
-        QVERIFY(property.isReadable());
-        QVERIFY(property.isWritable());
-        QCOMPARE(property.notifySignal().name(), "PropertyChanged");
+        QCOMPARE(property.isReadable(), true);
     }
+
+    void AutomaticProperty_Exists_IsWritable() {
+        const QMetaProperty property = GetProperty("AutomaticProperty");
+
+        QCOMPARE(property.isWritable(), true);
+    }
+
+    void AutomaticProperty_Exists_HasNotifySignal() {
+        const QMetaProperty property = GetProperty("AutomaticProperty");
+
+        QVERIFY(property.hasNotifySignal());
+        QCOMPARE(property.notifySignal().name(), "AutomaticPropertyChanged");
+    }
+
+    void AutomaticProperty_CommonSetterWasCalled_ChangesItsUnderlyingMember() {
+        const bool propertChanged = setProperty("AutomaticProperty", ExpectedValue);
+
+        QCOMPARE(propertChanged, true);
+        QCOMPARE(m_AutomaticProperty, ExpectedValue);
+    }
+
+    void AutomaticProperty_DedicatedSetterWasCalled_ChangesItsUnderlyingMember() {
+        SetAutomaticProperty(ExpectedValue);
+
+        QCOMPARE(m_AutomaticProperty, ExpectedValue);
+    }
+
+    void AutomaticProperty_CommonGetterWasCalled_ReturnsItsUnderlyingMember() {
+        m_AutomaticProperty = ExpectedValue;
+
+        QCOMPARE(property("AutomaticProperty").toInt(), ExpectedValue);
+    }
+
+    void AutomaticProperty_DedicatedGetterWasCalled_ReturnsItsUnderlyingMember() {
+        m_AutomaticProperty = ExpectedValue;
+
+        QCOMPARE(GetAutomaticProperty(), ExpectedValue);
+    }
+
+    void AutomaticProperty_CommonSetterWasCalledTwiceWithSameValue_NotifiesOnlyOnce() {
+        QSignalSpy notification(this, &PropertyHelperTests::AutomaticPropertyChanged);
+
+        setProperty("AutomaticProperty", ExpectedValue);
+        setProperty("AutomaticProperty", ExpectedValue);
+
+        QTRY_COMPARE_WITH_TIMEOUT(notification.count(), 1, NotificationTimeout);
+    }
+
+    void AutomaticProperty_DedicatedSetterWasCalledTwiceWithSameValue_NotifiesOnlyOnce() {
+        QSignalSpy notification(this, &PropertyHelperTests::AutomaticPropertyChanged);
+
+        SetAutomaticProperty(ExpectedValue);
+        SetAutomaticProperty(ExpectedValue);
+
+        QTRY_COMPARE_WITH_TIMEOUT(notification.count(), 1, NotificationTimeout);
+    }
+
+    //---------------------------------------------------
+
+private:
+    static QMetaProperty GetProperty(const char *name) {
+        return staticMetaObject.property(staticMetaObject.indexOfProperty(name));
+    }
+
+    static constexpr int ExpectedValue = 42;
+    static constexpr int NotificationTimeout = 1000;
 };
 
 QTEST_MAIN(PropertyHelperTests)
