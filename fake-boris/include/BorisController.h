@@ -22,6 +22,13 @@ private:
     static constexpr char WriteCommand = '\xba';
 };
 
+class BorisController : public AbstractBorisController {
+    Q_OBJECT
+
+public:
+    BorisController(QObject *parent = nullptr);
+};
+
 } // namespace Diplomamunka
 
 #endif // ABSTRACTBORISCONTROLLER_H
