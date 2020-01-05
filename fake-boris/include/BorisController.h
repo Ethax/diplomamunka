@@ -1,8 +1,10 @@
 #ifndef ABSTRACTBORISCONTROLLER_H
 #define ABSTRACTBORISCONTROLLER_H
 
+#include <IOPort.hpp>
 #include <PropertyHelper.hpp>
 #include <QObject>
+#include <Timer.hpp>
 
 namespace Diplomamunka {
 
@@ -17,7 +19,15 @@ class AbstractBorisController : public QObject {
 public:
     explicit AbstractBorisController(QObject *parent = nullptr);
 
+    void Start();
+    bool IsActive() const;
+
 private:
+    virtual IOPort &GetIOPort() = 0;
+    virtual Timer &GetTimer() = 0;
+    virtual const IOPort &GetIOPort() const = 0;
+    virtual const Timer &GetTimer() const = 0;
+
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';
 };
