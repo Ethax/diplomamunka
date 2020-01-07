@@ -1,0 +1,42 @@
+#ifndef IOEXCEPTION_H
+#define IOEXCEPTION_H
+
+#include <QString>
+#include <stdexcept>
+
+namespace Diplomamunka {
+
+class Exception : public std::exception {
+public:
+    explicit Exception(const QString &message);
+
+    QString GetMessage() const noexcept;
+    const char *what() const noexcept override;
+
+private:
+    QString m_Message;
+};
+
+class UnauthorizedAccessException : public Exception {
+public:
+    explicit UnauthorizedAccessException(const QString &message);
+};
+
+class ArgumentOutOfRangeException : public Exception {
+public:
+    explicit ArgumentOutOfRangeException(const QString &message);
+};
+
+class IOException : public Exception {
+public:
+    explicit IOException(const QString &message);
+};
+
+class InvalidOperationException : public Exception {
+public:
+    explicit InvalidOperationException(const QString &message);
+};
+
+} // namespace Diplomamunka
+
+#endif // IOEXCEPTION_H
