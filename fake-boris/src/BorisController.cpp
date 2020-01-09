@@ -11,14 +11,18 @@ void AbstractBorisController::Start() {
         GetTimer().Start(GetInterval());
     }
     catch (const Exception &) {
-        GetTimer().Stop();
-        GetIOPort().Close();
+        Stop();
         throw;
     }
 }
 
 bool AbstractBorisController::IsActive() const {
     return GetIOPort().IsOpen() && GetTimer().IsRunning();
+}
+
+void AbstractBorisController::Stop() {
+    GetTimer().Stop();
+    GetIOPort().Close();
 }
 
 BorisController::BorisController(QObject *parent) : AbstractBorisController(parent) {}

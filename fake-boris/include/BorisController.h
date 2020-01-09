@@ -19,8 +19,9 @@ class AbstractBorisController : public QObject {
 public:
     explicit AbstractBorisController(QObject *parent = nullptr);
 
-    void Start();
-    bool IsActive() const;
+    Q_INVOKABLE void Start();
+    Q_INVOKABLE bool IsActive() const;
+    Q_INVOKABLE void Stop();
 
 private:
     virtual IOPort &GetIOPort() = 0;

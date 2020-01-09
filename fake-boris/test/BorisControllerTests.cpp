@@ -1,4 +1,5 @@
 #include <BorisController.h>
+#include <Exception.h>
 #include <QCoreApplication>
 #include <QtTest>
 #include <fakeit.hpp>
@@ -10,6 +11,11 @@ namespace {
 
 class TestableBorisController : public AbstractBorisController {
 public:
+    TestableBorisController() : AbstractBorisController() {
+        FakeIOPortMethods();
+        FakeTimerMethods();
+    }
+
     Mock<IOPort> FakeIOPort;
     Mock<Timer> FakeTimer;
 
@@ -18,6 +24,21 @@ private:
     Timer &GetTimer() override { return m_Timer; }
     const IOPort &GetIOPort() const override { return m_IOPort; }
     const Timer &GetTimer() const override { return m_Timer; }
+
+    void FakeIOPortMethods() {
+        Fake(Method(FakeIOPort, GetPortNames));
+        Fake(Method(FakeIOPort, Open));
+        Fake(Method(FakeIOPort, IsOpen));
+        Fake(Method(FakeIOPort, Close));
+        Fake(Method(FakeIOPort, Read));
+        Fake(Method(FakeIOPort, Write));
+    }
+
+    void FakeTimerMethods() {
+        Fake(Method(FakeTimer, Start));
+        Fake(Method(FakeTimer, IsRunning));
+        Fake(Method(FakeTimer, Stop));
+    }
 
     IOPort &m_IOPort = FakeIOPort.get();
     Timer &m_Timer = FakeTimer.get();
@@ -37,9 +58,42 @@ class BorisControllerTests : public QObject {
     Q_OBJECT
 
 private slots:
+    void Start_OpeningIOPortThrowsException_ClosesIOPortAndStopsTimer() {
+        TestableBorisController controller;
+        When(Method(controller.FakeIOPort, Open)).Throw(IOException("Test"));
+
+        QVERIFY_EXCEPTION_THROWN(controller.Start(), IOException);
+        Verify(Method(controller.FakeIOPort, Close)).Once();
+        Verify(Method(controller.FakeTimer, Stop)).Once();
+    }
+
+    void Start_StartingTimerThrowsException_ClosesIOPortAndStopsTimer() {
+        TestableBorisController controller;
+        When(Method(controller.FakeTimer, Start)).Throw(ArgumentOutOfRangeException("Test"));
+
+        QVERIFY_EXCEPTION_THROWN(controller.Start(), ArgumentOutOfRangeException);
+        Verify(Method(controller.FakeTimer, Stop)).Once();
+        Verify(Method(controller.FakeIOPort, Close)).Once();
+    }
+
+    void Start_Invoked_OpensPortBeforeStartingTimer() {
+        TestableBorisController controller;
+
+        controller.Start();
+
+        Verify(Method(controller.FakeIOPort, Open), Method(controller.FakeTimer, Start));
+    }
+
+    void Stop_Invoked_StopsTimerBeforeClosingPort() {
+        TestableBorisController controller;
+
+        controller.Stop();
+
+        Verify(Method(controller.FakeTimer, Stop), Method(controller.FakeIOPort, Close));
+    }
 
     // TODO: Testing IsActive is not necessary
-
+#if 0
     void IsActive_PortIsOpenAndTimerIsRunning_ReturnsTrue() {
         TestableBorisController controller;
         When(Method(controller.FakeIOPort, IsOpen)).Return(true);
@@ -68,6 +122,7 @@ private slots:
 
         QCOMPARE(controllerIsActive, false);
     }
+#endif
 };
 
 QTEST_MAIN(BorisControllerTests)
