@@ -9,6 +9,7 @@ void AbstractBorisController::Start() {
     try {
         GetIOPort().Open(GetPortName());
         GetTimer().Start(GetInterval());
+        m_IsActive = true;
     }
     catch (const Exception &) {
         Stop();
@@ -16,13 +17,22 @@ void AbstractBorisController::Start() {
     }
 }
 
-bool AbstractBorisController::IsActive() const {
-    return GetIOPort().IsOpen() && GetTimer().IsRunning();
-}
-
 void AbstractBorisController::Stop() {
-    GetTimer().Stop();
-    GetIOPort().Close();
+    if (GetTimer().IsRunning()) {
+        GetTimer().Stop();
+    }
+    if (GetIOPort().IsOpen()) {
+        GetIOPort().Close();
+    }
+    m_IsActive = false;
 }
 
 BorisController::BorisController(QObject *parent) : AbstractBorisController(parent) {}
+
+BorisController::~BorisController() {
+    try {
+        // TODO: direct calls to Stop and Close methods, avoid virtual methods
+    }
+    catch (...) {
+    }
+}

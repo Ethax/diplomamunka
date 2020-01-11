@@ -9,50 +9,20 @@ using namespace fakeit;
 
 namespace {
 
+Mock<IOPort> CreateFakeIOPort();
+Mock<Timer> CreateFakeTimer();
+
 class TestableBorisController : public AbstractBorisController {
 public:
-    TestableBorisController() : AbstractBorisController() {
-        FakeIOPortMethods();
-        FakeTimerMethods();
-    }
-
-    Mock<IOPort> FakeIOPort;
-    Mock<Timer> FakeTimer;
+    Mock<IOPort> FakeIOPort = CreateFakeIOPort();
+    Mock<Timer> FakeTimer = CreateFakeTimer();
 
 private:
-    IOPort &GetIOPort() override { return m_IOPort; }
-    Timer &GetTimer() override { return m_Timer; }
-    const IOPort &GetIOPort() const override { return m_IOPort; }
-    const Timer &GetTimer() const override { return m_Timer; }
-
-    void FakeIOPortMethods() {
-        Fake(Method(FakeIOPort, GetPortNames));
-        Fake(Method(FakeIOPort, Open));
-        Fake(Method(FakeIOPort, IsOpen));
-        Fake(Method(FakeIOPort, Close));
-        Fake(Method(FakeIOPort, Read));
-        Fake(Method(FakeIOPort, Write));
-    }
-
-    void FakeTimerMethods() {
-        Fake(Method(FakeTimer, Start));
-        Fake(Method(FakeTimer, IsRunning));
-        Fake(Method(FakeTimer, Stop));
-    }
-
-    IOPort &m_IOPort = FakeIOPort.get();
-    Timer &m_Timer = FakeTimer.get();
+    IOPort &GetIOPort() override { return FakeIOPort.get(); }
+    Timer &GetTimer() override { return FakeTimer.get(); }
 };
 
 } // namespace
-
-namespace QTest {
-
-template <typename T> auto getData(const char *name) {
-    return *static_cast<T *>(qData(name, qMetaTypeId<T>()));
-}
-
-} // namespace QTest
 
 class BorisControllerTests : public QObject {
     Q_OBJECT
@@ -91,39 +61,30 @@ private slots:
 
         Verify(Method(controller.FakeTimer, Stop), Method(controller.FakeIOPort, Close));
     }
-
-    // TODO: Testing IsActive is not necessary
-#if 0
-    void IsActive_PortIsOpenAndTimerIsRunning_ReturnsTrue() {
-        TestableBorisController controller;
-        When(Method(controller.FakeIOPort, IsOpen)).Return(true);
-        When(Method(controller.FakeTimer, IsRunning)).Return(true);
-
-        const bool controllerIsActive = controller.IsActive();
-
-        QCOMPARE(controllerIsActive, true);
-    }
-
-    void IsActive_PortIsNotOpenOrTimerIsNotRunning_ReturnsFalse_data() {
-        QTest::addColumn<bool>("IsOpen");
-        QTest::addColumn<bool>("IsRunning");
-
-        QTest::newRow("PortIsNotOpen") << false << true;
-        QTest::newRow("TimerIsNotRunning") << true << false;
-        QTest::newRow("PortIsNotOpenAndTimerIsNotRunning") << false << false;
-    }
-
-    void IsActive_PortIsNotOpenOrTimerIsNotRunning_ReturnsFalse() {
-        TestableBorisController controller;
-        When(Method(controller.FakeIOPort, IsOpen)).Return(QTest::getData<bool>("IsOpen"));
-        When(Method(controller.FakeTimer, IsRunning)).Return(QTest::getData<bool>("IsRunning"));
-
-        const bool controllerIsActive = controller.IsActive();
-
-        QCOMPARE(controllerIsActive, false);
-    }
-#endif
 };
+
+namespace {
+
+Mock<IOPort> CreateFakeIOPort() {
+    Mock<IOPort> fakeIOPort;
+    Fake(Method(fakeIOPort, GetPortNames));
+    Fake(Method(fakeIOPort, Open));
+    Fake(Method(fakeIOPort, IsOpen));
+    Fake(Method(fakeIOPort, Close));
+    Fake(Method(fakeIOPort, Read));
+    Fake(Method(fakeIOPort, Write));
+    return fakeIOPort;
+}
+
+Mock<Timer> CreateFakeTimer() {
+    Mock<Timer> fakeTimer;
+    Fake(Method(fakeTimer, Start));
+    Fake(Method(fakeTimer, IsRunning));
+    Fake(Method(fakeTimer, Stop));
+    return fakeTimer;
+}
+
+} // namespace
 
 QTEST_MAIN(BorisControllerTests)
 

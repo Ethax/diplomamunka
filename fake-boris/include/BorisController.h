@@ -20,24 +20,25 @@ public:
     explicit AbstractBorisController(QObject *parent = nullptr);
 
     Q_INVOKABLE void Start();
-    Q_INVOKABLE bool IsActive() const;
+    Q_INVOKABLE bool IsActive() const { return m_IsActive; }
     Q_INVOKABLE void Stop();
 
 private:
     virtual IOPort &GetIOPort() = 0;
     virtual Timer &GetTimer() = 0;
-    virtual const IOPort &GetIOPort() const = 0;
-    virtual const Timer &GetTimer() const = 0;
 
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';
+
+    bool m_IsActive = false;
 };
 
 class BorisController : public AbstractBorisController {
     Q_OBJECT
 
 public:
-    BorisController(QObject *parent = nullptr);
+    explicit BorisController(QObject *parent = nullptr);
+    virtual ~BorisController() override;
 };
 
 } // namespace Diplomamunka
