@@ -17,3 +17,5 @@ ArgumentOutOfRangeException::ArgumentOutOfRangeException(const QString &message)
 IOException::IOException(const QString &message) : Exception(message) {}
 
 InvalidOperationException::InvalidOperationException(const QString &message) : Exception(message) {}
+
+ArgumentNullException::ArgumentNullException(const QString &message) : Exception(message) {}

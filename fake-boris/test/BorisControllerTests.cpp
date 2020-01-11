@@ -9,62 +9,6 @@ using namespace fakeit;
 
 namespace {
 
-Mock<IOPort> CreateFakeIOPort();
-Mock<Timer> CreateFakeTimer();
-
-class TestableBorisController : public AbstractBorisController {
-public:
-    Mock<IOPort> FakeIOPort = CreateFakeIOPort();
-    Mock<Timer> FakeTimer = CreateFakeTimer();
-
-private:
-    IOPort &GetIOPort() override { return FakeIOPort.get(); }
-    Timer &GetTimer() override { return FakeTimer.get(); }
-};
-
-} // namespace
-
-class BorisControllerTests : public QObject {
-    Q_OBJECT
-
-private slots:
-    void Start_OpeningIOPortThrowsException_ClosesIOPortAndStopsTimer() {
-        TestableBorisController controller;
-        When(Method(controller.FakeIOPort, Open)).Throw(IOException("Test"));
-
-        QVERIFY_EXCEPTION_THROWN(controller.Start(), IOException);
-        Verify(Method(controller.FakeIOPort, Close)).Once();
-        Verify(Method(controller.FakeTimer, Stop)).Once();
-    }
-
-    void Start_StartingTimerThrowsException_ClosesIOPortAndStopsTimer() {
-        TestableBorisController controller;
-        When(Method(controller.FakeTimer, Start)).Throw(ArgumentOutOfRangeException("Test"));
-
-        QVERIFY_EXCEPTION_THROWN(controller.Start(), ArgumentOutOfRangeException);
-        Verify(Method(controller.FakeTimer, Stop)).Once();
-        Verify(Method(controller.FakeIOPort, Close)).Once();
-    }
-
-    void Start_Invoked_OpensPortBeforeStartingTimer() {
-        TestableBorisController controller;
-
-        controller.Start();
-
-        Verify(Method(controller.FakeIOPort, Open), Method(controller.FakeTimer, Start));
-    }
-
-    void Stop_Invoked_StopsTimerBeforeClosingPort() {
-        TestableBorisController controller;
-
-        controller.Stop();
-
-        Verify(Method(controller.FakeTimer, Stop), Method(controller.FakeIOPort, Close));
-    }
-};
-
-namespace {
-
 Mock<IOPort> CreateFakeIOPort() {
     Mock<IOPort> fakeIOPort;
     Fake(Method(fakeIOPort, GetPortNames));
@@ -84,7 +28,60 @@ Mock<Timer> CreateFakeTimer() {
     return fakeTimer;
 }
 
+template <typename T> std::shared_ptr<T> ToPtr(Mock<T> &fake) {
+    return std::shared_ptr<T>(&fake(), [](...) {});
+}
+
 } // namespace
+
+class BorisControllerTests : public QObject {
+    Q_OBJECT
+
+private slots:
+    void Start_OpeningIOPortThrowsException_ClosesIOPortAndStopsTimer() {
+        auto fakeIOPort = CreateFakeIOPort();
+        auto fakeTimer = CreateFakeTimer();
+        BorisController controller(ToPtr(fakeIOPort), ToPtr(fakeTimer));
+        When(Method(fakeIOPort, Open)).Throw(IOException("Test"));
+
+        QVERIFY_EXCEPTION_THROWN(controller.Start(), IOException);
+        Verify(Method(fakeIOPort, Close)).Once();
+        Verify(Method(fakeTimer, Stop)).Once();
+    }
+
+    void Start_StartingTimerThrowsException_ClosesIOPortAndStopsTimer() {
+        auto fakeIOPort = CreateFakeIOPort();
+        auto fakeTimer = CreateFakeTimer();
+        BorisController controller(ToPtr(fakeIOPort), ToPtr(fakeTimer));
+        When(Method(fakeTimer, Start)).Throw(ArgumentOutOfRangeException("Test"));
+
+        QVERIFY_EXCEPTION_THROWN(controller.Start(), ArgumentOutOfRangeException);
+        Verify(Method(fakeTimer, Stop)).Once();
+        Verify(Method(fakeIOPort, Close)).Once();
+    }
+
+    void Start_Invoked_OpensPortBeforeStartingTimer() {
+        auto fakeIOPort = CreateFakeIOPort();
+        auto fakeTimer = CreateFakeTimer();
+        BorisController controller(ToPtr(fakeIOPort), ToPtr(fakeTimer));
+
+        controller.Start();
+
+        Verify(Method(fakeIOPort, Open), Method(fakeTimer, Start));
+    }
+
+    void Stop_Invoked_StopsTimerBeforeClosingPort() {
+        auto fakeIOPort = CreateFakeIOPort();
+        auto fakeTimer = CreateFakeTimer();
+        BorisController controller(ToPtr(fakeIOPort), ToPtr(fakeTimer));
+        When(Method(fakeIOPort, IsOpen)).AlwaysReturn(true);
+        When(Method(fakeTimer, IsRunning)).AlwaysReturn(true);
+
+        controller.Stop();
+
+        Verify(Method(fakeTimer, Stop), Method(fakeIOPort, Close));
+    }
+};
 
 QTEST_MAIN(BorisControllerTests)
 

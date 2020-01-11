@@ -2,6 +2,7 @@
 #define TIMER_H
 
 #include <QObject>
+#include <memory>
 
 namespace Diplomamunka {
 
@@ -18,6 +19,8 @@ public:
 signals:
     void Elapsed();
 };
+
+using TimerPtr = std::shared_ptr<Timer>;
 
 } // namespace Diplomamunka
 

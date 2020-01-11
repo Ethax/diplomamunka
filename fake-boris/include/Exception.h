@@ -37,6 +37,11 @@ public:
     explicit InvalidOperationException(const QString &message);
 };
 
+class ArgumentNullException : public Exception {
+public:
+    explicit ArgumentNullException(const QString &message);
+};
+
 } // namespace Diplomamunka
 
 #endif // IOEXCEPTION_H

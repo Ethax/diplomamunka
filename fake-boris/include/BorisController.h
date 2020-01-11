@@ -8,7 +8,7 @@
 
 namespace Diplomamunka {
 
-class AbstractBorisController : public QObject {
+class BorisController : public QObject {
     Q_OBJECT
 
     AUTOMATIC_PROPERTY(int, Interval) = 10;
@@ -17,28 +17,22 @@ class AbstractBorisController : public QObject {
     AUTOMATIC_PROPERTY(quint16, Output) = 0;
 
 public:
-    explicit AbstractBorisController(QObject *parent = nullptr);
+    explicit BorisController(QObject *parent = nullptr);
+    explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent = nullptr);
 
     Q_INVOKABLE void Start();
     Q_INVOKABLE bool IsActive() const { return m_IsActive; }
     Q_INVOKABLE void Stop();
 
+    virtual ~BorisController() override;
+
 private:
-    virtual IOPort &GetIOPort() = 0;
-    virtual Timer &GetTimer() = 0;
+    IOPortPtr m_IOPort;
+    TimerPtr m_Timer;
+    bool m_IsActive = false;
 
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';
-
-    bool m_IsActive = false;
-};
-
-class BorisController : public AbstractBorisController {
-    Q_OBJECT
-
-public:
-    explicit BorisController(QObject *parent = nullptr);
-    virtual ~BorisController() override;
 };
 
 } // namespace Diplomamunka

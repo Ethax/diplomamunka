@@ -3,12 +3,28 @@
 
 using namespace Diplomamunka;
 
-AbstractBorisController::AbstractBorisController(QObject *parent) : QObject(parent) {}
+namespace {
 
-void AbstractBorisController::Start() {
+template <typename T> void VerifyNotNullptr(const std::shared_ptr<T> &ptr, const QString &name) {
+    if (ptr == nullptr) {
+        throw ArgumentNullException(QString("Argument '%1' cannot be nullptr.").arg(name));
+    }
+}
+
+} // namespace
+
+// AbstractBorisController::AbstractBorisController(QObject *parent) : QObject(parent) {}
+
+BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent)
+    : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {
+    VerifyNotNullptr(ioPort, "ioPort");
+    VerifyNotNullptr(timer, "timer");
+}
+
+void BorisController::Start() {
     try {
-        GetIOPort().Open(GetPortName());
-        GetTimer().Start(GetInterval());
+        m_IOPort->Open(GetPortName());
+        m_Timer->Start(GetInterval());
         m_IsActive = true;
     }
     catch (const Exception &) {
@@ -17,21 +33,19 @@ void AbstractBorisController::Start() {
     }
 }
 
-void AbstractBorisController::Stop() {
-    if (GetTimer().IsRunning()) {
-        GetTimer().Stop();
+void BorisController::Stop() {
+    if (m_Timer->IsRunning()) {
+        m_Timer->Stop();
     }
-    if (GetIOPort().IsOpen()) {
-        GetIOPort().Close();
+    if (m_IOPort->IsOpen()) {
+        m_IOPort->Close();
     }
     m_IsActive = false;
 }
 
-BorisController::BorisController(QObject *parent) : AbstractBorisController(parent) {}
-
 BorisController::~BorisController() {
     try {
-        // TODO: direct calls to Stop and Close methods, avoid virtual methods
+        Stop();
     }
     catch (...) {
     }

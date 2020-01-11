@@ -4,6 +4,7 @@
 #include <QByteArray>
 #include <QObject>
 #include <QStringList>
+#include <memory>
 
 namespace Diplomamunka {
 
@@ -23,6 +24,8 @@ public:
 signals:
     void DataReceived();
 };
+
+using IOPortPtr = std::shared_ptr<IOPort>;
 
 } // namespace Diplomamunka
 
