@@ -21,7 +21,7 @@ public:
     explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent = nullptr);
 
     Q_INVOKABLE void Start();
-    Q_INVOKABLE bool IsActive() const { return m_IsActive; }
+    Q_INVOKABLE bool IsActive() const;
     Q_INVOKABLE void Stop();
 
     virtual ~BorisController() override;
