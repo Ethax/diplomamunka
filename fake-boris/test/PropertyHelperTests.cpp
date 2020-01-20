@@ -4,6 +4,8 @@
 #include <QSignalSpy>
 #include <QtTest>
 
+namespace Diplomamunka::UnitTest {
+
 class PropertyHelperTests : public QObject {
     Q_OBJECT
 
@@ -147,6 +149,8 @@ private:
     static constexpr int NotificationTimeout = 1000;
 };
 
-QTEST_MAIN(PropertyHelperTests)
+} // namespace Diplomamunka::UnitTest
+
+QTEST_MAIN(Diplomamunka::UnitTest::PropertyHelperTests)
 
 #include "PropertyHelperTests.moc"

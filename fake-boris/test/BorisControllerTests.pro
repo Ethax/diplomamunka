@@ -9,7 +9,12 @@ CONFIG -= app_bundle
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
-SOURCES += BorisControllerTests.cpp
+HEADERS += \
+    TestDummy.h
+
+SOURCES += \
+    TestDummy.cpp \
+    BorisControllerTests.cpp
 
 win32:CONFIG(release, debug|release): \
     LIBS += -L$$OUT_PWD/../src/release/ -lBorisAccess
@@ -28,3 +33,4 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): \
     PRE_TARGETDEPS += $$OUT_PWD/../src/debug/BorisAccess.lib
 else:unix: \
     PRE_TARGETDEPS += $$OUT_PWD/../src/libBorisAccess.a
+
