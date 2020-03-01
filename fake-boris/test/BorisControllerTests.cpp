@@ -90,7 +90,7 @@ private slots:
         emit m_FakeTimer.get().Elapsed();
 
         QTest::qWait(NotificationTimeout);
-        Verify(Method(m_FakeIOPort, Write).Using("\xba\x12\x34\\xb9")).Once();
+        Verify(Method(m_FakeIOPort, Write).Using("\xba\x12\x34\xb9")).Once();
     }
 
     void init() {

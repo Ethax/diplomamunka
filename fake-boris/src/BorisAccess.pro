@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/../include/IOPort.hpp \
     $$PWD/../include/PropertyHelper.hpp \
     $$PWD/../include/Timer.hpp \
-    $$PWD/../include/Exception.h
+    $$PWD/../include/Exception.h \
+    ../include/Verify.hpp
 
 SOURCES += \
     BorisController.cpp \

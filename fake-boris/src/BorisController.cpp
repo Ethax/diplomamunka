@@ -1,25 +1,14 @@
 #include <BorisController.h>
-#include <Exception.h>
+#include <Verify.hpp>
 
 using namespace Diplomamunka;
 
-namespace {
-
-template <typename T> void VerifyNotNullptr(const std::shared_ptr<T> &ptr, const QString &name) {
-    if (ptr == nullptr) {
-        const auto message = BorisController::tr("Argument '%1' cannot be nullptr.").arg(name);
-        throw ArgumentNullException(message);
-    }
-}
-
-} // namespace
-
-// AbstractBorisController::AbstractBorisController(QObject *parent) : QObject(parent) {}
-
 BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent)
     : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {
-    VerifyNotNullptr(ioPort, "ioPort");
-    VerifyNotNullptr(timer, "timer");
+    VERIFY_NOT_NULLPTR(ioPort);
+    VERIFY_NOT_NULLPTR(timer);
+
+    connect(m_Timer.get(), &Timer::Elapsed, this, &BorisController::WriteOutput);
 }
 
 void BorisController::Start() {
@@ -42,4 +31,15 @@ BorisController::~BorisController() {
     }
     catch (...) {
     }
+}
+
+void BorisController::WriteOutput() {
+    QByteArray output;
+
+    output.append(WriteCommand);
+    output.append(static_cast<char>((GetOutput() >> 8) & 0xff));
+    output.append(static_cast<char>(GetOutput() & 0xff));
+    output.append(ReadCommand);
+
+    m_IOPort->Write(output);
 }

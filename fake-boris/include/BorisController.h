@@ -26,6 +26,9 @@ public:
 
     virtual ~BorisController() override;
 
+private slots:
+    void WriteOutput();
+
 private:
     IOPortPtr m_IOPort;
     TimerPtr m_Timer;

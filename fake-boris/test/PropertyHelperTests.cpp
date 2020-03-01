@@ -100,8 +100,6 @@ private slots:
     }
 
     void ReadonlyProperty_PropertySetterWasCalled_ChangesNothing() {
-        IgnoreWarningByWildcard("*ReadonlyProperty* invalid, read-only or does not exist");
-
         const bool propertyChanged = setProperty("ReadonlyProperty", ExpectedValue);
 
         QCOMPARE(propertyChanged, false);
@@ -138,11 +136,6 @@ private slots:
 private:
     static QMetaProperty GetProperty(const char *name) {
         return staticMetaObject.property(staticMetaObject.indexOfProperty(name));
-    }
-
-    static void IgnoreWarningByWildcard(const QString &messagePattern) {
-        const auto regexPattern = QRegularExpression::wildcardToRegularExpression(messagePattern);
-        QTest::ignoreMessage(QtWarningMsg, QRegularExpression(regexPattern));
     }
 
     static constexpr int ExpectedValue = 42;
