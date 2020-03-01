@@ -10,9 +10,8 @@ HEADERS += \
     $$PWD/../include/PropertyHelper.hpp \
     $$PWD/../include/Timer.hpp \
     $$PWD/../include/Exception.h \
-    ../include/Verify.hpp
+    $$PWD/../include/Verify.hpp
 
 SOURCES += \
     BorisController.cpp \
     Exception.cpp
-

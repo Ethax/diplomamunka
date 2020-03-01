@@ -4,7 +4,9 @@
 #include <QObject>
 
 #define PROPERTY_GETTER(Type, Name)                                                                \
-    Type Get##Name() const { return m_##Name; }
+    Type Get##Name() const {                                                                       \
+        return m_##Name;                                                                           \
+    }
 
 #define PROPERTY_SETTER(Type, Name)                                                                \
     void Set##Name(const Type &value) {                                                            \
@@ -22,7 +24,7 @@ public:                                                                         
     PROPERTY_GETTER(Type, Name)                                                                    \
     PROPERTY_SETTER(Type, Name)                                                                    \
                                                                                                    \
-private:                                                                                           \
+protected:                                                                                         \
     Type m_##Name
 
 #define READONLY_PROPERTY(Type, Name)                                                              \
@@ -31,7 +33,7 @@ private:                                                                        
 public:                                                                                            \
     PROPERTY_GETTER(Type, Name)                                                                    \
                                                                                                    \
-private:                                                                                           \
+protected:                                                                                         \
     PROPERTY_SETTER(Type, Name)                                                                    \
     Type m_##Name
 

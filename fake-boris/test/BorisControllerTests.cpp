@@ -2,17 +2,68 @@
 #include <Exception.h>
 #include <QCoreApplication>
 #include <QtTest>
-#include <TestDummy.h>
-#include <fakeit.hpp>
 
-using namespace fakeit;
+#include <gmock/gmock.h>
 
+using namespace testing;
+
+namespace Diplomamunka {
+
+class FakeIOPort : public IOPort {
+    Q_OBJECT
+
+public:
+    MOCK_METHOD(QStringList, GetPortNames, (), (const, override));
+    MOCK_METHOD(void, Open, (const QString &portName), (override));
+    MOCK_METHOD(bool, IsOpen, (), (const, override));
+    MOCK_METHOD(void, Close, (), (override));
+    MOCK_METHOD(QByteArray, Read, (), (override));
+    MOCK_METHOD(void, Write, (const QByteArray &data), (override));
+};
+
+class FakeTimer : public Timer {
+    Q_OBJECT
+
+public:
+    MOCK_METHOD(void, Start, (int duration), (override));
+    MOCK_METHOD(bool, IsRunning, (), (const, override));
+    MOCK_METHOD(void, Stop, (), (override));
+};
+
+TEST(Output, CommunicationHasBeenStarted_AppearsInOutgoingData) {
+    auto fakeIOPortPtr = std::make_shared<NiceMock<FakeIOPort>>();
+    auto fakeTimerPtr = std::make_shared<NiceMock<FakeTimer>>();
+
+    EXPECT_CALL(*fakeIOPortPtr, Write(QByteArray{"\xba\x12\x34\xb9"})).Times(1);
+
+    BorisController controller(fakeIOPortPtr, fakeTimerPtr);
+    controller.SetOutput(0x1234);
+
+    controller.Start();
+    emit fakeTimerPtr->Elapsed();
+    QTest::qWait(10);
+}
+
+} // namespace Diplomamunka
+#if 0
 namespace Diplomamunka::UnitTest {
 
 class BorisControllerTests : public QObject {
     Q_OBJECT
 
 private slots:
+
+    void Start_Invoked_OpensPortBeforeStartingTimer() {
+        auto controller = CreateBorisController();
+
+        EXPECT_CALL(m_FakeIOPort, Open());
+        EXPECT_CALL(m_FakeTimer, Start());
+
+        controller.Start();
+
+        // Verify(Method(m_FakeIOPort, Open), Method(m_FakeTimer, Start)).Once();
+    }
+
     void Constructor_ProvidedIOPortPtrIsNullptr_ThrowsArgumentNullException() {
         Mock<Timer> fakeTimer;
         TimerPtr fakeTimerPtr(&fakeTimer(), [](...) {});
@@ -116,11 +167,8 @@ private:
         return BorisController(fakeIOPortPtr, fakeTimerPtr);
     }
 
-    DummyIOPort m_DummyIOPort;
-    Mock<IOPort> m_FakeIOPort{m_DummyIOPort};
-
-    DummyTimer m_DummyTimer;
-    Mock<Timer> m_FakeTimer{m_DummyTimer};
+    NiceMock<IOPort> m_FakeIOPort;
+    NiceMock<FakeTimer> m_FakeTimer;
 
     static constexpr int NotificationTimeout = 10;
 };
@@ -128,5 +176,7 @@ private:
 } // namespace Diplomamunka::UnitTest
 
 QTEST_MAIN(Diplomamunka::UnitTest::BorisControllerTests)
+
+#endif
 
 #include "BorisControllerTests.moc"

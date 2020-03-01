@@ -2,9 +2,9 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
     BorisAccess \
-    BorisAccessTests
+    TestSuite
 
 BorisAccess.file = src/BorisAccess.pro
 
-BorisAccessTests.file = test/BorisAccessTests.pro
-BorisAccessTests.depends = BorisAccess
+TestSuite.file = test/TestSuite.pro
+TestSuite.depends = BorisAccess
