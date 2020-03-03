@@ -4,7 +4,7 @@ SUBDIRS += \
     GoogleTest \
     BorisAccessTests
 
-GoogleTest.file = GoogleTest.pro
+GoogleTest.file = framework/GoogleTest.pro
 
-BorisAccessTests.file = BorisAccessTests.pro
+BorisAccessTests.file = unittests/BorisAccessTests.pro
 BorisAccessTests.depends = GoogleTest

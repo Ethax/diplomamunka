@@ -2,15 +2,15 @@ QT += core
 TEMPLATE = lib
 CONFIG += c++17	staticlib
 
-INCLUDEPATH += $$PWD/../include
+INCLUDEPATH += ../include
 
 HEADERS += \
-    $$PWD/../include/BorisController.h \
-    $$PWD/../include/IOPort.hpp \
-    $$PWD/../include/PropertyHelper.hpp \
-    $$PWD/../include/Timer.hpp \
-    $$PWD/../include/Exception.h \
-    $$PWD/../include/Verify.hpp
+    ../include/BorisController.h \
+    ../include/IOPort.hpp \
+    ../include/PropertyHelper.hpp \
+    ../include/Timer.hpp \
+    ../include/Exception.h \
+    ../include/Verify.hpp
 
 SOURCES += \
     BorisController.cpp \
