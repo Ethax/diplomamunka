@@ -3,7 +3,7 @@
 
 using namespace Diplomamunka;
 
-BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent)
+BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent)
     : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {
     VERIFY_NOT_NULLPTR(ioPort);
     VERIFY_NOT_NULLPTR(timer);
@@ -17,7 +17,9 @@ void BorisController::Start() {
     m_IsActive = true;
 }
 
-bool BorisController::IsActive() const { return m_IsActive; }
+bool BorisController::IsActive() const {
+    return m_IsActive;
+}
 
 void BorisController::Stop() {
     m_Timer->Stop();
@@ -26,10 +28,8 @@ void BorisController::Stop() {
 }
 
 BorisController::~BorisController() {
-    try {
+    if (IsActive()) {
         Stop();
-    }
-    catch (...) {
     }
 }
 

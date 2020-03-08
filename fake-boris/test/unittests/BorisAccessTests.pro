@@ -10,8 +10,12 @@ INCLUDEPATH += \
     ../../include \
     ../framework/include
 
+HEADERS += \
+    BorisControllerTests.h \
+    PropertyHelperTests.h
+
 SOURCES += \
-    BorisAccessTestRunner.cpp \
+    ../framework/src/gmock/src/gmock_main.cc \
     BorisControllerTests.cpp \
     PropertyHelperTests.cpp
 

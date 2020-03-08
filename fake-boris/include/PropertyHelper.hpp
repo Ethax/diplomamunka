@@ -24,7 +24,7 @@ public:                                                                         
     PROPERTY_GETTER(Type, Name)                                                                    \
     PROPERTY_SETTER(Type, Name)                                                                    \
                                                                                                    \
-protected:                                                                                         \
+private:                                                                                           \
     Type m_##Name
 
 #define READONLY_PROPERTY(Type, Name)                                                              \
@@ -33,7 +33,7 @@ protected:                                                                      
 public:                                                                                            \
     PROPERTY_GETTER(Type, Name)                                                                    \
                                                                                                    \
-protected:                                                                                         \
+private:                                                                                           \
     PROPERTY_SETTER(Type, Name)                                                                    \
     Type m_##Name
 

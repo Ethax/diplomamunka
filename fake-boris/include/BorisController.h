@@ -17,8 +17,8 @@ class BorisController : public QObject {
     AUTOMATIC_PROPERTY(quint16, Output) = 0;
 
 public:
-    explicit BorisController(QObject *parent = nullptr);
-    explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject *parent = nullptr);
+    explicit BorisController(QObject* parent = nullptr); // TODO: implement
+    explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent = nullptr);
 
     Q_INVOKABLE void Start();
     Q_INVOKABLE bool IsActive() const;
@@ -36,6 +36,9 @@ private:
 
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';
+
+    BorisController(const BorisController&) = delete;
+    BorisController& operator=(const BorisController&) = delete;
 };
 
 } // namespace Diplomamunka
