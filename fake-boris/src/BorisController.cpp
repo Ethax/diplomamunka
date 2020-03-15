@@ -9,6 +9,7 @@ BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* pare
     VERIFY_NOT_NULLPTR(timer);
 
     connect(m_Timer.get(), &Timer::Elapsed, this, &BorisController::WriteOutput);
+    connect(m_IOPort.get(), &IOPort::DataReceived, this, &BorisController::ReadInput);
 }
 
 void BorisController::Start() {
@@ -27,19 +28,36 @@ void BorisController::Stop() {
     m_IsActive = false;
 }
 
+QStringList BorisController::GetPortNames() const {
+    return m_IOPort->GetPortNames();
+}
+
 BorisController::~BorisController() {
     if (IsActive()) {
         Stop();
     }
 }
 
+void BorisController::ReadInput() {
+    const QByteArray inputData = m_IOPort->Read();
+
+    if (inputData.length() == 2) {
+        quint16 input = 0;
+        input |= static_cast<unsigned char>(inputData[0]) << 8;
+        input |= static_cast<unsigned char>(inputData[1]);
+
+        SetInput(input);
+    }
+}
+
 void BorisController::WriteOutput() {
-    QByteArray output;
+    const quint16 output = GetOutput();
 
-    output.append(WriteCommand);
-    output.append(static_cast<char>((GetOutput() >> 8) & 0xff));
-    output.append(static_cast<char>(GetOutput() & 0xff));
-    output.append(ReadCommand);
+    QByteArray outputData;
+    outputData.append(WriteCommand);
+    outputData.append(static_cast<char>((output >> 8) & 0xff));
+    outputData.append(static_cast<char>(output & 0xff));
+    outputData.append(ReadCommand);
 
-    m_IOPort->Write(output);
+    m_IOPort->Write(outputData);
 }

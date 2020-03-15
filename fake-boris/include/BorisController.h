@@ -24,9 +24,12 @@ public:
     Q_INVOKABLE bool IsActive() const;
     Q_INVOKABLE void Stop();
 
+    Q_INVOKABLE QStringList GetPortNames() const;
+
     virtual ~BorisController() override;
 
 private slots:
+    void ReadInput();
     void WriteOutput();
 
 private:

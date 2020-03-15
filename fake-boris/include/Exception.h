@@ -8,10 +8,10 @@ namespace Diplomamunka {
 
 class Exception : public std::exception {
 public:
-    explicit Exception(const QString &message);
+    explicit Exception(const QString& message);
 
     QString GetMessage() const noexcept;
-    const char *what() const noexcept override;
+    const char* what() const noexcept override;
 
 private:
     QString m_Message;
@@ -19,27 +19,27 @@ private:
 
 class UnauthorizedAccessException : public Exception {
 public:
-    explicit UnauthorizedAccessException(const QString &message);
+    explicit UnauthorizedAccessException(const QString& message);
 };
 
 class ArgumentOutOfRangeException : public Exception {
 public:
-    explicit ArgumentOutOfRangeException(const QString &message);
+    explicit ArgumentOutOfRangeException(const QString& message);
 };
 
 class IOException : public Exception {
 public:
-    explicit IOException(const QString &message);
+    explicit IOException(const QString& message);
 };
 
 class InvalidOperationException : public Exception {
 public:
-    explicit InvalidOperationException(const QString &message);
+    explicit InvalidOperationException(const QString& message);
 };
 
 class ArgumentNullException : public Exception {
 public:
-    explicit ArgumentNullException(const QString &message);
+    explicit ArgumentNullException(const QString& message);
 };
 
 } // namespace Diplomamunka

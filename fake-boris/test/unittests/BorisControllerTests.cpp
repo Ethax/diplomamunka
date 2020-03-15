@@ -87,13 +87,46 @@ TEST_F(BorisControllerTests, Destructor_ControllerIsNotActive_DoesNothing) {
 }
 
 TEST_F(BorisControllerTests, Output_CommunicationHasBeenStarted_AppearsInOutgoingData) {
-    EXPECT_CALL(*m_FakeIOPortPtr, Write({"\xba\x12\x34\xb9"}));
+    EXPECT_CALL(*m_FakeIOPortPtr, Write({"\xba\xc0\xde\xb9"}));
 
     BorisController controller(m_FakeIOPortPtr, m_FakeTimerPtr);
-    controller.SetOutput(0x1234);
+    controller.SetOutput(0xc0de);
 
     controller.Start();
     m_FakeTimerPtr->Elapsed();
+}
+
+TEST_F(BorisControllerTests, Input_DataOfCorrectLengthWasReceived_ChangesToReceivedData) {
+    EXPECT_CALL(*m_FakeIOPortPtr, Read()).WillOnce(Return("\xc0\xde"));
+
+    BorisController controller(m_FakeIOPortPtr, m_FakeTimerPtr);
+    controller.Start();
+
+    m_FakeIOPortPtr->DataReceived();
+
+    ASSERT_THAT(controller.GetInput(), Eq(0xc0de));
+}
+
+TEST_F(BorisControllerTests, Input_TooShortDataWasReceived_RemainsUnchanged) {
+    EXPECT_CALL(*m_FakeIOPortPtr, Read()).WillOnce(Return("\xc0"));
+
+    BorisController controller(m_FakeIOPortPtr, m_FakeTimerPtr);
+    controller.Start();
+
+    m_FakeIOPortPtr->DataReceived();
+
+    ASSERT_THAT(controller.GetInput(), Eq(0));
+}
+
+TEST_F(BorisControllerTests, Input_TooLongDataWasReceived_RemainsUnchanged) {
+    EXPECT_CALL(*m_FakeIOPortPtr, Read()).WillOnce(Return("\xc0\xde\x09"));
+
+    BorisController controller(m_FakeIOPortPtr, m_FakeTimerPtr);
+    controller.Start();
+
+    m_FakeIOPortPtr->DataReceived();
+
+    ASSERT_THAT(controller.GetInput(), Eq(0));
 }
 
 } // namespace Diplomamunka::UnitTest
