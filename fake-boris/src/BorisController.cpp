@@ -1,7 +1,13 @@
 #include <BorisController.h>
+#include <CyclicTimer.h>
+#include <SerialPort.h>
 #include <Verify.hpp>
 
 using namespace Diplomamunka;
+
+BorisController::BorisController(QObject* parent)
+    : BorisController(SerialPort::Create(), CyclicTimer::Create(), parent) {
+}
 
 BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent)
     : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {

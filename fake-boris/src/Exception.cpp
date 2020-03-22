@@ -13,7 +13,11 @@ const char* Exception::what() const noexcept {
     return m_Message.toUtf8().constData();
 }
 
-UnauthorizedAccessException::UnauthorizedAccessException(const QString& message)
+ArgumentException::ArgumentException(const QString& message) //
+    : Exception(message) {
+}
+
+ArgumentNullException::ArgumentNullException(const QString& message) //
     : Exception(message) {
 }
 
@@ -21,11 +25,18 @@ ArgumentOutOfRangeException::ArgumentOutOfRangeException(const QString& message)
     : Exception(message) {
 }
 
-IOException::IOException(const QString& message) : Exception(message) {
+InvalidOperationException::InvalidOperationException(const QString& message) //
+    : Exception(message) {
 }
 
-InvalidOperationException::InvalidOperationException(const QString& message) : Exception(message) {
+IOException::IOException(const QString& message) //
+    : Exception(message) {
 }
 
-ArgumentNullException::ArgumentNullException(const QString& message) : Exception(message) {
+TimeoutException::TimeoutException(const QString& message) //
+    : Exception(message) {
+}
+
+UnauthorizedAccessException::UnauthorizedAccessException(const QString& message)
+    : Exception(message) {
 }

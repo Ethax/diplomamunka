@@ -10,6 +10,7 @@ namespace Diplomamunka {
 
 class BorisController : public QObject {
     Q_OBJECT
+    Q_DISABLE_COPY(BorisController)
 
     AUTOMATIC_PROPERTY(int, Interval) = 10;
     AUTOMATIC_PROPERTY(QString, PortName) = "";
@@ -17,7 +18,7 @@ class BorisController : public QObject {
     AUTOMATIC_PROPERTY(quint16, Output) = 0;
 
 public:
-    explicit BorisController(QObject* parent = nullptr); // TODO: implement
+    explicit BorisController(QObject* parent = nullptr);
     explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent = nullptr);
 
     Q_INVOKABLE void Start();
@@ -39,9 +40,6 @@ private:
 
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';
-
-    BorisController(const BorisController&) = delete;
-    BorisController& operator=(const BorisController&) = delete;
 };
 
 } // namespace Diplomamunka
