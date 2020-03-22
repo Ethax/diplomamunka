@@ -33,6 +33,10 @@ IOException::IOException(const QString& message) //
     : Exception(message) {
 }
 
+OutOfMemoryException::OutOfMemoryException(const QString& message) //
+    : Exception(message) {
+}
+
 TimeoutException::TimeoutException(const QString& message) //
     : Exception(message) {
 }

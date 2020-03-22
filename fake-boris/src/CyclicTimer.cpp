@@ -4,7 +4,11 @@
 
 using namespace Diplomamunka;
 
-void Diplomamunka::CyclicTimer::Start(int interval) {
+CyclicTimer::CyclicTimer(QObject* parent) : Timer(parent) {
+    connect(&m_TimerImpl, &QTimer::timeout, this, &CyclicTimer::Elapsed);
+}
+
+void CyclicTimer::Start(int interval) {
     VerifyCanBeStarted(interval);
 
     m_TimerImpl.start(interval);
@@ -12,11 +16,11 @@ void Diplomamunka::CyclicTimer::Start(int interval) {
     VerifyStarted();
 }
 
-bool Diplomamunka::CyclicTimer::IsRunning() const {
+bool CyclicTimer::IsRunning() const {
     return m_TimerImpl.isActive();
 }
 
-void Diplomamunka::CyclicTimer::Stop() {
+void CyclicTimer::Stop() {
     VerifyCanBeStopped();
 
     m_TimerImpl.stop();
@@ -27,12 +31,16 @@ TimerPtr CyclicTimer::Create() {
 }
 
 void CyclicTimer::VerifyCanBeStarted(int interval) {
+    if (m_TimerImpl.isActive()) {
+        throw InvalidOperationException(tr("Timer is already running."));
+    }
+
     if (interval < 0) {
         throw ArgumentOutOfRangeException(tr("Timers cannot have negative intervals."));
     }
 
-    if (thread() == nullptr || thread()->eventDispatcher() == nullptr) {
-        throw InvalidOperationException(tr("Timers can only be used with event dispatchers."));
+    if (thread()->eventDispatcher() == nullptr) {
+        throw InvalidOperationException(tr("Timers cannot be used without event dispatchers."));
     }
 
     if (thread() != QThread::currentThread()) {
@@ -42,16 +50,16 @@ void CyclicTimer::VerifyCanBeStarted(int interval) {
 
 void CyclicTimer::VerifyStarted() {
     if (m_TimerImpl.timerId() == InvalidTimerId) {
-        throw InvalidOperationException(tr("Failed to start timer."));
+        throw OutOfMemoryException(tr("Failed to start timer."));
     }
 }
 
 void CyclicTimer::VerifyCanBeStopped() {
-    if (thread() != QThread::currentThread()) {
-        throw InvalidOperationException(tr("Timers cannot be stopped from another thread"));
-    }
-
     if (!m_TimerImpl.isActive()) {
         throw InvalidOperationException(tr("Timer is not running."));
+    }
+
+    if (thread() != QThread::currentThread()) {
+        throw InvalidOperationException(tr("Timers cannot be stopped from another thread"));
     }
 }

@@ -8,7 +8,7 @@ SerialPort::SerialPort(QObject* parent) : IOPort(parent) {
     connect(&m_PortImpl, &QSerialPort::readyRead, this, &SerialPort::DataReceived);
 }
 
-QStringList Diplomamunka::SerialPort::GetPortNames() const {
+QStringList SerialPort::GetPortNames() const {
     QStringList portNames;
 
     for (const auto& port : QSerialPortInfo::availablePorts()) {
@@ -18,24 +18,24 @@ QStringList Diplomamunka::SerialPort::GetPortNames() const {
     return portNames;
 }
 
-void Diplomamunka::SerialPort::Open(const QString& portName) {
+void SerialPort::Open(const QString& portName) {
     m_PortImpl.setPortName(portName);
     m_PortImpl.open(QSerialPort::ReadWrite);
 
     VerifyNoErrors();
 }
 
-bool Diplomamunka::SerialPort::IsOpen() const {
+bool SerialPort::IsOpen() const {
     return m_PortImpl.isOpen();
 }
 
-void Diplomamunka::SerialPort::Close() {
+void SerialPort::Close() {
     m_PortImpl.close();
 
     VerifyNoErrors();
 }
 
-QByteArray Diplomamunka::SerialPort::Read() {
+QByteArray SerialPort::Read() {
     const auto receivedData = m_PortImpl.readAll();
 
     VerifyNoErrors();
@@ -43,7 +43,7 @@ QByteArray Diplomamunka::SerialPort::Read() {
     return receivedData;
 }
 
-void Diplomamunka::SerialPort::Write(const QByteArray& data) {
+void SerialPort::Write(const QByteArray& data) {
     m_PortImpl.write(data);
 
     VerifyNoErrors();

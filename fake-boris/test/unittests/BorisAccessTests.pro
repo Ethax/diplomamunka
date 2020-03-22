@@ -1,10 +1,10 @@
-QT += testlib
-QT -= gui
+VERSION = 0.0.1
 
 TEMPLATE = app
-
 CONFIG += c++17 console warn_on testcase
 CONFIG -= app_bundle debug_and_release
+QT += testlib serialport concurrent
+QT -= gui
 
 INCLUDEPATH += \
     ../../include \
@@ -17,6 +17,7 @@ HEADERS += \
 SOURCES += \
     ../framework/src/gmock/src/gmock_main.cc \
     BorisControllerTests.cpp \
+    CyclicTimerTests.cpp \
     PropertyHelperTests.cpp
 
 LIBS += \

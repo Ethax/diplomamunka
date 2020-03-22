@@ -42,6 +42,11 @@ public:
     explicit IOException(const QString& message);
 };
 
+class OutOfMemoryException : public Exception {
+public:
+    explicit OutOfMemoryException(const QString& message);
+};
+
 class TimeoutException : public Exception {
 public:
     explicit TimeoutException(const QString& message);
