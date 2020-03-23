@@ -39,8 +39,10 @@ QStringList BorisController::GetPortNames() const {
 }
 
 BorisController::~BorisController() {
-    if (IsActive()) {
-        Stop();
+    try {
+        StopIfActive();
+    }
+    catch (...) {
     }
 }
 
@@ -60,10 +62,16 @@ void BorisController::WriteOutput() {
     const quint16 output = GetOutput();
 
     QByteArray outputData;
-    outputData.append(WriteCommand);
-    outputData.append(static_cast<char>((output >> 8) & 0xff));
-    outputData.append(static_cast<char>(output & 0xff));
-    outputData.append(ReadCommand);
+    outputData += WriteCommand;
+    outputData += static_cast<char>((output >> 8) & 0xff);
+    outputData += static_cast<char>(output & 0xff);
+    outputData += ReadCommand;
 
     m_IOPort->Write(outputData);
+}
+
+void BorisController::StopIfActive() {
+    if (IsActive()) {
+        Stop();
+    }
 }

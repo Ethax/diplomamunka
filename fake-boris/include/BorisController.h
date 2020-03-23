@@ -3,7 +3,6 @@
 
 #include <IOPort.hpp>
 #include <PropertyHelper.hpp>
-#include <QObject>
 #include <Timer.hpp>
 
 namespace Diplomamunka {
@@ -34,6 +33,8 @@ private slots:
     void WriteOutput();
 
 private:
+    void StopIfActive();
+
     IOPortPtr m_IOPort;
     TimerPtr m_Timer;
     bool m_IsActive = false;

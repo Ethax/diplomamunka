@@ -60,6 +60,6 @@ void CyclicTimer::VerifyCanBeStopped() {
     }
 
     if (thread() != QThread::currentThread()) {
-        throw InvalidOperationException(tr("Timers cannot be stopped from another thread"));
+        throw InvalidOperationException(tr("Timers cannot be stopped from another thread."));
     }
 }
