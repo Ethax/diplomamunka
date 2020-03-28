@@ -7,6 +7,7 @@ QT += core serialport
 INCLUDEPATH += ../include
 
 HEADERS += \
+    ../include/BasicPort.h \
     ../include/BorisController.h \
     ../include/CyclicTimer.h \
     ../include/IOPort.hpp \
@@ -17,6 +18,7 @@ HEADERS += \
     ../include/Verify.hpp
 
 SOURCES += \
+    BasicPort.cpp \
     BorisController.cpp \
     CyclicTimer.cpp \
     Exception.cpp \
