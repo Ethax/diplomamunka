@@ -11,14 +11,14 @@ INCLUDEPATH += \
     ../framework/include
 
 HEADERS += \
-    BasicPortTests.h \
     BorisControllerTests.h \
+    DeveloperPortTests.h \
     PropertyHelperTests.h
 
 SOURCES += \
-    BasicPortTests.cpp \
     BorisControllerTests.cpp \
     CyclicTimerTests.cpp \
+    DeveloperPortTests.cpp \
     PropertyHelperTests.cpp \
     TestRunner.cpp
 

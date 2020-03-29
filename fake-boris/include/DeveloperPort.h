@@ -1,11 +1,11 @@
-#ifndef BASICPORT_H
-#define BASICPORT_H
+#ifndef DEVELOPERPORT_H
+#define DEVELOPERPORT_H
 
 #include <IOPort.hpp>
 
 namespace Diplomamunka {
 
-class BasicPort : public IOPort {
+class DeveloperPort : public IOPort {
     Q_OBJECT
 
     virtual void OpenPort(const QString& portName) = 0;
@@ -13,7 +13,7 @@ class BasicPort : public IOPort {
     virtual void WriteData(const QByteArray& data) = 0;
 
 public:
-    explicit BasicPort(QObject* parent = nullptr);
+    explicit DeveloperPort(QObject* parent = nullptr);
 
     void Open(const QString& portName) final;
     bool IsOpen() const final;
@@ -21,14 +21,10 @@ public:
     QByteArray Read() final;
     void Write(const QByteArray& data) final;
 
-    virtual ~BasicPort() override;
-
 private:
-    void CloseIfOpen();
-
     bool m_IsOpen = false;
 };
 
 } // namespace Diplomamunka
 
-#endif // BASICPORT_H
+#endif // DEVELOPERPORT_H

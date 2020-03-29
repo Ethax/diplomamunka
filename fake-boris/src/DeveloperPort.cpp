@@ -1,12 +1,12 @@
-#include <BasicPort.h>
+#include <DeveloperPort.h>
 #include <Exception.h>
 
 using namespace Diplomamunka;
 
-BasicPort::BasicPort(QObject* parent) : IOPort(parent) {
+DeveloperPort::DeveloperPort(QObject* parent) : IOPort(parent) {
 }
 
-void BasicPort::Open(const QString& portName) {
+void DeveloperPort::Open(const QString& portName) {
     if (IsOpen()) {
         throw InvalidOperationException(tr("Port is already open."));
     }
@@ -19,11 +19,11 @@ void BasicPort::Open(const QString& portName) {
     m_IsOpen = true;
 }
 
-bool BasicPort::IsOpen() const {
+bool DeveloperPort::IsOpen() const {
     return m_IsOpen;
 }
 
-void BasicPort::Close() {
+void DeveloperPort::Close() {
     if (!IsOpen()) {
         throw InvalidOperationException(tr("Port is not open."));
     }
@@ -31,7 +31,7 @@ void BasicPort::Close() {
     m_IsOpen = false;
 }
 
-QByteArray BasicPort::Read() {
+QByteArray DeveloperPort::Read() {
     if (!IsOpen()) {
         throw IOException(tr("Error reading from port."));
     }
@@ -39,24 +39,10 @@ QByteArray BasicPort::Read() {
     return ReadData();
 }
 
-void BasicPort::Write(const QByteArray& data) {
+void DeveloperPort::Write(const QByteArray& data) {
     if (!IsOpen()) {
         throw IOException(tr("Error writing to port."));
     }
 
     WriteData(data);
-}
-
-BasicPort::~BasicPort() {
-    try {
-        CloseIfOpen();
-    }
-    catch (...) {
-    }
-}
-
-void BasicPort::CloseIfOpen() {
-    if (IsOpen()) {
-        Close();
-    }
 }

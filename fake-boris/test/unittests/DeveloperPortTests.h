@@ -1,12 +1,12 @@
-#ifndef BASICPORTTESTS_H
-#define BASICPORTTESTS_H
+#ifndef DEVELOPERPORTTESTS_H
+#define DEVELOPERPORTTESTS_H
 
-#include <BasicPort.h>
+#include <DeveloperPort.h>
 #include <gmock/gmock.h>
 
 namespace Diplomamunka::UnitTest {
 
-class TestableBasicPort : public BasicPort {
+class TestableDeveloperPort : public DeveloperPort {
     Q_OBJECT
 
 public:
@@ -16,11 +16,11 @@ public:
     MOCK_METHOD(void, WriteData, (const QByteArray&), (override));
 };
 
-class BasicPortTests : public testing::Test {
+class DeveloperPortTests : public testing::Test {
 protected:
-    BasicPortTests();
+    DeveloperPortTests();
 
-    testing::NiceMock<TestableBasicPort> m_BasicPort;
+    testing::NiceMock<TestableDeveloperPort> m_DeveloperPort;
 
     const QStringList m_FakePorts {"COM1", "COM2"};
     const QString m_InvalidPort {"COM3"};
@@ -29,4 +29,4 @@ protected:
 
 } // namespace Diplomamunka::UnitTest
 
-#endif // BASICPORTTESTS_H
+#endif // DEVELOPERPORTTESTS_H
