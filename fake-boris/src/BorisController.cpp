@@ -1,7 +1,7 @@
 #include <BorisController.h>
 #include <CyclicTimer.h>
+#include <Exception.h>
 #include <SerialPort.h>
-#include <Verify.hpp>
 
 using namespace Diplomamunka;
 
@@ -11,8 +11,13 @@ BorisController::BorisController(QObject* parent)
 
 BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent)
     : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {
-    VERIFY_NOT_NULLPTR(ioPort);
-    VERIFY_NOT_NULLPTR(timer);
+    if (ioPort == nullptr) {
+        throw ArgumentNullException(tr("Argument 'ioPort' cannot be nullptr."));
+    }
+
+    if (timer == nullptr) {
+        throw ArgumentNullException(tr("Argument 'timer' cannot be nullptr."));
+    }
 
     connect(m_Timer.get(), &Timer::Elapsed, this, &BorisController::WriteOutput);
     connect(m_IOPort.get(), &IOPort::DataReceived, this, &BorisController::ReadInput);

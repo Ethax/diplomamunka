@@ -16,7 +16,7 @@ HEADERS += \
     ../include/SerialPort.h \
     ../include/Timer.hpp \
     ../include/Exception.h \
-    ../include/Verify.hpp
+    ../include/VirtualPort.h
 
 SOURCES += \
     BorisController.cpp \
@@ -24,4 +24,5 @@ SOURCES += \
     DeveloperPort.cpp \
     EchoPort.cpp \
     Exception.cpp \
-    SerialPort.cpp
+    SerialPort.cpp \
+    VirtualPort.cpp
