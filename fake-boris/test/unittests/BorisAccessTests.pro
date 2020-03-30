@@ -19,6 +19,7 @@ SOURCES += \
     BorisControllerTests.cpp \
     CyclicTimerTests.cpp \
     DeveloperPortTests.cpp \
+    EchoPortTests.cpp \
     PropertyHelperTests.cpp \
     TestRunner.cpp
 

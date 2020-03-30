@@ -6,7 +6,7 @@
 
 namespace Diplomamunka {
 
-class SerialPort : public IOPort {
+class SerialPort final : public IOPort {
     Q_OBJECT
     Q_DISABLE_COPY(SerialPort)
 

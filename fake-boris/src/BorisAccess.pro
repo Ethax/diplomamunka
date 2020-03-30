@@ -10,6 +10,7 @@ HEADERS += \
     ../include/BorisController.h \
     ../include/CyclicTimer.h \
     ../include/DeveloperPort.h \
+    ../include/EchoPort.h \
     ../include/IOPort.hpp \
     ../include/PropertyHelper.hpp \
     ../include/SerialPort.h \
@@ -21,5 +22,6 @@ SOURCES += \
     BorisController.cpp \
     CyclicTimer.cpp \
     DeveloperPort.cpp \
+    EchoPort.cpp \
     Exception.cpp \
     SerialPort.cpp

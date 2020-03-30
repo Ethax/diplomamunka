@@ -6,7 +6,7 @@
 
 namespace Diplomamunka {
 
-class CyclicTimer : public Timer {
+class CyclicTimer final : public Timer {
     Q_OBJECT
     Q_DISABLE_COPY(CyclicTimer)
 
