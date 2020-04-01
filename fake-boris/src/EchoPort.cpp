@@ -1,5 +1,4 @@
 #include <EchoPort.h>
-#include <algorithm>
 
 using namespace Diplomamunka;
 
@@ -19,13 +18,13 @@ void Diplomamunka::EchoPort::OpenPort(const QString& portName) {
 }
 
 QByteArray Diplomamunka::EchoPort::ReadData() {
-    QByteArray data;
+    const quint16 data = m_InverseMode ? ~m_Data : m_Data;
 
-    for (auto dataByte : m_Data) {
-        data.append(m_InverseMode ? ~dataByte : dataByte);
-    }
+    QByteArray output;
+    output += static_cast<char>((data >> 8) & 0xff);
+    output += static_cast<char>(data & 0xff);
 
-    return data;
+    return output;
 }
 
 void Diplomamunka::EchoPort::WriteData(const QByteArray& data) {
@@ -34,9 +33,11 @@ void Diplomamunka::EchoPort::WriteData(const QByteArray& data) {
 }
 
 void EchoPort::StoreData(const QByteArray& data) {
-    const auto payload = data.mid(1, sizeof(m_Data));
+    const QByteArray payload = data.mid(1, 2);
 
-    if (payload.size() == sizeof(m_Data)) {
-        std::copy(payload.begin(), payload.end(), std::begin(m_Data));
+    if (payload.size() == 2) {
+        m_Data = 0;
+        m_Data |= static_cast<unsigned char>(payload[0]) << 8;
+        m_Data |= static_cast<unsigned char>(payload[1]);
     }
 }

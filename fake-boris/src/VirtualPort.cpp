@@ -18,7 +18,6 @@ void VirtualPort::OpenPort(const QString&) {
 
 QByteArray VirtualPort::ReadData() {
     QByteArray data;
-
     data += static_cast<char>((GetData() >> 8) & 0xff);
     data += static_cast<char>(GetData() & 0xff);
 

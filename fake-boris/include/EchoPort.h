@@ -23,8 +23,8 @@ private:
 
     void StoreData(const QByteArray& data);
 
-    bool m_InverseMode {};
-    char m_Data[2] {};
+    bool m_InverseMode = false;
+    quint16 m_Data = 0;
 
     static constexpr const char* NormalEcho = "ECHO (NORMAL)";
     static constexpr const char* InverseEcho = "ECHO (INVERSE)";
