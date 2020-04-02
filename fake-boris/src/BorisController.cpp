@@ -39,7 +39,7 @@ void BorisController::Stop() {
     m_IsActive = false;
 }
 
-QStringList BorisController::GetPortNames() const {
+QStringList BorisController::getPortNames() const {
     return m_IOPort->GetPortNames();
 }
 

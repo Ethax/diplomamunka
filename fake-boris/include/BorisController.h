@@ -24,7 +24,7 @@ public:
     Q_INVOKABLE bool IsActive() const;
     Q_INVOKABLE void Stop();
 
-    Q_INVOKABLE QStringList GetPortNames() const;
+    Q_INVOKABLE QStringList getPortNames() const;
 
     virtual ~BorisController() override;
 

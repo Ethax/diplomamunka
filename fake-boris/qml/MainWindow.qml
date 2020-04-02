@@ -263,9 +263,9 @@ Window {
 
             ComboBox {
                 id: availablePorts
+                enabled: !mainSwitch.checked
                 Layout.fillWidth: true
-                flat: false
-                editable: false
+                Component.onCompleted: model = boris.getPortNames()
             }
 
             Switch {
