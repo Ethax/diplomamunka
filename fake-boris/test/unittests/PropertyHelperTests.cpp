@@ -6,102 +6,114 @@ using namespace testing;
 namespace Diplomamunka::UnitTest {
 
 TEST_F(AutomaticPropertyTests, IsReadable_Called_ReturnsTrue) {
-    ASSERT_THAT(m_AutomaticPropertyMeta.isReadable(), IsTrue());
+    const auto automaticProperty = metaProperty("automaticProperty");
+
+    ASSERT_THAT(automaticProperty.isReadable(), IsTrue());
 }
 
 TEST_F(ReadonlyPropertyTests, IsReadable_Called_ReturnsTrue) {
-    ASSERT_THAT(m_ReadonlyPropertyMeta.isReadable(), IsTrue());
+    const auto readonlyProperty = metaProperty("readonlyProperty");
+
+    ASSERT_THAT(readonlyProperty.isReadable(), IsTrue());
 }
 
 TEST_F(AutomaticPropertyTests, IsWritable_Called_ReturnsTrue) {
-    ASSERT_THAT(m_AutomaticPropertyMeta.isWritable(), IsTrue());
+    const auto automaticProperty = metaProperty("automaticProperty");
+
+    ASSERT_THAT(automaticProperty.isWritable(), IsTrue());
 }
 
 TEST_F(ReadonlyPropertyTests, IsWritable_Called_ReturnsFalse) {
-    ASSERT_THAT(m_ReadonlyPropertyMeta.isWritable(), IsFalse());
+    const auto readonlyProperty = metaProperty("readonlyProperty");
+
+    ASSERT_THAT(readonlyProperty.isWritable(), IsFalse());
 }
 
 TEST_F(AutomaticPropertyTests, HasNotifySignal_Called_ReturnsTrue) {
-    ASSERT_THAT(m_AutomaticPropertyMeta.hasNotifySignal(), IsTrue());
+    const auto automaticProperty = metaProperty("automaticProperty");
+
+    ASSERT_THAT(automaticProperty.hasNotifySignal(), IsTrue());
 }
 
 TEST_F(ReadonlyPropertyTests, HasNotifySignal_Called_ReturnsTrue) {
-    ASSERT_THAT(m_ReadonlyPropertyMeta.hasNotifySignal(), IsTrue());
+    const auto readonlyProperty = metaProperty("readonlyProperty");
+
+    ASSERT_THAT(readonlyProperty.hasNotifySignal(), IsTrue());
 }
 
 TEST_F(AutomaticPropertyTests, SetProperty_Called_ChangesItsUnderlyingMember) {
-    const bool propertyChanged = setProperty("AutomaticProperty", ExpectedValue);
+    const bool propertyChanged = setProperty("automaticProperty", TestValue);
 
     ASSERT_THAT(propertyChanged, IsTrue());
-    ASSERT_THAT(m_AutomaticProperty, Eq(ExpectedValue));
+    ASSERT_THAT(m_automaticProperty, Eq(TestValue));
 }
 
 TEST_F(ReadonlyPropertyTests, SetProperty_Called_ChangesNothing) {
-    const bool propertyChanged = setProperty("ReadonlyProperty", ExpectedValue);
+    const bool propertyChanged = setProperty("readonlyProperty", TestValue);
 
     ASSERT_THAT(propertyChanged, IsFalse());
-    ASSERT_THAT(m_ReadonlyProperty, Eq(0));
+    ASSERT_THAT(m_readonlyProperty, Eq(0));
 }
 
-TEST_F(AutomaticPropertyTests, SetAutomaticProperty_Called_ChangesItsUnderlyingMember) {
-    SetAutomaticProperty(ExpectedValue);
+TEST_F(AutomaticPropertyTests, AutomaticProperty_Called_ChangesItsUnderlyingMember) {
+    automaticProperty(TestValue);
 
-    ASSERT_THAT(m_AutomaticProperty, Eq(ExpectedValue));
+    ASSERT_THAT(m_automaticProperty, Eq(TestValue));
 }
 
-TEST_F(ReadonlyPropertyTests, SetReadonlyProperty_Called_ChangesItsUnderlyingMember) {
-    SetReadonlyProperty(ExpectedValue);
+TEST_F(ReadonlyPropertyTests, ReadonlyProperty_Called_ChangesItsUnderlyingMember) {
+    readonlyProperty(TestValue);
 
-    ASSERT_THAT(m_ReadonlyProperty, Eq(ExpectedValue));
+    ASSERT_THAT(m_readonlyProperty, Eq(TestValue));
 }
 
 TEST_F(AutomaticPropertyTests, Property_Called_ReturnsItsUnderlyingMember) {
-    m_AutomaticProperty = ExpectedValue;
+    m_automaticProperty = TestValue;
 
-    ASSERT_THAT(property("AutomaticProperty").toInt(), Eq(ExpectedValue));
+    ASSERT_THAT(property("automaticProperty").toInt(), Eq(TestValue));
 }
 
 TEST_F(ReadonlyPropertyTests, Property_Called_ReturnsItsUnderlyingMember) {
-    m_ReadonlyProperty = ExpectedValue;
+    m_readonlyProperty = TestValue;
 
-    ASSERT_THAT(property("ReadonlyProperty").toInt(), Eq(ExpectedValue));
+    ASSERT_THAT(property("readonlyProperty").toInt(), Eq(TestValue));
 }
 
-TEST_F(AutomaticPropertyTests, GetAutomaticProperty_Called_ReturnsItsUnderlyingMember) {
-    m_AutomaticProperty = ExpectedValue;
+TEST_F(AutomaticPropertyTests, AutomaticProperty_Called_ReturnsItsUnderlyingMember) {
+    m_automaticProperty = TestValue;
 
-    ASSERT_THAT(GetAutomaticProperty(), Eq(ExpectedValue));
+    ASSERT_THAT(automaticProperty(), Eq(TestValue));
 }
 
-TEST_F(ReadonlyPropertyTests, GetReadonlyProperty_Called_ReturnsItsUnderlyingMember) {
-    m_ReadonlyProperty = ExpectedValue;
+TEST_F(ReadonlyPropertyTests, ReadonlyProperty_Called_ReturnsItsUnderlyingMember) {
+    m_readonlyProperty = TestValue;
 
-    ASSERT_THAT(GetReadonlyProperty(), Eq(ExpectedValue));
+    ASSERT_THAT(readonlyProperty(), Eq(TestValue));
 }
 
-TEST_F(AutomaticPropertyTests, SetAutomaticProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(AutomaticPropertyChanged()));
+TEST_F(AutomaticPropertyTests, AutomaticProperty_CalledTwiceWithSameValue_NotifiesOnce) {
+    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged()));
 
-    SetAutomaticProperty(ExpectedValue);
-    SetAutomaticProperty(ExpectedValue);
+    automaticProperty(TestValue);
+    automaticProperty(TestValue);
 
     ASSERT_THAT(notification.count(), Eq(1));
 }
 
-TEST_F(ReadonlyPropertyTests, SetReadonlyProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(ReadonlyPropertyChanged()));
+TEST_F(ReadonlyPropertyTests, ReadonlyProperty_CalledTwiceWithSameValue_NotifiesOnce) {
+    QSignalSpy notification(this, SIGNAL(readonlyPropertyChanged()));
 
-    SetReadonlyProperty(ExpectedValue);
-    SetReadonlyProperty(ExpectedValue);
+    readonlyProperty(TestValue);
+    readonlyProperty(TestValue);
 
     ASSERT_THAT(notification.count(), Eq(1));
 }
 
 TEST_F(AutomaticPropertyTests, SetProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(AutomaticPropertyChanged()));
+    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged()));
 
-    setProperty("AutomaticProperty", ExpectedValue);
-    setProperty("AutomaticProperty", ExpectedValue);
+    setProperty("automaticProperty", TestValue);
+    setProperty("automaticProperty", TestValue);
 
     ASSERT_THAT(notification.count(), Eq(1));
 }

@@ -12,17 +12,18 @@ class IOPort : public QObject {
     Q_OBJECT
 
 public:
-    explicit IOPort(QObject *parent = nullptr) : QObject(parent) {}
+    explicit IOPort(QObject* parent = nullptr) : QObject(parent) {
+    }
 
-    virtual QStringList GetPortNames() const = 0;
-    virtual void Open(const QString &portName) = 0;
-    virtual bool IsOpen() const = 0;
-    virtual void Close() = 0;
-    virtual QByteArray Read() = 0;
-    virtual void Write(const QByteArray &data) = 0;
+    virtual QStringList getPortNames() const = 0;
+    virtual void open(const QString& portName) = 0;
+    virtual bool isOpen() const = 0;
+    virtual void close() = 0;
+    virtual QByteArray read() = 0;
+    virtual void write(const QByteArray& data) = 0;
 
 signals:
-    void DataReceived();
+    void dataReceived();
 };
 
 using IOPortPtr = std::shared_ptr<IOPort>;

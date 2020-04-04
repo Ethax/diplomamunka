@@ -6,43 +6,43 @@ using namespace Diplomamunka;
 DeveloperPort::DeveloperPort(QObject* parent) : IOPort(parent) {
 }
 
-void DeveloperPort::Open(const QString& portName) {
-    if (IsOpen()) {
+void DeveloperPort::open(const QString& portName) {
+    if (isOpen()) {
         throw InvalidOperationException(tr("Port is already open."));
     }
 
-    if (!GetPortNames().contains(portName)) {
+    if (!getPortNames().contains(portName)) {
         throw ArgumentException(tr("Invalid port name was specified."));
     }
 
-    OpenPort(portName);
-    m_IsOpen = true;
+    openPort(portName);
+    m_isOpen = true;
 }
 
-bool DeveloperPort::IsOpen() const {
-    return m_IsOpen;
+bool DeveloperPort::isOpen() const {
+    return m_isOpen;
 }
 
-void DeveloperPort::Close() {
-    if (!IsOpen()) {
+void DeveloperPort::close() {
+    if (!isOpen()) {
         throw InvalidOperationException(tr("Port is not open."));
     }
 
-    m_IsOpen = false;
+    m_isOpen = false;
 }
 
-QByteArray DeveloperPort::Read() {
-    if (!IsOpen()) {
+QByteArray DeveloperPort::read() {
+    if (!isOpen()) {
         throw IOException(tr("Error reading from port."));
     }
 
-    return ReadData();
+    return readData();
 }
 
-void DeveloperPort::Write(const QByteArray& data) {
-    if (!IsOpen()) {
+void DeveloperPort::write(const QByteArray& data) {
+    if (!isOpen()) {
         throw IOException(tr("Error writing to port."));
     }
 
-    WriteData(data);
+    writeData(data);
 }

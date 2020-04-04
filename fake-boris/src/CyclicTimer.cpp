@@ -5,33 +5,33 @@
 using namespace Diplomamunka;
 
 CyclicTimer::CyclicTimer(QObject* parent) : Timer(parent) {
-    connect(&m_TimerImpl, &QTimer::timeout, this, &CyclicTimer::Elapsed);
+    connect(&m_timerImpl, &QTimer::timeout, this, &CyclicTimer::elapsed);
 }
 
-void CyclicTimer::Start(int interval) {
-    VerifyCanBeStarted(interval);
+void CyclicTimer::start(int interval) {
+    verifyCanBeStarted(interval);
 
-    m_TimerImpl.start(interval);
+    m_timerImpl.start(interval);
 
-    VerifyStarted();
+    verifyStarted();
 }
 
-bool CyclicTimer::IsRunning() const {
-    return m_TimerImpl.isActive();
+bool CyclicTimer::isRunning() const {
+    return m_timerImpl.isActive();
 }
 
-void CyclicTimer::Stop() {
-    VerifyCanBeStopped();
+void CyclicTimer::stop() {
+    verifyCanBeStopped();
 
-    m_TimerImpl.stop();
+    m_timerImpl.stop();
 }
 
-TimerPtr CyclicTimer::Create() {
+TimerPtr CyclicTimer::create() {
     return std::make_shared<CyclicTimer>();
 }
 
-void CyclicTimer::VerifyCanBeStarted(int interval) {
-    if (m_TimerImpl.isActive()) {
+void CyclicTimer::verifyCanBeStarted(int interval) {
+    if (m_timerImpl.isActive()) {
         throw InvalidOperationException(tr("Timer is already running."));
     }
 
@@ -48,14 +48,14 @@ void CyclicTimer::VerifyCanBeStarted(int interval) {
     }
 }
 
-void CyclicTimer::VerifyStarted() {
-    if (m_TimerImpl.timerId() == InvalidTimerId) {
+void CyclicTimer::verifyStarted() {
+    if (m_timerImpl.timerId() == InvalidTimerId) {
         throw OutOfMemoryException(tr("Failed to start timer."));
     }
 }
 
-void CyclicTimer::VerifyCanBeStopped() {
-    if (!m_TimerImpl.isActive()) {
+void CyclicTimer::verifyCanBeStopped() {
+    if (!m_timerImpl.isActive()) {
         throw InvalidOperationException(tr("Timer is not running."));
     }
 

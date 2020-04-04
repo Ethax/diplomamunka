@@ -10,19 +10,19 @@ class VirtualPort final : public DeveloperPort {
     Q_OBJECT
     Q_DISABLE_COPY(VirtualPort)
 
-    AUTOMATIC_PROPERTY(quint16, Data) = 0;
+    AUTOMATIC_PROPERTY(quint16, data) = 0;
 
 public:
     explicit VirtualPort(QObject* parent = nullptr);
 
-    QStringList GetPortNames() const override;
+    QStringList getPortNames() const override;
 
-    static IOPortPtr Create();
+    static IOPortPtr create();
 
 private:
-    void OpenPort(const QString&) override;
-    QByteArray ReadData() override;
-    void WriteData(const QByteArray&) override;
+    void openPort(const QString&) override;
+    QByteArray readData() override;
+    void writeData(const QByteArray&) override;
 
     static constexpr const char* Port = "VIRTUAL";
 };

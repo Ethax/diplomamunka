@@ -6,11 +6,11 @@
 using namespace Diplomamunka;
 
 BorisController::BorisController(QObject* parent)
-    : BorisController(SerialPort::Create(), CyclicTimer::Create(), parent) {
+    : BorisController(SerialPort::create(), CyclicTimer::create(), parent) {
 }
 
 BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent)
-    : QObject(parent), m_IOPort(ioPort), m_Timer(timer) {
+    : QObject(parent), m_ioPort(ioPort), m_timer(timer) {
     if (ioPort == nullptr) {
         throw ArgumentNullException(tr("Argument 'ioPort' cannot be nullptr."));
     }
@@ -19,64 +19,64 @@ BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* pare
         throw ArgumentNullException(tr("Argument 'timer' cannot be nullptr."));
     }
 
-    connect(m_Timer.get(), &Timer::Elapsed, this, &BorisController::WriteOutput);
-    connect(m_IOPort.get(), &IOPort::DataReceived, this, &BorisController::ReadInput);
+    connect(m_timer.get(), &Timer::elapsed, this, &BorisController::writeOutput);
+    connect(m_ioPort.get(), &IOPort::dataReceived, this, &BorisController::readInput);
 }
 
-void BorisController::Start() {
-    m_IOPort->Open(GetPortName());
-    m_Timer->Start(GetInterval());
-    m_IsActive = true;
+void BorisController::start() {
+    m_ioPort->open(portName());
+    m_timer->start(interval());
+    m_isActive = true;
 }
 
-bool BorisController::IsActive() const {
-    return m_IsActive;
+bool BorisController::isActive() const {
+    return m_isActive;
 }
 
-void BorisController::Stop() {
-    m_Timer->Stop();
-    m_IOPort->Close();
-    m_IsActive = false;
+void BorisController::stop() {
+    m_timer->stop();
+    m_ioPort->close();
+    m_isActive = false;
 }
 
 QStringList BorisController::getPortNames() const {
-    return m_IOPort->GetPortNames();
+    return m_ioPort->getPortNames();
 }
 
 BorisController::~BorisController() {
     try {
-        StopIfActive();
+        stopIfActive();
     }
     catch (...) {
     }
 }
 
-void BorisController::ReadInput() {
-    const QByteArray inputData = m_IOPort->Read();
+void BorisController::readInput() {
+    const QByteArray readBytes = m_ioPort->read();
 
-    if (inputData.length() == 2) {
-        quint16 input = 0;
-        input |= static_cast<unsigned char>(inputData[0]) << 8;
-        input |= static_cast<unsigned char>(inputData[1]);
+    if (readBytes.length() == 2) {
+        quint16 newInput = 0;
+        newInput |= static_cast<unsigned char>(readBytes[0]) << 8;
+        newInput |= static_cast<unsigned char>(readBytes[1]);
 
-        SetInput(input);
+        input(newInput);
     }
 }
 
-void BorisController::WriteOutput() {
-    const quint16 output = GetOutput();
+void BorisController::writeOutput() {
+    const quint16 newOutput = output();
 
-    QByteArray outputData;
-    outputData += WriteCommand;
-    outputData += static_cast<char>((output >> 8) & 0xff);
-    outputData += static_cast<char>(output & 0xff);
-    outputData += ReadCommand;
+    QByteArray bytesToWrite;
+    bytesToWrite += WriteCommand;
+    bytesToWrite += static_cast<char>((newOutput >> 8) & 0xff);
+    bytesToWrite += static_cast<char>(newOutput & 0xff);
+    bytesToWrite += ReadCommand;
 
-    m_IOPort->Write(outputData);
+    m_ioPort->write(bytesToWrite);
 }
 
-void BorisController::StopIfActive() {
-    if (IsActive()) {
-        Stop();
+void BorisController::stopIfActive() {
+    if (isActive()) {
+        stop();
     }
 }

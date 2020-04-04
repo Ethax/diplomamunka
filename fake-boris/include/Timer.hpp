@@ -13,12 +13,12 @@ public:
     explicit Timer(QObject* parent = nullptr) : QObject(parent) {
     }
 
-    virtual void Start(int interval) = 0;
-    virtual bool IsRunning() const = 0;
-    virtual void Stop() = 0;
+    virtual void start(int interval) = 0;
+    virtual bool isRunning() const = 0;
+    virtual void stop() = 0;
 
 signals:
-    void Elapsed();
+    void elapsed();
 };
 
 using TimerPtr = std::shared_ptr<Timer>;

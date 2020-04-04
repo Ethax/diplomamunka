@@ -5,10 +5,10 @@
 using namespace Diplomamunka;
 
 SerialPort::SerialPort(QObject* parent) : IOPort(parent) {
-    connect(&m_PortImpl, &QSerialPort::readyRead, this, &SerialPort::DataReceived);
+    connect(&m_portImpl, &QSerialPort::readyRead, this, &SerialPort::dataReceived);
 }
 
-QStringList SerialPort::GetPortNames() const {
+QStringList SerialPort::getPortNames() const {
     QStringList portNames;
 
     for (const auto& port : QSerialPortInfo::availablePorts()) {
@@ -18,45 +18,45 @@ QStringList SerialPort::GetPortNames() const {
     return portNames;
 }
 
-void SerialPort::Open(const QString& portName) {
-    m_PortImpl.setPortName(portName);
-    m_PortImpl.open(QSerialPort::ReadWrite);
+void SerialPort::open(const QString& portName) {
+    m_portImpl.setPortName(portName);
+    m_portImpl.open(QSerialPort::ReadWrite);
 
-    VerifyNoErrors();
+    verifyNoErrors();
 }
 
-bool SerialPort::IsOpen() const {
-    return m_PortImpl.isOpen();
+bool SerialPort::isOpen() const {
+    return m_portImpl.isOpen();
 }
 
-void SerialPort::Close() {
-    m_PortImpl.close();
+void SerialPort::close() {
+    m_portImpl.close();
 
-    VerifyNoErrors();
+    verifyNoErrors();
 }
 
-QByteArray SerialPort::Read() {
-    const auto receivedData = m_PortImpl.readAll();
+QByteArray SerialPort::read() {
+    const auto receivedData = m_portImpl.readAll();
 
-    VerifyNoErrors();
+    verifyNoErrors();
 
     return receivedData;
 }
 
-void SerialPort::Write(const QByteArray& data) {
-    m_PortImpl.write(data);
+void SerialPort::write(const QByteArray& data) {
+    m_portImpl.write(data);
 
-    VerifyNoErrors();
+    verifyNoErrors();
 }
 
-IOPortPtr SerialPort::Create() {
+IOPortPtr SerialPort::create() {
     return std::make_shared<SerialPort>();
 }
 
-void SerialPort::VerifyNoErrors() {
-    const auto errorMessage = m_PortImpl.errorString();
+void SerialPort::verifyNoErrors() {
+    const auto errorMessage = m_portImpl.errorString();
 
-    switch (m_PortImpl.error()) {
+    switch (m_portImpl.error()) {
     case QSerialPort::NoError:
         return;
 

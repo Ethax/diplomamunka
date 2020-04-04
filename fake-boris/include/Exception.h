@@ -10,11 +10,11 @@ class Exception : public std::exception {
 public:
     explicit Exception(const QString& message);
 
-    QString GetMessage() const noexcept;
+    QString getMessage() const noexcept;
     const char* what() const noexcept override;
 
 private:
-    QString m_Message;
+    QString m_message;
 };
 
 class ArgumentException : public Exception {

@@ -5,25 +5,25 @@ using namespace Diplomamunka;
 VirtualPort::VirtualPort(QObject* parent) : DeveloperPort(parent) {
 }
 
-QStringList VirtualPort::GetPortNames() const {
+QStringList VirtualPort::getPortNames() const {
     return {Port};
 }
 
-IOPortPtr VirtualPort::Create() {
+IOPortPtr VirtualPort::create() {
     return std::make_shared<VirtualPort>();
 }
 
-void VirtualPort::OpenPort(const QString&) {
+void VirtualPort::openPort(const QString&) {
 }
 
-QByteArray VirtualPort::ReadData() {
-    QByteArray data;
-    data += static_cast<char>((GetData() >> 8) & 0xff);
-    data += static_cast<char>(GetData() & 0xff);
+QByteArray VirtualPort::readData() {
+    QByteArray output;
+    output += static_cast<char>((data() >> 8) & 0xff);
+    output += static_cast<char>(data() & 0xff);
 
-    return data;
+    return output;
 }
 
-void VirtualPort::WriteData(const QByteArray&) {
-    emit DataReceived();
+void VirtualPort::writeData(const QByteArray&) {
+    emit dataReceived();
 }

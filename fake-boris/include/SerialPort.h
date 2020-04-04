@@ -13,19 +13,19 @@ class SerialPort final : public IOPort {
 public:
     explicit SerialPort(QObject* parent = nullptr);
 
-    QStringList GetPortNames() const override;
-    void Open(const QString& portName) override;
-    bool IsOpen() const override;
-    void Close() override;
-    QByteArray Read() override;
-    void Write(const QByteArray& data) override;
+    QStringList getPortNames() const override;
+    void open(const QString& portName) override;
+    bool isOpen() const override;
+    void close() override;
+    QByteArray read() override;
+    void write(const QByteArray& data) override;
 
-    static IOPortPtr Create();
+    static IOPortPtr create();
 
 private:
-    void VerifyNoErrors();
+    void verifyNoErrors();
 
-    QSerialPort m_PortImpl;
+    QSerialPort m_portImpl;
 };
 
 } // namespace Diplomamunka

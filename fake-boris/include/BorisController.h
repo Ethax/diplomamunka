@@ -11,33 +11,33 @@ class BorisController : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(BorisController)
 
-    AUTOMATIC_PROPERTY(int, Interval) = 10;
-    AUTOMATIC_PROPERTY(QString, PortName) = "";
-    READONLY_PROPERTY(quint16, Input) = 0;
-    AUTOMATIC_PROPERTY(quint16, Output) = 0;
+    AUTOMATIC_PROPERTY(int, interval) = 10;
+    AUTOMATIC_PROPERTY(QString, portName) = "";
+    READONLY_PROPERTY(quint16, input) = 0;
+    AUTOMATIC_PROPERTY(quint16, output) = 0;
 
 public:
     explicit BorisController(QObject* parent = nullptr);
     explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent = nullptr);
 
-    Q_INVOKABLE void Start();
-    Q_INVOKABLE bool IsActive() const;
-    Q_INVOKABLE void Stop();
+    Q_INVOKABLE void start();
+    Q_INVOKABLE bool isActive() const;
+    Q_INVOKABLE void stop();
 
     Q_INVOKABLE QStringList getPortNames() const;
 
     virtual ~BorisController() override;
 
 private slots:
-    void ReadInput();
-    void WriteOutput();
+    void readInput();
+    void writeOutput();
 
 private:
-    void StopIfActive();
+    void stopIfActive();
 
-    IOPortPtr m_IOPort;
-    TimerPtr m_Timer;
-    bool m_IsActive = false;
+    IOPortPtr m_ioPort;
+    TimerPtr m_timer;
+    bool m_isActive = false;
 
     static constexpr char ReadCommand = '\xb9';
     static constexpr char WriteCommand = '\xba';

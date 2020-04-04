@@ -13,18 +13,18 @@ class CyclicTimer final : public Timer {
 public:
     explicit CyclicTimer(QObject* parent = nullptr);
 
-    void Start(int interval) override;
-    bool IsRunning() const override;
-    void Stop() override;
+    void start(int interval) override;
+    bool isRunning() const override;
+    void stop() override;
 
-    static TimerPtr Create();
+    static TimerPtr create();
 
 private:
-    void VerifyCanBeStarted(int interval);
-    void VerifyStarted();
-    void VerifyCanBeStopped();
+    void verifyCanBeStarted(int interval);
+    void verifyStarted();
+    void verifyCanBeStopped();
 
-    QTimer m_TimerImpl;
+    QTimer m_timerImpl;
 
     static constexpr int InvalidTimerId = -1;
 };

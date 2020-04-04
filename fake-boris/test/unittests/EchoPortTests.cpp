@@ -8,56 +8,56 @@ namespace Diplomamunka::UnitTest {
 
 TEST(EchoPortTests, NormalEcho_DataOfCorrectSizeWasUsed_EchoesPayload) {
     EchoPort port;
-    port.Open("ECHO (NORMAL)");
+    port.open("ECHO (NORMAL)");
 
-    port.Write("\xff\xc0\xde\xff");
+    port.write("\xff\xc0\xde\xff");
 
-    ASSERT_THAT(port.Read(), Eq("\xc0\xde"));
+    ASSERT_THAT(port.read(), Eq("\xc0\xde"));
 }
 
 TEST(EchoPortTests, NormalEcho_TooShortDataWasUsed_EchoesDefaultData) {
     EchoPort port;
-    port.Open("ECHO (NORMAL)");
+    port.open("ECHO (NORMAL)");
 
-    port.Write("\xc0\xde");
+    port.write("\xc0\xde");
 
-    ASSERT_THAT(port.Read(), Eq(QByteArray(2, '\x00')));
+    ASSERT_THAT(port.read(), Eq(QByteArray(2, '\x00')));
 }
 
 TEST(EchoPortTests, NormalEcho_EmptyDataWasUsed_EchoesDefaultData) {
     EchoPort port;
-    port.Open("ECHO (NORMAL)");
+    port.open("ECHO (NORMAL)");
 
-    port.Write("");
+    port.write("");
 
-    ASSERT_THAT(port.Read(), Eq(QByteArray(2, '\x00')));
+    ASSERT_THAT(port.read(), Eq(QByteArray(2, '\x00')));
 }
 
 TEST(EchoPortTests, InverseEcho_DataOfCorrectSizeWasUsed_EchoesInversePayload) {
     EchoPort port;
-    port.Open("ECHO (INVERSE)");
+    port.open("ECHO (INVERSE)");
 
-    port.Write("\xff\xc0\xde\xff");
+    port.write("\xff\xc0\xde\xff");
 
-    ASSERT_THAT(port.Read(), Eq("\x3f\x21"));
+    ASSERT_THAT(port.read(), Eq("\x3f\x21"));
 }
 
 TEST(EchoPortTests, InverseEcho_TooShortDataWasUsed_EchoesDefaultData) {
     EchoPort port;
-    port.Open("ECHO (INVERSE)");
+    port.open("ECHO (INVERSE)");
 
-    port.Write("\xc0\xde");
+    port.write("\xc0\xde");
 
-    ASSERT_THAT(port.Read(), Eq(QByteArray(2, '\xff')));
+    ASSERT_THAT(port.read(), Eq(QByteArray(2, '\xff')));
 }
 
 TEST(EchoPortTests, InverseEcho_EmptyDataWasUsed_EchoesDefaultData) {
     EchoPort port;
-    port.Open("ECHO (INVERSE)");
+    port.open("ECHO (INVERSE)");
 
-    port.Write("");
+    port.write("");
 
-    ASSERT_THAT(port.Read(), Eq(QByteArray(2, '\xff')));
+    ASSERT_THAT(port.read(), Eq(QByteArray(2, '\xff')));
 }
 
 } // namespace Diplomamunka::UnitTest

@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    BorisController boris(EchoPort::Create(), CyclicTimer::Create());
+    BorisController boris(EchoPort::create(), CyclicTimer::create());
 
     engine.rootContext()->setContextProperty("boris", &boris);
 
