@@ -3,6 +3,7 @@
 #include <EchoPort.h>
 
 #include <QGuiApplication>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -18,7 +19,7 @@ int main(int argc, char* argv[]) {
 
     engine.rootContext()->setContextProperty("boris", &boris);
 
-    const QUrl url(QStringLiteral("qrc:/MainWindow.qml"));
+    const QUrl url("qrc:/MainWindow.qml");
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
         [url](QObject* obj, const QUrl& objUrl) {

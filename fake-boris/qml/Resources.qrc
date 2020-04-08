@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>MainWindow.qml</file>
+        <file>CheckButton.qml</file>
+        <file>FramedLabel.qml</file>
+        <file>EmptyLabel.qml</file>
     </qresource>
 </RCC>
