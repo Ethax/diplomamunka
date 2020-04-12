@@ -20,9 +20,11 @@ public:
     explicit BorisController(QObject* parent = nullptr);
     explicit BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* parent = nullptr);
 
-    Q_INVOKABLE void start();
+    Q_INVOKABLE bool start();
     Q_INVOKABLE bool isActive() const;
     Q_INVOKABLE void stop();
+
+    Q_SIGNAL void errorOccurred(QString message);
 
     Q_INVOKABLE QStringList getPortNames() const;
 

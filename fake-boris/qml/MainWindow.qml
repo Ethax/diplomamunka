@@ -70,11 +70,15 @@ Window {
                             text: "I" + labelIndex
                         }
 
-                        EmptyLabel {
+                        Rectangle {
+                            color: "#999999"
+                            height: 20
                             Layout.fillWidth: true
                         }
 
-                        EmptyLabel {
+                        Rectangle {
+                            color: "#999999"
+                            height: 20
                             Layout.fillWidth: true
                         }
 
@@ -104,42 +108,23 @@ Window {
             }
         }
 
-        RowLayout {
-            Layout.fillWidth: true
+        PortControllerRow {
+            id: portController
 
-            ComboBox {
-                id: portList
-                Layout.fillWidth: true
-                enabled: !mainSwitch.checked
-
-                Component.onCompleted: {
-                    model = boris.getPortNames();
-                }
-
-                onPressedChanged: {
-                    if (pressed) {
-                        model = boris.getPortNames();
-                    }
-                }
-            }
-
-            Switch {
-                id: mainSwitch
-
-                onCheckedChanged: {
-                    if (checked) {
-                        boris.start();
-                    }
-                    else {
-                        boris.stop();
-                    }
-                }
-            }
+            onActivated: active = boris.start()
+            onDeactivated: if(boris.isActive()) boris.stop()
+            onDroppedDown: portNames = boris.getPortNames()
+            Component.onCompleted: portNames = boris.getPortNames()
 
             Binding {
                 target: boris
                 property: "portName"
-                value: portList.currentValue
+                value: portController.currentPort
+            }
+
+            Connections {
+                target: boris
+                onErrorOccurred: portController.showError(message)
             }
         }
     }

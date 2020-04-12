@@ -1,5 +1,6 @@
 #include <BorisControllerTests.h>
 #include <Exception.h>
+#include <QSignalSpy>
 
 using namespace testing;
 using namespace Diplomamunka;
@@ -31,22 +32,52 @@ TEST_F(BorisControllerTests, IsActive_ControllerStartedThenStopped_ReturnsFalse)
     ASSERT_THAT(controller.isActive(), IsFalse());
 }
 
-TEST_F(BorisControllerTests, IsActive_OpeningIOPortThrowsException_ReturnsFalse) {
+TEST_F(BorisControllerTests, Start_StartupIsSuccessful_ReturnsTrue) {
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+
+    ASSERT_THAT(controller.start(), IsTrue());
+}
+
+TEST_F(BorisControllerTests, Start_OpeningIOPortThrowsException_ReturnsFalseAndNotActive) {
     EXPECT_CALL(*m_ioPortPtr, open(_)).WillOnce(Throw(IOException("Test")));
 
     BorisController controller(m_ioPortPtr, m_timerPtr);
 
-    ASSERT_THROW(controller.start(), IOException);
+    ASSERT_THAT(controller.start(), IsFalse());
     ASSERT_THAT(controller.isActive(), IsFalse());
 }
 
-TEST_F(BorisControllerTests, IsActive_StartingTimerThrowsException_ReturnsFalse) {
+TEST_F(BorisControllerTests, Start_OpeningIOPortThrowsException_NotifiesAboutError) {
+    EXPECT_CALL(*m_ioPortPtr, open(_)).WillOnce(Throw(IOException("Test")));
+
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+    QSignalSpy notification(&controller, SIGNAL(errorOccurred(QString)));
+
+    controller.start();
+
+    ASSERT_THAT(notification.count(), Eq(1));
+    ASSERT_THAT(notification.first().at(0), Eq("Test"));
+}
+
+TEST_F(BorisControllerTests, Start_StartingTimerThrowsException_ReturnsFalseAndNotActive) {
     EXPECT_CALL(*m_timerPtr, start(_)).WillOnce(Throw(ArgumentOutOfRangeException("Test")));
 
     BorisController controller(m_ioPortPtr, m_timerPtr);
 
-    ASSERT_THROW(controller.start(), ArgumentOutOfRangeException);
+    ASSERT_THAT(controller.start(), IsFalse());
     ASSERT_THAT(controller.isActive(), IsFalse());
+}
+
+TEST_F(BorisControllerTests, Start_StartingTimerThrowsException_NotifiesAboutError) {
+    EXPECT_CALL(*m_timerPtr, start(_)).WillOnce(Throw(ArgumentOutOfRangeException("Test")));
+
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+    QSignalSpy notification(&controller, SIGNAL(errorOccurred(QString)));
+
+    controller.start();
+
+    ASSERT_THAT(notification.count(), Eq(1));
+    ASSERT_THAT(notification.first().at(0), Eq("Test"));
 }
 
 TEST_F(BorisControllerTests, Start_Called_OpensPortBeforeStartingTimer) {
@@ -67,6 +98,30 @@ TEST_F(BorisControllerTests, Stop_Called_StopsTimerBeforeClosingPort) {
     BorisController controller(m_ioPortPtr, m_timerPtr);
 
     controller.stop();
+}
+
+TEST_F(BorisControllerTests, Stop_ClosingIOPortThrowsException_NotifiesAboutError) {
+    EXPECT_CALL(*m_ioPortPtr, close()).WillOnce(Throw(InvalidOperationException("Test")));
+
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+    QSignalSpy notification(&controller, SIGNAL(errorOccurred(QString)));
+
+    controller.stop();
+
+    ASSERT_THAT(notification.count(), Eq(1));
+    ASSERT_THAT(notification.first().at(0), Eq("Test"));
+}
+
+TEST_F(BorisControllerTests, Stop_StoppingTimerThrowsException_NotifiesAboutError) {
+    EXPECT_CALL(*m_timerPtr, stop()).WillOnce(Throw(InvalidOperationException("Test")));
+
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+    QSignalSpy notification(&controller, SIGNAL(errorOccurred(QString)));
+
+    controller.stop();
+
+    ASSERT_THAT(notification.count(), Eq(1));
+    ASSERT_THAT(notification.first().at(0), Eq("Test"));
 }
 
 TEST_F(BorisControllerTests, Destructor_ControllerIsActive_StopsTimerBeforeClosingPort) {

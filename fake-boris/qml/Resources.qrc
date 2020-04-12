@@ -3,6 +3,6 @@
         <file>MainWindow.qml</file>
         <file>CheckButton.qml</file>
         <file>FramedLabel.qml</file>
-        <file>EmptyLabel.qml</file>
+        <file>PortControllerRow.qml</file>
     </qresource>
 </RCC>

@@ -23,10 +23,16 @@ BorisController::BorisController(IOPortPtr ioPort, TimerPtr timer, QObject* pare
     connect(m_ioPort.get(), &IOPort::dataReceived, this, &BorisController::readInput);
 }
 
-void BorisController::start() {
-    m_ioPort->open(portName());
-    m_timer->start(interval());
-    m_isActive = true;
+bool BorisController::start() {
+    try {
+        m_ioPort->open(portName());
+        m_timer->start(interval());
+        m_isActive = true;
+    }
+    catch (const Exception& error) {
+        emit errorOccurred(error.getMessage());
+    }
+    return isActive();
 }
 
 bool BorisController::isActive() const {
@@ -34,9 +40,14 @@ bool BorisController::isActive() const {
 }
 
 void BorisController::stop() {
-    m_timer->stop();
-    m_ioPort->close();
-    m_isActive = false;
+    try {
+        m_timer->stop();
+        m_ioPort->close();
+        m_isActive = false;
+    }
+    catch (const Exception& error) {
+        emit errorOccurred(error.getMessage());
+    }
 }
 
 QStringList BorisController::getPortNames() const {
