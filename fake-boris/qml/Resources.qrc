@@ -4,5 +4,7 @@
         <file>CheckButton.qml</file>
         <file>FramedLabel.qml</file>
         <file>PortControllerRow.qml</file>
+        <file>DigitalInputOutputRow.qml</file>
+        <file>ColumnCaptionRow.qml</file>
     </qresource>
 </RCC>

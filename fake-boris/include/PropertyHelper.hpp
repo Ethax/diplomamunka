@@ -3,26 +3,22 @@
 
 #include <QObject>
 
-#define PROPERTY_GETTER(Type, Name)                                                                \
-    Type Name() const {                                                                            \
-        return m_##Name;                                                                           \
-    }
-
-#define PROPERTY_SETTER(Type, Name)                                                                \
-    void Name(const Type& value) {                                                                 \
-        if (value != m_##Name) {                                                                   \
-            m_##Name = value;                                                                      \
-            emit Name##Changed();                                                                  \
-        }                                                                                          \
-    }                                                                                              \
-    Q_SIGNAL void Name##Changed();
-
 #define AUTOMATIC_PROPERTY(Type, Name)                                                             \
     Q_PROPERTY(Type Name READ Name WRITE Name NOTIFY Name##Changed)                                \
                                                                                                    \
 public:                                                                                            \
-    PROPERTY_GETTER(Type, Name)                                                                    \
-    PROPERTY_SETTER(Type, Name)                                                                    \
+    void Name(Type value) {                                                                        \
+        if (value != m_##Name) {                                                                   \
+            m_##Name = value;                                                                      \
+            emit Name##Changed(value);                                                             \
+        }                                                                                          \
+    }                                                                                              \
+                                                                                                   \
+    Type Name() const {                                                                            \
+        return m_##Name;                                                                           \
+    }                                                                                              \
+                                                                                                   \
+    Q_SIGNAL void Name##Changed(Type value);                                                       \
                                                                                                    \
 private:                                                                                           \
     Type m_##Name
@@ -31,10 +27,20 @@ private:                                                                        
     Q_PROPERTY(Type Name READ Name NOTIFY Name##Changed)                                           \
                                                                                                    \
 public:                                                                                            \
-    PROPERTY_GETTER(Type, Name)                                                                    \
+    Type Name() const {                                                                            \
+        return m_##Name;                                                                           \
+    }                                                                                              \
+                                                                                                   \
+    Q_SIGNAL void Name##Changed(Type value);                                                       \
                                                                                                    \
 private:                                                                                           \
-    PROPERTY_SETTER(Type, Name)                                                                    \
+    void Name(Type value) {                                                                        \
+        if (value != m_##Name) {                                                                   \
+            m_##Name = value;                                                                      \
+            emit Name##Changed(value);                                                             \
+        }                                                                                          \
+    }                                                                                              \
+                                                                                                   \
     Type m_##Name
 
 #endif // PROPERTYHELPER_H

@@ -7,7 +7,7 @@ RowLayout {
     property alias portNames: portList.model
     property alias active: mainSwitch.checked
 
-    signal droppedDown
+    signal dropDownOpened
     signal activated
     signal deactivated
 
@@ -22,7 +22,7 @@ RowLayout {
         id: portList
         Layout.fillWidth: true
         enabled: !mainSwitch.checked        
-        onPressedChanged: if (pressed) droppedDown()
+        onPressedChanged: if (pressed) dropDownOpened()
     }
     
     Switch {

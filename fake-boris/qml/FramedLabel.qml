@@ -3,8 +3,8 @@ import QtQuick 2.12
 Rectangle {
     property alias text: underlyingText.text
 
-    width: 30
     height: 20
+    width: height * 1.5
     color: "#00000000"
     border.width: 1
 
