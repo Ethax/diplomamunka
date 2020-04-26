@@ -92,7 +92,7 @@ TEST_F(ReadonlyPropertyTests, ReadonlyProperty_Called_ReturnsItsUnderlyingMember
 }
 
 TEST_F(AutomaticPropertyTests, AutomaticProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged()));
+    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged(int)));
 
     automaticProperty(TestValue);
     automaticProperty(TestValue);
@@ -101,7 +101,7 @@ TEST_F(AutomaticPropertyTests, AutomaticProperty_CalledTwiceWithSameValue_Notifi
 }
 
 TEST_F(ReadonlyPropertyTests, ReadonlyProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(readonlyPropertyChanged()));
+    QSignalSpy notification(this, SIGNAL(readonlyPropertyChanged(int)));
 
     readonlyProperty(TestValue);
     readonlyProperty(TestValue);
@@ -110,7 +110,7 @@ TEST_F(ReadonlyPropertyTests, ReadonlyProperty_CalledTwiceWithSameValue_Notifies
 }
 
 TEST_F(AutomaticPropertyTests, SetProperty_CalledTwiceWithSameValue_NotifiesOnce) {
-    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged()));
+    QSignalSpy notification(this, SIGNAL(automaticPropertyChanged(int)));
 
     setProperty("automaticProperty", TestValue);
     setProperty("automaticProperty", TestValue);

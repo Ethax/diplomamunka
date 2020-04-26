@@ -23,10 +23,9 @@ public:
     Q_INVOKABLE bool start();
     Q_INVOKABLE bool isActive() const;
     Q_INVOKABLE void stop();
+    Q_INVOKABLE QStringList getPortNames() const;
 
     Q_SIGNAL void errorOccurred(QString message);
-
-    Q_INVOKABLE QStringList getPortNames() const;
 
     virtual ~BorisController() override;
 

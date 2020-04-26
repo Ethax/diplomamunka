@@ -42,8 +42,7 @@ Window {
                         onOutputChanged: {
                             if (output) {
                                 boris.output |= 1 << bitIndex
-                            }
-                            else {
+                            } else {
                                 boris.output &= ~(1 << bitIndex)
                             }
                         }
@@ -60,16 +59,15 @@ Window {
         PortControllerRow {
             id: portController
 
-            onActivated: active = boris.start()
-            onDeactivated: if(boris.isActive()) boris.stop()
-
-            onDropDownOpened: portNames = boris.getPortNames()
             Component.onCompleted: portNames = boris.getPortNames()
+            onDropDownOpened: portNames = boris.getPortNames()
+            onCurrentPortChanged: boris.portName = currentPort
 
-            Binding {
-                target: boris
-                property: "portName"
-                value: portController.currentPort
+            onActivated: active = boris.start()
+            onDeactivated: {
+                if (boris.isActive()) {
+                    boris.stop()
+                }
             }
 
             Connections {

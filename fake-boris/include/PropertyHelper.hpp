@@ -7,7 +7,7 @@
     Q_PROPERTY(Type Name READ Name WRITE Name NOTIFY Name##Changed)                                \
                                                                                                    \
 public:                                                                                            \
-    void Name(Type value) {                                                                        \
+    void Name(const Type& value) {                                                                 \
         if (value != m_##Name) {                                                                   \
             m_##Name = value;                                                                      \
             emit Name##Changed(value);                                                             \
@@ -34,7 +34,7 @@ public:                                                                         
     Q_SIGNAL void Name##Changed(Type value);                                                       \
                                                                                                    \
 private:                                                                                           \
-    void Name(Type value) {                                                                        \
+    void Name(const Type& value) {                                                                 \
         if (value != m_##Name) {                                                                   \
             m_##Name = value;                                                                      \
             emit Name##Changed(value);                                                             \
