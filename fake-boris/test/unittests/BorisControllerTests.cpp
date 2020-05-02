@@ -80,6 +80,16 @@ TEST_F(BorisControllerTests, Start_StartingTimerThrowsException_NotifiesAboutErr
     ASSERT_THAT(notification.first().at(0), Eq("Test"));
 }
 
+TEST_F(BorisControllerTests, Start_StartingTimerThrowsException_ClosesTheIOPort) {
+    EXPECT_CALL(*m_ioPortPtr, isOpen()).WillOnce(Return(true));
+    EXPECT_CALL(*m_ioPortPtr, close());
+    EXPECT_CALL(*m_timerPtr, start(_)).WillOnce(Throw(ArgumentOutOfRangeException("Test")));
+
+    BorisController controller(m_ioPortPtr, m_timerPtr);
+
+    controller.start();
+}
+
 TEST_F(BorisControllerTests, Start_Called_OpensPortBeforeStartingTimer) {
     InSequence expectOrderedCalls;
     EXPECT_CALL(*m_ioPortPtr, open(_));

@@ -30,8 +30,13 @@ bool BorisController::start() {
         m_isActive = true;
     }
     catch (const Exception& error) {
+        if (m_ioPort->isOpen()) {
+            m_ioPort->close();
+        }
+
         emit errorOccurred(error.getMessage());
     }
+
     return isActive();
 }
 

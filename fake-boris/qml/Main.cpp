@@ -18,18 +18,9 @@ int main(int argc, char* argv[]) {
 #else
     BorisController boris;
 #endif
-    engine.rootContext()->setContextProperty("boris", &boris);
 
-    const QUrl url("qrc:/MainWindow.qml");
-    QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreated, &application,
-        [url](QObject* object, const QUrl& objectUrl) {
-            if (object == nullptr && objectUrl == url) {
-                QCoreApplication::exit(-1);
-            }
-        },
-        Qt::QueuedConnection);
-    engine.load(url);
+    engine.rootContext()->setContextProperty("boris", &boris);
+    engine.load(QUrl("qrc:/MainWindow.qml"));
 
     return application.exec();
 }

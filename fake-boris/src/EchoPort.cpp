@@ -29,6 +29,7 @@ QByteArray EchoPort::readData() {
 
 void EchoPort::writeData(const QByteArray& data) {
     storeData(data);
+
     emit dataReceived();
 }
 

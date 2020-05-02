@@ -42,7 +42,8 @@ Window {
                         onOutputChanged: {
                             if (output) {
                                 boris.output |= 1 << bitIndex
-                            } else {
+                            }
+                            else {
                                 boris.output &= ~(1 << bitIndex)
                             }
                         }
@@ -64,11 +65,7 @@ Window {
             onCurrentPortChanged: boris.portName = currentPort
 
             onActivated: active = boris.start()
-            onDeactivated: {
-                if (boris.isActive()) {
-                    boris.stop()
-                }
-            }
+            onDeactivated: if (boris.isActive()) boris.stop()
 
             Connections {
                 target: boris
