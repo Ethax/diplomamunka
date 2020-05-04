@@ -14,10 +14,10 @@ int main(int argc, char* argv[]) {
     QQmlApplicationEngine engine;
 
 #ifdef QT_DEBUG
-    const auto port = VirtualPort::create();
-    BorisController boris(port, CyclicTimer::create());
+    IOPortPtr ioPort = VirtualPort::create();
+    BorisController boris(ioPort, CyclicTimer::create());
 
-    engine.rootContext()->setContextProperty("port", port.get());
+    engine.rootContext()->setContextProperty("ioPort", ioPort.get());
     engine.rootContext()->setContextProperty("boris", &boris);
     engine.load(QUrl("qrc:/MainWindow.qml"));
 #else

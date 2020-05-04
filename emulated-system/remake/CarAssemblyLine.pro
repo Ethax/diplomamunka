@@ -13,5 +13,5 @@ RESOURCES += qml/Resources.qrc
 TRANSLATIONS += \
     qml/CarAssemblyLine_en_US.ts
 
-CONFIG(release, debug|release): LIBS += -Llibs/BorisAccess/release/ -lBorisAccess
-CONFIG(debug, debug|release): LIBS += -Llibs/BorisAccess/debug/ -lBorisAccess
+CONFIG(release, debug|release): LIBS += -L$$PWD/libs/BorisAccess/release/ -lBorisAccess
+CONFIG(debug, debug|release): LIBS += -L$$PWD/libs/BorisAccess/debug/ -lBorisAccess
