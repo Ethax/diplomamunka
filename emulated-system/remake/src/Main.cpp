@@ -1,20 +1,31 @@
+#include <BorisController.h>
+#include <CyclicTimer.h>
+#include <VirtualPort.h>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
-int main(int argc, char *argv[])
-{
+using namespace Diplomamunka;
+
+int main(int argc, char* argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
-    QGuiApplication app(argc, argv);
-
+    QGuiApplication application(argc, argv);
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-        &app, [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        }, Qt::QueuedConnection);
-    engine.load(url);
 
-    return app.exec();
+#ifdef QT_DEBUG
+    const auto port = VirtualPort::create();
+    BorisController boris(port, CyclicTimer::create());
+
+    engine.rootContext()->setContextProperty("port", port.get());
+    engine.rootContext()->setContextProperty("boris", &boris);
+    engine.load(QUrl("qrc:/MainWindow.qml"));
+#else
+    BorisController boris;
+
+    engine.rootContext()->setContextProperty("boris", &boris);
+    engine.load(QUrl("qrc:/MainWindow.qml"));
+#endif
+
+    return application.exec();
 }
