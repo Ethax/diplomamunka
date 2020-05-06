@@ -1,5 +1,17 @@
 <RCC>
     <qresource prefix="/">
+        <file>BodyType1.png</file>
+        <file>BodyType2.png</file>
+        <file>BodyType3.png</file>
+        <file>Bridge.png</file>
+        <file>CarBody.qml</file>
+        <file>LeftClamp.png</file>
+        <file>LeftFork.png</file>
         <file>MainWindow.qml</file>
+        <file>RightClamp.png</file>
+        <file>RightFork.png</file>
+        <file>RunwayBeam.png</file>
+        <file>Trolley.png</file>
+        <file>Crane.qml</file>
     </qresource>
 </RCC>

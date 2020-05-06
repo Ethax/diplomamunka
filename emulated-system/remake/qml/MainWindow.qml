@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
+import QtQuick 2.14
+import QtQuick.Window 2.14
 import QtQuick.Extras 1.4
 
 Window {
@@ -30,33 +30,6 @@ Window {
         }
     }
 
-    Rectangle {
-        property alias animationEnabled: behavior.enabled
-
-        id: slave
-        x: 100
-        y: 100
-        width: 50
-        height: 50
-        color: "#ff0000"
-
-        Behavior on x {
-            id: behavior
-
-            NumberAnimation {
-                duration: 1000
-            }
-        }
-
-        function attachTo(item) {
-            var newPoint = parent.mapToItem(item, x, y)
-
-            parent = item
-            x = newPoint.x
-            y = newPoint.y
-        }
-    }
-
     ToggleButton {
         id: move
         x: 100
@@ -80,12 +53,46 @@ Window {
 
         onClicked: {
             if (checked) {
-                slave.animationEnabled = false
-                slave.attachTo(master)
+                carBody.attachTo(master)
             } else {
-                slave.attachTo(mainWindow.contentItem)
-                slave.animationEnabled = true
-                slave.x = 200
+                carBody.attachTo(mainWindow.contentItem)
+            }
+        }
+    }
+
+    Crane {
+        id: crane
+        x: 711
+        y: 40
+    }
+
+    //    CarBody {
+    //        id: carBody
+    //        bodyType: CarBody.TypeOne
+    //        x: 508
+    //        y: 319
+
+    //        Component.onCompleted: {
+    //            attachTo(trolley)
+    //            z = -2
+    //        }
+    //    }
+
+    //    Trolley {
+    //        x: 552
+    //        y: 332
+    //    }
+    ToggleButton {
+        id: toggleButton
+        x: 517
+        y: 433
+        text: qsTr("Open/Close")
+
+        onClicked: {
+            if (checked) {
+                crane.bridgePosition = crane.height
+            } else {
+                crane.bridgePosition = crane.height / 3.0
             }
         }
     }
