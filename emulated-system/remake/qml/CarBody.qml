@@ -18,6 +18,7 @@ Image {
         z = 0
     }
 
+    source: "BodyType1.png"
     onBodyTypeChanged: {
         switch (bodyType) {
         case CarBody.TypeOne:
@@ -29,8 +30,8 @@ Image {
         case CarBody.TypeThree:
             source = "BodyType3.png"
             break
+        default:
+            console.exception("Invalid body type:", bodyType)
         }
     }
-
-    source: "BodyType1.png"
 }

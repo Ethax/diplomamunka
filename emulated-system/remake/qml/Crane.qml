@@ -1,42 +1,52 @@
 import QtQuick 2.14
 
 Image {
+    id: runwayBeam
+
+    property int position: 0
+
     source: "RunwayBeam.png"
-    property alias bridgePosition: bridge.y
+    onPositionChanged: {
+        switch (position) {
+        case 1:
+            bridge.y = 2 * bridge.stepSize
+            break
+        case 3:
+            bridge.y = bridge.stepSize
+            break
+        case 5:
+            bridge.y = 0
+            break
+        case 7:
+            bridge.y = 3 * bridge.stepSize
+            break
+        default:
+            console.exception("Invalid position:", position)
+        }
+    }
 
     Image {
-        property real stepSize: parent.height / 3.0
-
         id: bridge
+
+        property real stepSize: (runwayBeam.height - height) / 3.0
 
         anchors.rightMargin: -17
         anchors.right: parent.right
         source: "Bridge.png"
+        y: 2 * bridge.stepSize
 
         Behavior on y {
-            id: transition
-            property int distance: Math.abs(bridge.y - targetValue)
+            id: bridgeMotion
 
             NumberAnimation {
-                duration: 6000 // * Math.ceil(Math.abs(                                               to - from) / bridge.stepSize)
-                onRunningChanged: {
-                    if (running) {
-                        console.log("Target value: ", transition.targetValue)
-                        console.log("Current value: ", bridge.y)
-                        console.log("Distance: ", transition.distance)
-                        console.log("Step size: ", bridge.stepSize)
-                        console.log("-----------------------------------")
-                    }
-                }
                 easing.type: Easing.InOutCubic
+                duration: {
+                    var distance = Math.abs(bridge.y - bridgeMotion.targetValue)
+                    var numberOfSteps = Math.round(distance / bridge.stepSize)
+
+                    return 6000 * numberOfSteps
+                }
             }
         }
     }
 } //Image {//    property int clampDistance: 18//    id: trolley//    source: "Trolley.png"//    Image {//        id: rightClamp//        y: -trolley.clampDistance//        z: -1//        anchors.horizontalCenter: parent.horizontalCenter//        source: "RightClamp.png"//        Behavior on y {//            NumberAnimation {//                duration: 2000//            }//        }//    }//    Image {//        id: rightFork//        scale: 1//        z: -3//        anchors {//            top: rightClamp.top//            horizontalCenter: parent.horizontalCenter//        }//        source: "RightFork.png"//    }//    Image {//        id: leftClamp//        y: trolley.clampDistance//        z: -1//        source: "LeftClamp.png"//        anchors.horizontalCenter: parent.horizontalCenter//        Behavior on y {//            NumberAnimation {//                duration: 2000//            }//        }//    }//    Image {//        id: leftFork//        z: -3//        source: "LeftFork.png"//        anchors {//            bottom: leftClamp.bottom//            horizontalCenter: parent.horizontalCenter//        }//    }//}
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:6}
-}
-##^##*/
-

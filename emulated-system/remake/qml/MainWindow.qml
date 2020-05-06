@@ -1,6 +1,6 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
-import QtQuick.Extras 1.4
+import QtQuick.Controls 2.14
 
 Window {
     id: mainWindow
@@ -30,36 +30,35 @@ Window {
         }
     }
 
-    ToggleButton {
-        id: move
-        x: 100
-        y: 300
-        text: qsTr("Move")
+    //    ToggleButton {
+    //        id: move
+    //        x: 100
+    //        y: 300
+    //        text: qsTr("Move")
 
-        onClicked: {
-            if (checked) {
-                master.x = 700
-            } else {
-                master.x = 10
-            }
-        }
-    }
+    //        onClicked: {
+    //            if (checked) {
+    //                master.x = 700
+    //            } else {
+    //                master.x = 10
+    //            }
+    //        }
+    //    }
 
-    ToggleButton {
-        id: attach
-        x: 300
-        y: 300
-        text: qsTr("Attach")
+    //    ToggleButton {
+    //        id: attach
+    //        x: 300
+    //        y: 300
+    //        text: qsTr("Attach")
 
-        onClicked: {
-            if (checked) {
-                carBody.attachTo(master)
-            } else {
-                carBody.attachTo(mainWindow.contentItem)
-            }
-        }
-    }
-
+    //        onClicked: {
+    //            if (checked) {
+    //                carBody.attachTo(master)
+    //            } else {
+    //                carBody.attachTo(mainWindow.contentItem)
+    //            }
+    //        }
+    //    }
     Crane {
         id: crane
         x: 711
@@ -82,17 +81,17 @@ Window {
     //        x: 552
     //        y: 332
     //    }
-    ToggleButton {
+    Button {
         id: toggleButton
-        x: 517
-        y: 433
-        text: qsTr("Open/Close")
+        x: 190
+        y: 440
+        text: qsTr("Move crane")
 
         onClicked: {
-            if (checked) {
-                crane.bridgePosition = crane.height
+            if (crane.position > 0) {
+                crane.position += 2
             } else {
-                crane.bridgePosition = crane.height / 3.0
+                crane.position = 1
             }
         }
     }
