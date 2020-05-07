@@ -61,38 +61,45 @@ Window {
     //    }
     Crane {
         id: crane
-        x: 711
-        y: 40
+        x: 563
+        y: 54
     }
 
-    //    CarBody {
-    //        id: carBody
-    //        bodyType: CarBody.TypeOne
-    //        x: 508
-    //        y: 319
+    CarBody {
+        id: carBody
+        bodyType: CarBody.TypeOne
+        x: 529
+        y: 266
 
-    //        Component.onCompleted: {
-    //            attachTo(trolley)
-    //            z = -2
-    //        }
-    //    }
+        Component.onCompleted: {
+            attachTo(crane.attachPoint)
+        }
+    }
 
-    //    Trolley {
-    //        x: 552
-    //        y: 332
-    //    }
     Button {
-        id: toggleButton
         x: 190
         y: 440
         text: qsTr("Move crane")
 
         onClicked: {
-            if (crane.position > 0) {
-                crane.position += 2
-            } else {
-                crane.position = 1
-            }
+            crane.position++
+        }
+    }
+
+    Button {
+        x: 050
+        y: 440
+        text: qsTr("Open/Close")
+
+        onClicked: {
+            crane.open ^= 1
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:3}
+}
+##^##*/
+

@@ -1,27 +1,103 @@
 import QtQuick 2.14
 
-Image {
-    id: runwayBeam
+Item {
+    id: element
 
     property int position: 0
+    property bool open: false
+    property alias attachPoint: hook
 
-    source: "RunwayBeam.png"
+    implicitHeight: runwayBeam.height
+    implicitWidth: bridge.width
+
     onPositionChanged: {
-        switch (position) {
+        switch (position >> 1) {
+        case 0:
+            bridge.y = runwayBeam.y + Math.round(2 * bridge.stepSize)
+            break
         case 1:
-            bridge.y = 2 * bridge.stepSize
+            bridge.y = runwayBeam.y + Math.round(bridge.stepSize)
+            break
+        case 2:
+            bridge.y = runwayBeam.y
             break
         case 3:
-            bridge.y = bridge.stepSize
-            break
-        case 5:
-            bridge.y = 0
-            break
-        case 7:
-            bridge.y = 3 * bridge.stepSize
+            bridge.y = runwayBeam.y + Math.round(3 * bridge.stepSize)
             break
         default:
             console.exception("Invalid position:", position)
+            return
+        }
+
+        switch (position & 1) {
+        case 0:
+            trolley.anchors.leftMargin = 0
+            break
+        case 1:
+            trolley.anchors.leftMargin = bridge.width / 4
+            break
+        }
+    }
+
+    onOpenChanged: trolley.clampOffset = open ? trolley.height / 2 : 0
+
+    Image {
+        id: runwayBeam
+
+        source: "RunwayBeam.png"
+        anchors.right: bridge.right
+    }
+
+    Image {
+        id: rightFork
+
+        source: "RightFork.png"
+        anchors.horizontalCenter: trolley.horizontalCenter
+        anchors.top: rightClamp.top
+    }
+
+    Image {
+        id: leftFork
+
+        source: "LeftFork.png"
+        anchors.horizontalCenter: trolley.horizontalCenter
+        anchors.bottom: leftClamp.bottom
+    }
+
+    Item {
+        id: hook // attachPoint
+
+        anchors.horizontalCenter: trolley.horizontalCenter
+        anchors.verticalCenter: trolley.verticalCenter
+    }
+
+    Image {
+        id: rightClamp
+
+        source: "RightClamp.png"
+        anchors.horizontalCenter: trolley.horizontalCenter
+        anchors.verticalCenter: trolley.top
+        anchors.verticalCenterOffset: -trolley.clampOffset
+
+        Behavior on anchors.verticalCenterOffset {
+            NumberAnimation {
+                duration: 2000
+            }
+        }
+    }
+
+    Image {
+        id: leftClamp
+
+        source: "LeftClamp.png"
+        anchors.horizontalCenter: trolley.horizontalCenter
+        anchors.verticalCenter: trolley.bottom
+        anchors.verticalCenterOffset: trolley.clampOffset
+
+        Behavior on anchors.verticalCenterOffset {
+            NumberAnimation {
+                duration: 2000
+            }
         }
     }
 
@@ -30,10 +106,9 @@ Image {
 
         property real stepSize: (runwayBeam.height - height) / 3.0
 
-        anchors.rightMargin: -17
-        anchors.right: parent.right
         source: "Bridge.png"
-        y: 2 * bridge.stepSize
+        anchors.right: parent.right
+        y: Math.round(2 * stepSize)
 
         Behavior on y {
             id: bridgeMotion
@@ -48,5 +123,29 @@ Image {
                 }
             }
         }
+        visible: true
     }
-} //Image {//    property int clampDistance: 18//    id: trolley//    source: "Trolley.png"//    Image {//        id: rightClamp//        y: -trolley.clampDistance//        z: -1//        anchors.horizontalCenter: parent.horizontalCenter//        source: "RightClamp.png"//        Behavior on y {//            NumberAnimation {//                duration: 2000//            }//        }//    }//    Image {//        id: rightFork//        scale: 1//        z: -3//        anchors {//            top: rightClamp.top//            horizontalCenter: parent.horizontalCenter//        }//        source: "RightFork.png"//    }//    Image {//        id: leftClamp//        y: trolley.clampDistance//        z: -1//        source: "LeftClamp.png"//        anchors.horizontalCenter: parent.horizontalCenter//        Behavior on y {//            NumberAnimation {//                duration: 2000//            }//        }//    }//    Image {//        id: leftFork//        z: -3//        source: "LeftFork.png"//        anchors {//            bottom: leftClamp.bottom//            horizontalCenter: parent.horizontalCenter//        }//    }//}
+
+    Image {
+        id: trolley
+
+        property int clampOffset: 0
+
+        source: "Trolley.png"
+        anchors.verticalCenter: bridge.verticalCenter
+        anchors.left: bridge.left
+
+        Behavior on anchors.leftMargin {
+            NumberAnimation {
+                duration: 5000
+            }
+        }
+    }
+}
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:8;anchors_x:5}
+}
+##^##*/
+

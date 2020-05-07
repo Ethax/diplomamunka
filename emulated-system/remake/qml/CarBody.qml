@@ -1,6 +1,6 @@
 import QtQuick 2.14
 
-Image {
+Item {
     enum BodyType {
         TypeOne,
         TypeTwo,
@@ -9,29 +9,36 @@ Image {
 
     property int bodyType: CarBody.TypeOne
 
+    implicitHeight: carBody.height
+    implicitWidth: carBody.width
+
+    onBodyTypeChanged: {
+        switch (bodyType) {
+        case CarBody.TypeOne:
+            carBody.source = "BodyType1.png"
+            break
+        case CarBody.TypeTwo:
+            carBody.source = "BodyType2.png"
+            break
+        case CarBody.TypeThree:
+            carBody.source = "BodyType3.png"
+            break
+        default:
+            console.exception("Invalid body type:", bodyType)
+        }
+    }
+
     function attachTo(item) {
         var newPoint = parent.mapToItem(item, x, y)
 
         parent = item
         x = newPoint.x
         y = newPoint.y
-        z = 0
     }
 
-    source: "BodyType1.png"
-    onBodyTypeChanged: {
-        switch (bodyType) {
-        case CarBody.TypeOne:
-            source = "BodyType1.png"
-            break
-        case CarBody.TypeTwo:
-            source = "BodyType2.png"
-            break
-        case CarBody.TypeThree:
-            source = "BodyType3.png"
-            break
-        default:
-            console.exception("Invalid body type:", bodyType)
-        }
+    Image {
+        id: carBody
+
+        source: "BodyType1.png"
     }
 }
