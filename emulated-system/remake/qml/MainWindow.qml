@@ -18,7 +18,7 @@ Window {
 
         Behavior on x {
             NumberAnimation {
-                duration: 4000
+                duration: 6000
                 easing.type: Easing.InOutCubic
 
                 onRunningChanged: {
@@ -28,24 +28,28 @@ Window {
                 }
             }
         }
+
+        onXChanged: {
+            if (carBody.overlaps(sensor)) {
+                sensor.color = "#ff0000"
+            } else {
+                sensor.color = "#ffff00"
+            }
+        }
     }
 
-    //    ToggleButton {
-    //        id: move
-    //        x: 100
-    //        y: 300
-    //        text: qsTr("Move")
+    Button {
+        id: move
+        x: 50
+        y: 327
+        text: qsTr("Move")
 
-    //        onClicked: {
-    //            if (checked) {
-    //                master.x = 700
-    //            } else {
-    //                master.x = 10
-    //            }
-    //        }
-    //    }
+        onClicked: {
+            master.x = 400
+        }
+    }
 
-    //    ToggleButton {
+    //    CheckBox {
     //        id: attach
     //        x: 300
     //        y: 300
@@ -68,17 +72,17 @@ Window {
     CarBody {
         id: carBody
         bodyType: CarBody.TypeOne
-        x: 529
-        y: 266
+        x: 82
+        y: 123
 
         Component.onCompleted: {
-            attachTo(crane.attachPoint)
+            attachTo(master)
         }
     }
 
     Button {
-        x: 190
-        y: 440
+        x: 676
+        y: 507
         text: qsTr("Move crane")
 
         onClicked: {
@@ -87,19 +91,21 @@ Window {
     }
 
     Button {
-        x: 050
-        y: 440
+        x: 536
+        y: 507
         text: qsTr("Open/Close")
 
         onClicked: {
             crane.open ^= 1
         }
     }
-}
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:3}
+    Rectangle {
+        id: sensor
+        x: 257
+        y: 81
+        width: 5
+        height: 200
+        color: "#ffff00"
+    }
 }
-##^##*/
-
