@@ -3,10 +3,21 @@ import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
 
 Window {
-    id: mainWindow
+    id: window
+
     visible: true
-    width: 800
-    height: 600
+    minimumWidth: 800
+    minimumHeight: 600
+
+    contentItem.transform: Scale {
+        xScale: yScale
+        yScale: {
+            var widthRatio = width / minimumWidth
+            var heightRatio = height / minimumHeight
+
+            return Math.min(widthRatio, heightRatio)
+        }
+    }
 
     Rectangle {
         id: master
@@ -49,20 +60,6 @@ Window {
         }
     }
 
-    //    CheckBox {
-    //        id: attach
-    //        x: 300
-    //        y: 300
-    //        text: qsTr("Attach")
-
-    //        onClicked: {
-    //            if (checked) {
-    //                carBody.attachTo(master)
-    //            } else {
-    //                carBody.attachTo(mainWindow.contentItem)
-    //            }
-    //        }
-    //    }
     Crane {
         id: crane
         x: 563
