@@ -93,7 +93,7 @@ Window {
         text: qsTr("Open/Close")
 
         onClicked: {
-            crane.open ^= 1
+            crane.gripperOpen ^= 1
         }
     }
 
@@ -105,4 +105,38 @@ Window {
         height: 200
         color: "#ffff00"
     }
+
+    Button {
+        x: 348
+        y: 171
+        text: qsTr("Destination 5")
+        onClicked: crane.position = 5
+    }
+
+    Button {
+        x: 348
+        y: 228
+        text: qsTr("Destination 3")
+        onClicked: crane.position = 3
+    }
+
+    Button {
+        x: 348
+        y: 283
+        text: qsTr("Destination 1")
+        onClicked: crane.position = 1
+    }
+
+    Button {
+        x: 348
+        y: 339
+        text: qsTr("Destination 7")
+        onClicked: crane.position = 7
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -13,5 +13,9 @@
         <file>RunwayBeam.png</file>
         <file>Trolley.png</file>
         <file>Crane.qml</file>
+        <file>Trolley.qml</file>
+        <file>Bridge.qml</file>
+        <file>BridgeState.qml</file>
+        <file>BridgeTransition.qml</file>
     </qresource>
 </RCC>

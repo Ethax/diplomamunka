@@ -48,7 +48,6 @@ Item {
 
     Image {
         id: carBody
-
         source: "BodyType1.png"
     }
 }
