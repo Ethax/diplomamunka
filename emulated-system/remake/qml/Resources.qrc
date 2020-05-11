@@ -17,5 +17,6 @@
         <file>Bridge.qml</file>
         <file>BridgeState.qml</file>
         <file>BridgeTransition.qml</file>
+        <file>Clamp.qml</file>
     </qresource>
 </RCC>

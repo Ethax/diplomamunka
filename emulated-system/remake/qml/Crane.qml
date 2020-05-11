@@ -65,19 +65,8 @@ Item {
         }
     }
 
-    Image {
+    Clamp {
         id: leftClamp
-
-        source: "LeftClamp.png"
-        anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.verticalCenter: trolley.bottom
-        anchors.verticalCenterOffset: 0
-
-        Behavior on anchors.verticalCenterOffset {
-            NumberAnimation {
-                duration: 2000
-            }
-        }
     }
 
     Bridge {

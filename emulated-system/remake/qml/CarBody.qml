@@ -1,6 +1,8 @@
 import QtQuick 2.14
 
 Item {
+    id: carBody
+
     enum BodyType {
         TypeOne,
         TypeTwo,
@@ -9,19 +11,19 @@ Item {
 
     property int bodyType: CarBody.TypeOne
 
-    implicitHeight: carBody.height
-    implicitWidth: carBody.width
+    implicitHeight: displayedImage.height
+    implicitWidth: displayedImage.width
 
     onBodyTypeChanged: {
         switch (bodyType) {
         case CarBody.TypeOne:
-            carBody.source = "BodyType1.png"
+            displayedImage.source = "BodyType1.png"
             break
         case CarBody.TypeTwo:
-            carBody.source = "BodyType2.png"
+            displayedImage.source = "BodyType2.png"
             break
         case CarBody.TypeThree:
-            carBody.source = "BodyType3.png"
+            displayedImage.source = "BodyType3.png"
             break
         default:
             console.exception("Invalid body type:", bodyType)
@@ -47,7 +49,7 @@ Item {
     }
 
     Image {
-        id: carBody
+        id: displayedImage
         source: "BodyType1.png"
     }
 }
