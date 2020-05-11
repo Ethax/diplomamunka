@@ -62,8 +62,8 @@ Window {
 
     Crane {
         id: crane
-        x: 563
-        y: 54
+        x: 503
+        y: 57
     }
 
     CarBody {
@@ -137,6 +137,7 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:600;width:800}
 }
 ##^##*/
+

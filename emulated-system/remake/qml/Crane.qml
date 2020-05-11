@@ -92,7 +92,7 @@ Item {
         id: trolley
 
         connection: bridge
-        runwayLength: bridge.width / 4
+        runwayLength: bridge.width / 3
     }
 }
 

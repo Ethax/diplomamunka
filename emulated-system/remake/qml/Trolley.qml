@@ -11,12 +11,12 @@ Item {
     implicitWidth: displayedImage.width
 
     anchors {
-        left: connection ? connection.left : undefined
+        horizontalCenter: connection ? connection.horizontalCenter : undefined
         verticalCenter: connection ? connection.verticalCenter : undefined
-        leftMargin: position ? runwayLength : 0
+        horizontalCenterOffset: (position ? runwayLength : -runwayLength) / 2
     }
 
-    Behavior on anchors.leftMargin {
+    Behavior on anchors.horizontalCenterOffset {
         NumberAnimation {
             easing.type: Easing.InOutCubic
             duration: 5000
