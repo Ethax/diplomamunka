@@ -10,10 +10,13 @@ Item {
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    anchors {
-        horizontalCenter: connection ? connection.horizontalCenter : undefined
-        verticalCenter: connection ? connection.verticalCenter : undefined
-        horizontalCenterOffset: (position ? runwayLength : -runwayLength) / 2
+    anchors.horizontalCenterOffset: {
+        position ? runwayLength / 2 : -runwayLength / 2
+    }
+
+    Binding on anchors.centerIn {
+        when: connection
+        value: connection
     }
 
     Behavior on anchors.horizontalCenterOffset {

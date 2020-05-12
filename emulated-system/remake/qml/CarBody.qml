@@ -9,26 +9,10 @@ Item {
         TypeThree
     }
 
-    property int bodyType: CarBody.TypeOne
+    property int bodyType
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
-
-    onBodyTypeChanged: {
-        switch (bodyType) {
-        case CarBody.TypeOne:
-            displayedImage.source = "BodyType1.png"
-            break
-        case CarBody.TypeTwo:
-            displayedImage.source = "BodyType2.png"
-            break
-        case CarBody.TypeThree:
-            displayedImage.source = "BodyType3.png"
-            break
-        default:
-            console.exception("Invalid body type:", bodyType)
-        }
-    }
 
     function attachTo(item) {
         var newPoint = parent.mapToItem(item, x, y)
@@ -50,6 +34,18 @@ Item {
 
     Image {
         id: displayedImage
-        source: "BodyType1.png"
+
+        source: {
+            switch (bodyType) {
+            case CarBody.TypeOne:
+                return "BodyType1.png"
+            case CarBody.TypeTwo:
+                return "BodyType2.png"
+            case CarBody.TypeThree:
+                return "BodyType3.png"
+            default:
+                console.exception("Invalid body type:", bodyType)
+            }
+        }
     }
 }

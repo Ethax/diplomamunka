@@ -10,8 +10,17 @@ Item {
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    anchors.top: connection ? connection.top : undefined
     state: destination & 3
+
+    Binding on anchors.top {
+        when: connection
+        value: connection.top
+    }
+
+    Image {
+        id: displayedImage
+        source: "Bridge.png"
+    }
 
     states: [
         BridgeState {
@@ -56,9 +65,4 @@ Item {
             duration: 18000
         }
     ]
-
-    Image {
-        id: displayedImage
-        source: "Bridge.png"
-    }
 }

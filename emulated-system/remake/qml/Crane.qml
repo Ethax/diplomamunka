@@ -5,20 +5,10 @@ Item {
 
     property int position: 0
     property bool gripperOpen: false
-    property alias attachPoint: hook
+    property alias attachPoint: attachPoint
 
     implicitHeight: runwayBeam.height
     implicitWidth: bridge.width
-
-    onPositionChanged: {
-        bridge.destination = position >> 1
-        trolley.position = position & 1
-    }
-
-    onGripperOpenChanged: {
-
-        //trolley.clampOffset = gripperOpen ? trolley.height / 2 : 0
-    }
 
     Image {
         id: runwayBeam
@@ -32,7 +22,7 @@ Item {
 
         source: "RightFork.png"
         anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.top: rightClamp.top
+        anchors.top: upperClamp.top
     }
 
     Image {
@@ -40,33 +30,31 @@ Item {
 
         source: "LeftFork.png"
         anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.bottom: leftClamp.bottom
+        anchors.bottom: lowerClamp.bottom
     }
 
     Item {
-        id: hook // attachPoint
+        id: attachPoint
 
-        anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.verticalCenter: trolley.verticalCenter
-    }
-
-    Image {
-        id: rightClamp
-
-        source: "RightClamp.png"
-        anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.verticalCenter: trolley.top
-        anchors.verticalCenterOffset: 0
-
-        Behavior on anchors.verticalCenterOffset {
-            NumberAnimation {
-                duration: 2000
-            }
-        }
+        anchors.centerIn: trolley
     }
 
     Clamp {
-        id: leftClamp
+        id: upperClamp
+
+        connection: trolley
+        runwayLength: trolley.height / 2
+        orientation: Clamp.Downward
+        position: crane.gripperOpen
+    }
+
+    Clamp {
+        id: lowerClamp
+
+        connection: trolley
+        runwayLength: trolley.height / 2
+        orientation: Clamp.Upward
+        position: crane.gripperOpen
     }
 
     Bridge {
@@ -75,6 +63,7 @@ Item {
         connection: runwayBeam
         anchors.right: crane.right
         runwayLength: runwayBeam.height
+        destination: crane.position >> 1
     }
 
     Trolley {
@@ -82,6 +71,7 @@ Item {
 
         connection: bridge
         runwayLength: bridge.width / 3
+        position: crane.position & 1
     }
 }
 
