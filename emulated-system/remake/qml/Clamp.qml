@@ -8,29 +8,27 @@ Item {
         Upward
     }
 
-    property bool position
-    property int runwayLength
-    property int orientation
-    property Item connection
+    property int orientation: Clamp.Upward
+    property bool position: false
+    property Item base: parent
+    property int runwayLength: base.height / 2
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    anchors.verticalCenterOffset: position ? runwayLength : 0
+    anchors {
+        horizontalCenter: base.horizontalCenter
+        verticalCenterOffset: position ? runwayLength : 0
 
-    Binding on anchors.horizontalCenter {
-        when: connection
-        value: connection.horizontalCenter
-    }
+        Binding on verticalCenter {
+            when: orientation === Clamp.Downward
+            value: base.top
+        }
 
-    Binding on anchors.verticalCenter {
-        when: connection && orientation === Clamp.Downward
-        value: connection.top
-    }
-
-    Binding on anchors.verticalCenter {
-        when: connection && orientation === Clamp.Upward
-        value: connection.bottom
+        Binding on verticalCenter {
+            when: orientation === Clamp.Upward
+            value: base.bottom
+        }
     }
 
     Behavior on anchors.verticalCenterOffset {

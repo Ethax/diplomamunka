@@ -3,22 +3,23 @@ import QtQuick 2.14
 Item {
     id: bridge
 
-    property int destination
-    property int runwayLength
-    property Item connection
+    property int position: 0
+    property Item base: parent
+    property int runwayLength: base.height
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    state: destination & 3
-
-    Binding on anchors.top {
-        when: connection
-        value: connection.top
+    anchors {
+        top: base.top
+        horizontalCenter: base.horizontalCenter
     }
+
+    state: position & 3
 
     Image {
         id: displayedImage
+
         source: "Bridge.png"
     }
 

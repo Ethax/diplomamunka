@@ -9,7 +9,8 @@ Item {
         TypeThree
     }
 
-    property int bodyType
+    property int bodyType: CarBody.TypeOne
+    property int timeUnit: 10
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
@@ -30,6 +31,25 @@ Item {
                 && otherRect.x < thisRect.x + thisRect.width
                 && thisRect.y < otherRect.y + otherRect.height
                 && otherRect.y < thisRect.y + thisRect.height
+    }
+
+    function animate(destination) {
+        var duration = Math.abs(destination - x) * timeUnit
+
+        animation.stop()
+        animation.to = destination
+        animation.duration = duration
+        animation.start()
+    }
+
+    function stop() {
+        animation.stop()
+    }
+
+    NumberAnimation on x {
+        id: animation
+
+        stopped: true
     }
 
     Image {

@@ -14,7 +14,7 @@ Item {
         id: runwayBeam
 
         source: "RunwayBeam.png"
-        anchors.right: bridge.right
+        anchors.right: crane.right
     }
 
     Image {
@@ -42,35 +42,30 @@ Item {
     Clamp {
         id: upperClamp
 
-        connection: trolley
-        runwayLength: trolley.height / 2
         orientation: Clamp.Downward
+        base: trolley
         position: crane.gripperOpen
     }
 
     Clamp {
         id: lowerClamp
 
-        connection: trolley
-        runwayLength: trolley.height / 2
         orientation: Clamp.Upward
+        base: trolley
         position: crane.gripperOpen
     }
 
     Bridge {
         id: bridge
 
-        connection: runwayBeam
-        anchors.right: crane.right
-        runwayLength: runwayBeam.height
-        destination: crane.position >> 1
+        base: runwayBeam
+        position: crane.position >> 1
     }
 
     Trolley {
         id: trolley
 
-        connection: bridge
-        runwayLength: bridge.width / 3
+        base: bridge
         position: crane.position & 1
     }
 }

@@ -3,20 +3,16 @@ import QtQuick 2.14
 Item {
     id: trolley
 
-    property bool position
-    property int runwayLength
-    property Item connection
+    property bool position: false
+    property Item base: parent
+    property int runwayLength: base.width / 3
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    anchors.horizontalCenterOffset: {
-        position ? runwayLength / 2 : -runwayLength / 2
-    }
-
-    Binding on anchors.centerIn {
-        when: connection
-        value: connection
+    anchors {
+        centerIn: base
+        horizontalCenterOffset: position ? runwayLength / 2 : -runwayLength / 2
     }
 
     Behavior on anchors.horizontalCenterOffset {
@@ -28,6 +24,7 @@ Item {
 
     Image {
         id: displayedImage
+
         source: "Trolley.png"
     }
 }

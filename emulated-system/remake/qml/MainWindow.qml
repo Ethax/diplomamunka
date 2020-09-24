@@ -73,6 +73,12 @@ Window {
         y: 123
 
         Component.onCompleted: {
+
+            if (parent === window.contentItem)
+                console.log("Attached to window")
+            else
+                console.log("Parent:", parent)
+
             attachTo(master)
         }
     }
@@ -132,6 +138,50 @@ Window {
         y: 339
         text: qsTr("Destination 7")
         onClicked: crane.position = 7
+    }
+
+    Rectangle {
+        x: 100
+        y: 300
+        width: 50
+        height: 50
+        color: "#000000"
+
+        property int timeUnit: 10
+
+        function animate(destination) {
+            var duration = Math.abs(destination - x) * timeUnit
+
+            animation.stop()
+            animation.to = destination
+            animation.duration = duration
+            animation.start()
+        }
+
+        function stop() {
+            animation.stop()
+        }
+
+        NumberAnimation on x {
+            id: animation
+            stopped: true
+        }
+
+        id: dummy
+    }
+
+    Button {
+        x: 10
+        y: 400
+        text: "Start"
+        onClicked: dummy.animate(300)
+    }
+
+    Button {
+        x: 200
+        y: 400
+        text: "Stop"
+        onClicked: dummy.stop()
     }
 }
 
