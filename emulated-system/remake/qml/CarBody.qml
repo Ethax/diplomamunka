@@ -48,8 +48,6 @@ Item {
 
     NumberAnimation on x {
         id: animation
-
-        stopped: true
     }
 
     Image {

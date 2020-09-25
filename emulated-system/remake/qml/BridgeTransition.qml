@@ -8,7 +8,7 @@ Transition {
     NumberAnimation {
         id: animation
 
-        properties: "anchors.topMargin"
+        property: "anchors.topMargin"
         easing.type: Easing.InOutCubic
     }
 }

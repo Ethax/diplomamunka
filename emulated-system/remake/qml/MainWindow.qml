@@ -2,6 +2,8 @@ import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
 
+import "qrc:/crane"
+
 Window {
     id: window
 
@@ -164,7 +166,6 @@ Window {
 
         NumberAnimation on x {
             id: animation
-            stopped: true
         }
 
         id: dummy

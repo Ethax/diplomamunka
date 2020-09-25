@@ -17,20 +17,18 @@ Item {
         anchors.right: crane.right
     }
 
-    Image {
-        id: rightFork
+    Fork {
+        id: upperFork
 
-        source: "RightFork.png"
-        anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.top: upperClamp.top
+        orientation: OrientedImage.Downward
+        base: upperClamp
     }
 
-    Image {
-        id: leftFork
+    Fork {
+        id: lowerFork
 
-        source: "LeftFork.png"
-        anchors.horizontalCenter: trolley.horizontalCenter
-        anchors.bottom: lowerClamp.bottom
+        orientation: OrientedImage.Upward
+        base: lowerClamp
     }
 
     Item {
@@ -42,7 +40,7 @@ Item {
     Clamp {
         id: upperClamp
 
-        orientation: Clamp.Downward
+        orientation: OrientedImage.Downward
         base: trolley
         position: crane.gripperOpen
     }
@@ -50,7 +48,7 @@ Item {
     Clamp {
         id: lowerClamp
 
-        orientation: Clamp.Upward
+        orientation: OrientedImage.Upward
         base: trolley
         position: crane.gripperOpen
     }

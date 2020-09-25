@@ -27,22 +27,22 @@ Item {
         BridgeState {
             name: "0"
             bridge: bridge
-            position: 2.0 * (runwayLength - height) / 3.0
+            distance: 2.0 * (runwayLength - height) / 3.0
         },
         BridgeState {
             name: "1"
             bridge: bridge
-            position: (runwayLength - height) / 3.0
+            distance: (runwayLength - height) / 3.0
         },
         BridgeState {
             name: "2"
             bridge: bridge
-            position: 0.0
+            distance: 0.0
         },
         BridgeState {
             name: "3"
             bridge: bridge
-            position: runwayLength - height
+            distance: runwayLength - height
         }
     ]
 
