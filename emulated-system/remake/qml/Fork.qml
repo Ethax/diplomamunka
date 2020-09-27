@@ -1,4 +1,5 @@
 import QtQuick 2.14
+import "qrc:/common"
 
 Item {
     id: fork
@@ -13,12 +14,12 @@ Item {
         horizontalCenter: base.horizontalCenter
 
         Binding on bottom {
-            when: orientation === OrientedImage.Upward
+            when: orientation === Orientation.Upward
             value: base.bottom
         }
 
         Binding on top {
-            when: orientation === OrientedImage.Downward
+            when: orientation === Orientation.Downward
             value: base.top
         }
     }

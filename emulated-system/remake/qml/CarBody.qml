@@ -1,6 +1,7 @@
 import QtQuick 2.14
+import "qrc:/common"
 
-Item {
+AttachableItem {
     id: carBody
 
     enum BodyType {
@@ -10,31 +11,12 @@ Item {
     }
 
     property int bodyType: CarBody.TypeOne
-    property int timeUnit: 10
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
-    function attachTo(item) {
-        var newPoint = parent.mapToItem(item, x, y)
-
-        parent = item
-        x = newPoint.x
-        y = newPoint.y
-    }
-
-    function overlaps(item) {
-        var thisRect = mapToItem(null, 0, 0, width, height)
-        var otherRect = item.mapToItem(null, 0, 0, item.width, item.height)
-
-        return thisRect.x < otherRect.x + otherRect.width
-                && otherRect.x < thisRect.x + thisRect.width
-                && thisRect.y < otherRect.y + otherRect.height
-                && otherRect.y < thisRect.y + thisRect.height
-    }
-
-    function animate(destination) {
-        var duration = Math.abs(destination - x) * timeUnit
+    function move(destination) {
+        var duration = Math.abs(destination - x) * 10
 
         animation.stop()
         animation.to = destination

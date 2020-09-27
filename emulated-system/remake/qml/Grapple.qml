@@ -1,7 +1,8 @@
 import QtQuick 2.14
+import "qrc:/common"
 
 Item {
-    id: clamp
+    id: grapple
 
     property alias orientation: displayedImage.orientation
     property bool position: false
@@ -15,22 +16,22 @@ Item {
         horizontalCenter: base.horizontalCenter
 
         Binding on verticalCenterOffset {
-            when: orientation === OrientedImage.Upward
+            when: orientation === Orientation.Upward
             value: position ? runwayLength : 0
         }
 
         Binding on verticalCenter {
-            when: orientation === OrientedImage.Upward
+            when: orientation === Orientation.Upward
             value: base.bottom
         }
 
         Binding on verticalCenterOffset {
-            when: orientation === OrientedImage.Downward
+            when: orientation === Orientation.Downward
             value: position ? -runwayLength : 0
         }
 
         Binding on verticalCenter {
-            when: orientation === OrientedImage.Downward
+            when: orientation === Orientation.Downward
             value: base.top
         }
     }
@@ -44,6 +45,6 @@ Item {
     OrientedImage {
         id: displayedImage
 
-        source: "Clamp.png"
+        source: "Grapple.png"
     }
 }

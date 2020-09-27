@@ -1,22 +1,15 @@
 import QtQuick 2.14
 
 Image {
-    id: displayedImage
-
-    enum Orientation {
-        Downward,
-        Upward
-    }
-
-    property int orientation: OrientedImage.Upward
+    property int orientation: Orientation.Upward
 
     Binding on rotation {
-        when: orientation === OrientedImage.Downward
+        when: orientation === Orientation.Downward
         value: 180
     }
 
     Binding on rotation {
-        when: orientation === OrientedImage.Upward
+        when: orientation === Orientation.Upward
         value: 0
     }
 }

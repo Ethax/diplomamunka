@@ -1,56 +1,67 @@
 import QtQuick 2.14
+import "qrc:/common"
 
 Item {
     id: crane
 
     property int position: 0
-    property bool gripperOpen: false
-    property alias attachPoint: attachPoint
+    property bool grappleOpen: false
 
     implicitHeight: runwayBeam.height
     implicitWidth: bridge.width
 
-    Image {
+    function tryRelease(attachableItem) {
+        if (attachableItem.attachedTo(hook)) {
+            attachableItem.release()
+        }
+    }
+
+    function tryCatch(attachableItem) {
+        if (attachableItem.overlaps(hook)) {
+            attachableItem.attachTo(hook)
+        }
+    }
+
+    RunwayBeam {
         id: runwayBeam
 
-        source: "RunwayBeam.png"
-        anchors.right: crane.right
+        base: crane
     }
 
     Fork {
-        id: upperFork
+        id: leftFork
 
-        orientation: OrientedImage.Downward
-        base: upperClamp
+        orientation: Orientation.Downward
+        base: leftGrapple
     }
 
     Fork {
-        id: lowerFork
+        id: rightFork
 
-        orientation: OrientedImage.Upward
-        base: lowerClamp
+        orientation: Orientation.Upward
+        base: rightGrapple
     }
 
     Item {
-        id: attachPoint
+        id: hook
 
         anchors.centerIn: trolley
     }
 
-    Clamp {
-        id: upperClamp
+    Grapple {
+        id: leftGrapple
 
-        orientation: OrientedImage.Downward
+        orientation: Orientation.Downward
         base: trolley
-        position: crane.gripperOpen
+        position: crane.grappleOpen
     }
 
-    Clamp {
-        id: lowerClamp
+    Grapple {
+        id: rightGrapple
 
-        orientation: OrientedImage.Upward
+        orientation: Orientation.Upward
         base: trolley
-        position: crane.gripperOpen
+        position: crane.grappleOpen
     }
 
     Bridge {
@@ -64,13 +75,6 @@ Item {
         id: trolley
 
         base: bridge
-        position: crane.position & 1
+        raised: crane.position & 1
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

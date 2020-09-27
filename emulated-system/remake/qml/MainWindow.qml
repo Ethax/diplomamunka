@@ -1,7 +1,6 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
-
 import "qrc:/crane"
 
 Window {
@@ -66,22 +65,25 @@ Window {
         id: crane
         x: 503
         y: 57
+        z: 1000
     }
 
     CarBody {
         id: carBody
+
         bodyType: CarBody.TypeOne
-        x: 82
-        y: 123
+        x: 531
+        y: 267
 
-        Component.onCompleted: {
-
-            if (parent === window.contentItem)
-                console.log("Attached to window")
-            else
-                console.log("Parent:", parent)
-
-            attachTo(master)
+        Connections {
+            target: crane
+            onGrappleOpenChanged: {
+                if (crane.grappleOpen) {
+                    crane.tryRelease(carBody)
+                } else {
+                    crane.tryCatch(carBody)
+                }
+            }
         }
     }
 
@@ -101,7 +103,7 @@ Window {
         text: qsTr("Open/Close")
 
         onClicked: {
-            crane.gripperOpen ^= 1
+            crane.grappleOpen ^= 1
         }
     }
 

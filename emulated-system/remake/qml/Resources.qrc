@@ -11,14 +11,19 @@
         <file>Bridge.qml</file>
         <file>BridgeState.qml</file>
         <file>BridgeTransition.qml</file>
-        <file>Clamp.qml</file>
         <file>Crane.qml</file>
-        <file>Clamp.png</file>
         <file>Fork.png</file>
+        <file>Fork.qml</file>
+        <file>Grapple.png</file>
+        <file>Grapple.qml</file>
         <file>RunwayBeam.png</file>
+        <file>RunwayBeam.qml</file>
         <file>Trolley.png</file>
         <file>Trolley.qml</file>
-        <file>Fork.qml</file>
+    </qresource>
+    <qresource prefix="/common">
+        <file>AttachableItem.qml</file>
+        <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
     </qresource>
 </RCC>
