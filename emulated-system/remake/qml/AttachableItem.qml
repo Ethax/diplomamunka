@@ -1,21 +1,12 @@
 import QtQuick 2.14
 
 Item {
-    property Item previousParent: parent
-
     function attachTo(item) {
-        var newPoint = parent.mapToItem(item, x, y)
+        var mappedPosition = parent.mapToItem(item, x, y)
 
-        previousParent = parent
         parent = item
-
-        x = newPoint.x
-        y = newPoint.y
-    }
-
-    function release() {
-        attachTo(previousParent)
-        previousParent = parent
+        x = mappedPosition.x
+        y = mappedPosition.y
     }
 
     function attachedTo(item) {

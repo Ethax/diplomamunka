@@ -3,9 +3,8 @@ import QtQuick 2.14
 Item {
     id: bridge
 
-    property int position: 0
     property Item base: parent
-    property int runwayLength: base.height
+    property int position: 0
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
@@ -27,12 +26,12 @@ Item {
         BridgeState {
             name: "0"
             bridge: bridge
-            distance: 2.0 * (runwayLength - height) / 3.0
+            distance: 2.0 * (base.height - height) / 3.0
         },
         BridgeState {
             name: "1"
             bridge: bridge
-            distance: (runwayLength - height) / 3.0
+            distance: (base.height - height) / 3.0
         },
         BridgeState {
             name: "2"
@@ -42,7 +41,7 @@ Item {
         BridgeState {
             name: "3"
             bridge: bridge
-            distance: runwayLength - height
+            distance: base.height - height
         }
     ]
 

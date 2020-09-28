@@ -4,6 +4,7 @@ import "qrc:/common"
 Item {
     id: crane
 
+    property Item scene: parent
     property int position: 0
     property bool grappleOpen: false
 
@@ -12,7 +13,7 @@ Item {
 
     function tryRelease(attachableItem) {
         if (attachableItem.attachedTo(hook)) {
-            attachableItem.release()
+            attachableItem.attachTo(scene)
         }
     }
 
@@ -31,15 +32,15 @@ Item {
     Fork {
         id: leftFork
 
-        orientation: Orientation.Downward
         base: leftGrapple
+        orientation: Orientation.Downward
     }
 
     Fork {
         id: rightFork
 
-        orientation: Orientation.Upward
         base: rightGrapple
+        orientation: Orientation.Upward
     }
 
     Item {
@@ -51,17 +52,17 @@ Item {
     Grapple {
         id: leftGrapple
 
-        orientation: Orientation.Downward
         base: trolley
-        position: crane.grappleOpen
+        orientation: Orientation.Downward
+        open: crane.grappleOpen
     }
 
     Grapple {
         id: rightGrapple
 
-        orientation: Orientation.Upward
         base: trolley
-        position: crane.grappleOpen
+        orientation: Orientation.Upward
+        open: crane.grappleOpen
     }
 
     Bridge {

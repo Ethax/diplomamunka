@@ -4,8 +4,8 @@ import "qrc:/common"
 Item {
     id: fork
 
-    property alias orientation: displayedImage.orientation
     property Item base: parent
+    property alias orientation: displayedImage.orientation
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width

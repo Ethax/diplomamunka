@@ -3,8 +3,8 @@ import QtQuick 2.14
 Item {
     id: trolley
 
-    property bool raised: false
     property Item base: parent
+    property bool raised: false
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
