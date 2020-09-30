@@ -11,15 +11,15 @@ Item {
     implicitHeight: runwayBeam.height
     implicitWidth: bridge.width
 
-    function tryRelease(attachableItem) {
-        if (attachableItem.attachedTo(hook)) {
-            attachableItem.attachTo(scene)
+    function tryCatch(animatedItem) {
+        if (animatedItem.overlaps(hook)) {
+            animatedItem.attachTo(hook)
         }
     }
 
-    function tryCatch(attachableItem) {
-        if (attachableItem.overlaps(hook)) {
-            attachableItem.attachTo(hook)
+    function tryRelease(animatedItem) {
+        if (animatedItem.attachedTo(hook)) {
+            animatedItem.attachTo(scene)
         }
     }
 

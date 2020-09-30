@@ -5,6 +5,7 @@
         <file>BodyType3.png</file>
         <file>CarBody.qml</file>
         <file>MainWindow.qml</file>
+        <file>ConveyorBelt.qml</file>
     </qresource>
     <qresource prefix="/crane">
         <file>Bridge.png</file>
@@ -22,7 +23,7 @@
         <file>Trolley.qml</file>
     </qresource>
     <qresource prefix="/common">
-        <file>AttachableItem.qml</file>
+        <file>AnimatedItem.qml</file>
         <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
     </qresource>

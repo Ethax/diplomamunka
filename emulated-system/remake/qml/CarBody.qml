@@ -1,7 +1,7 @@
 import QtQuick 2.14
 import "qrc:/common"
 
-AttachableItem {
+AnimatedItem {
     id: carBody
 
     enum BodyType {
@@ -14,23 +14,6 @@ AttachableItem {
 
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
-
-    function move(destination) {
-        var duration = Math.abs(destination - x) * 10
-
-        animation.stop()
-        animation.to = destination
-        animation.duration = duration
-        animation.start()
-    }
-
-    function stop() {
-        animation.stop()
-    }
-
-    NumberAnimation on x {
-        id: animation
-    }
 
     Image {
         id: displayedImage

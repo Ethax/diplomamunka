@@ -1,6 +1,11 @@
 import QtQuick 2.14
 
 Item {
+    id: animatedItem
+
+    signal destinationReached(var animatedItem)
+    signal positionChanged(var animatedItem)
+
     function attachTo(item) {
         var mappedPosition = parent.mapToItem(item, x, y)
 
@@ -22,4 +27,32 @@ Item {
                 && thisRect.y < otherRect.y + otherRect.height
                 && otherRect.y < thisRect.y + thisRect.height
     }
+
+    function move(destination) {
+        var duration = Math.abs(destination - x) * 10
+
+        animation.stop()
+        animation.to = destination
+        animation.duration = duration
+        animation.start()
+    }
+
+    function stop() {
+        animation.stop()
+    }
+
+    onXChanged: positionChanged(this)
+
+    NumberAnimation on x {
+        id: animation
+
+        onFinished: destinationReached(animatedItem)
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

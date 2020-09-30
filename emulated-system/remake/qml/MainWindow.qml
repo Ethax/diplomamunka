@@ -20,45 +20,43 @@ Window {
         }
     }
 
-    Rectangle {
-        id: master
+    ConveyorBelt {
+        id: conveyorBelt2
+        x: conveyorBelt.x + conveyorBelt.width
+        y: 10
+    }
+    ConveyorBelt {
+        id: conveyorBelt
         x: 10
         y: 10
-        width: 50
-        height: 50
-        color: "#00ff00"
+        nextSegment: conveyorBelt2
+    }
 
-        Behavior on x {
-            NumberAnimation {
-                duration: 6000
-                easing.type: Easing.InOutCubic
+    CarBody {
+        id: carBody2
+        x: 10
+        y: 20
 
-                onRunningChanged: {
-                    if (!running) {
-                        master.color = "#ff0000"
-                    }
-                }
-            }
-        }
+        bodyType: CarBody.TypeTwo
+    }
 
-        onXChanged: {
-            if (carBody.overlaps(sensor)) {
-                sensor.color = "#ff0000"
-            } else {
-                sensor.color = "#ffff00"
-            }
+    Button {
+        x: 50
+        y: 100
+        text: qsTr("Convey/Stop")
+
+        onClicked: {
+            conveyorBelt.running ^= 1
+            conveyorBelt2.running ^= 1
         }
     }
 
     Button {
-        id: move
-        x: 50
-        y: 327
-        text: qsTr("Move")
+        x: 100
+        y: 100
+        text: qsTr("Place On")
 
-        onClicked: {
-            master.x = 400
-        }
+        onClicked: conveyorBelt.tryPlaceOn(carBody2)
     }
 
     Crane {
@@ -107,15 +105,6 @@ Window {
         }
     }
 
-    Rectangle {
-        id: sensor
-        x: 257
-        y: 81
-        width: 5
-        height: 200
-        color: "#ffff00"
-    }
-
     Button {
         x: 348
         y: 171
@@ -142,49 +131,6 @@ Window {
         y: 339
         text: qsTr("Destination 7")
         onClicked: crane.position = 7
-    }
-
-    Rectangle {
-        x: 100
-        y: 300
-        width: 50
-        height: 50
-        color: "#000000"
-
-        property int timeUnit: 10
-
-        function animate(destination) {
-            var duration = Math.abs(destination - x) * timeUnit
-
-            animation.stop()
-            animation.to = destination
-            animation.duration = duration
-            animation.start()
-        }
-
-        function stop() {
-            animation.stop()
-        }
-
-        NumberAnimation on x {
-            id: animation
-        }
-
-        id: dummy
-    }
-
-    Button {
-        x: 10
-        y: 400
-        text: "Start"
-        onClicked: dummy.animate(300)
-    }
-
-    Button {
-        x: 200
-        y: 400
-        text: "Stop"
-        onClicked: dummy.stop()
     }
 }
 
