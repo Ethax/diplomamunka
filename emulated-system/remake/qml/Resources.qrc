@@ -27,4 +27,5 @@
         <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
     </qresource>
+    <qresource prefix="/conveyor"/>
 </RCC>

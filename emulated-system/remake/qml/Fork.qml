@@ -27,6 +27,6 @@ Item {
     OrientedImage {
         id: displayedImage
 
-        source: "Fork.png"
+        source: "qrc:/crane/Fork.png"
     }
 }

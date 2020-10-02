@@ -24,6 +24,6 @@ Item {
     Image {
         id: displayedImage
 
-        source: "Trolley.png"
+        source: "qrc:/crane/Trolley.png"
     }
 }

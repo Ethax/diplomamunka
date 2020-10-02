@@ -19,7 +19,7 @@ Item {
     Image {
         id: displayedImage
 
-        source: "Bridge.png"
+        source: "qrc:/crane/Bridge.png"
     }
 
     states: [

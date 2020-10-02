@@ -159,7 +159,6 @@ Window {
                 Component.onCompleted: {
                     if (index > 0) {
                         repeater.itemAt(index - 1).next = this
-                        //repeater.itemAt(index - 1).text += " This is from " + index
                     }
                 }
 

@@ -13,6 +13,6 @@ Item {
     Image {
         id: displayedImage
 
-        source: "RunwayBeam.png"
+        source: "qrc:/crane/RunwayBeam.png"
     }
 }

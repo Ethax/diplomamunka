@@ -44,6 +44,6 @@ Item {
     OrientedImage {
         id: displayedImage
 
-        source: "Grapple.png"
+        source: "qrc:/crane/Grapple.png"
     }
 }
