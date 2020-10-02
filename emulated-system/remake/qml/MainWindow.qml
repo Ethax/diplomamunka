@@ -25,6 +25,7 @@ Window {
         x: conveyorBelt.x + conveyorBelt.width
         y: 10
     }
+
     ConveyorBelt {
         id: conveyorBelt
         x: 10
@@ -41,7 +42,7 @@ Window {
     }
 
     Button {
-        x: 50
+        x: 10
         y: 100
         text: qsTr("Convey/Stop")
 
@@ -52,7 +53,7 @@ Window {
     }
 
     Button {
-        x: 100
+        x: 20 + width
         y: 100
         text: qsTr("Place On")
 
@@ -131,6 +132,53 @@ Window {
         y: 339
         text: qsTr("Destination 7")
         onClicked: crane.position = 7
+    }
+
+    Row {
+        spacing: 5
+
+        Repeater {
+            id: repeater
+            model: 3
+
+            Rectangle {
+                id: rectangle
+
+                property Rectangle next
+                property alias text: text.text
+
+                function hasNext() {
+                    return next !== null
+                }
+
+                height: 20
+                width: 100
+                color: "red"
+                y: 350
+
+                Component.onCompleted: {
+                    if (index > 0) {
+                        repeater.itemAt(index - 1).next = this
+                        //repeater.itemAt(index - 1).text += " This is from " + index
+                    }
+                }
+
+                Text {
+                    id: text
+                    text: "[" + index + "]"
+                    anchors.centerIn: parent
+                }
+            }
+        }
+
+        Component.onCompleted: {
+            for (var i = 0; i < repeater.count; ++i) {
+                var item = repeater.itemAt(i)
+                if (item.hasNext()) {
+                    item.text += " -> " + item.next.text
+                }
+            }
+        }
     }
 }
 
