@@ -73,7 +73,7 @@ Item {
             console.log("I'm here")
             unregister(animatedItem)
 
-            if (nextSegment instanceof ConveyorBelt) {
+            if (nextSegment instanceof ConveyorBelt_Old) {
                 nextSegment.tryPlaceOn(animatedItem)
             } else {
                 animatedItem.attachTo(nextSegment)

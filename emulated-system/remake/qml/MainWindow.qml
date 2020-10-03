@@ -2,6 +2,7 @@ import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
 import "qrc:/crane"
+import "qrc:/common"
 
 Window {
     id: window
@@ -20,13 +21,13 @@ Window {
         }
     }
 
-    ConveyorBelt {
+    ConveyorBelt_Old {
         id: conveyorBelt2
         x: conveyorBelt.x + conveyorBelt.width
         y: 10
     }
 
-    ConveyorBelt {
+    ConveyorBelt_Old {
         id: conveyorBelt
         x: 10
         y: 10
@@ -134,49 +135,60 @@ Window {
         onClicked: crane.position = 7
     }
 
-    Row {
-        spacing: 5
+    HorizontalRepeater {
+        id: repeater
 
-        Repeater {
-            id: repeater
-            model: 3
+        itemCount: 3
 
-            Rectangle {
-                id: rectangle
+        Rectangle {
+            id: rectangle
 
-                property Rectangle next
-                property alias text: text.text
+            property Rectangle next
+            property alias text: text.text
 
-                function hasNext() {
-                    return next !== null
+            function hasNext() {
+                return next !== null
+            }
+
+            height: 20
+            width: 100
+            color: "red"
+            border.color: "black"
+            y: 350 + (10 * index)
+
+            Component.onCompleted: {
+                if (index > 0) {
+                    repeater.itemAt(index - 1).next = this
                 }
+            }
 
-                height: 20
-                width: 100
-                color: "red"
-                y: 350
-
-                Component.onCompleted: {
-                    if (index > 0) {
-                        repeater.itemAt(index - 1).next = this
-                    }
-                }
-
-                Text {
-                    id: text
-                    text: "[" + index + "]"
-                    anchors.centerIn: parent
-                }
+            Text {
+                id: text
+                text: "[" + index + "]"
+                anchors.centerIn: parent
             }
         }
 
         Component.onCompleted: {
-            for (var i = 0; i < repeater.count; ++i) {
+            for (var i = 0; i < repeater.itemCount; ++i) {
                 var item = repeater.itemAt(i)
                 if (item.hasNext()) {
                     item.text += " -> " + item.next.text
                 }
             }
+        }
+    }
+
+    HorizontalRepeater {
+        itemCount: 3
+
+        Rectangle {
+            height: 20
+            width: 100
+            color: "green"
+            border.color: "black"
+
+            y: 340 + (10 * index)
         }
     }
 }
