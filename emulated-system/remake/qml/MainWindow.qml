@@ -139,6 +139,7 @@ Window {
         id: repeater
 
         itemCount: 3
+        spacing: 10
 
         Rectangle {
             id: rectangle
@@ -170,6 +171,8 @@ Window {
         }
 
         Component.onCompleted: {
+            rectangles.itemCount = itemCount
+
             for (var i = 0; i < repeater.itemCount; ++i) {
                 var item = repeater.itemAt(i)
                 if (item.hasNext()) {
@@ -180,16 +183,22 @@ Window {
     }
 
     HorizontalRepeater {
-        itemCount: 3
+        id: rectangles
 
         Rectangle {
-            height: 20
-            width: 100
             color: "green"
             border.color: "black"
 
+            height: repeater.itemAt(index).height
+            width: repeater.itemAt(index).width
+
             y: 340 + (10 * index)
         }
+    }
+
+    Text {
+        id: trial
+        text: "Height: " + repeater.height + "; Width: " + repeater.width
     }
 }
 

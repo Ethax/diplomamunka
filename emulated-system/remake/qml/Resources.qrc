@@ -28,5 +28,7 @@
         <file>OrientedImage.qml</file>
         <file>HorizontalRepeater.qml</file>
     </qresource>
-    <qresource prefix="/conveyor"/>
+    <qresource prefix="/conveyor">
+        <file>ConveyorBelt.qml</file>
+    </qresource>
 </RCC>
