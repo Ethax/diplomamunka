@@ -3,15 +3,14 @@ import QtQuick 2.14
 Item {
     id: animatedItem
 
-    signal destinationReached(var animatedItem)
-    signal positionChanged(var animatedItem)
+    signal destinationReached(var sender)
 
     function attachTo(item) {
         var mappedPosition = parent.mapToItem(item, x, y)
 
-        parent = item
         x = mappedPosition.x
         y = mappedPosition.y
+        parent = item
     }
 
     function attachedTo(item) {
@@ -41,18 +40,9 @@ Item {
         animation.stop()
     }
 
-    onXChanged: positionChanged(this)
-
     NumberAnimation on x {
         id: animation
 
         onFinished: destinationReached(animatedItem)
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-
