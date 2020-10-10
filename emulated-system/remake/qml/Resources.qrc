@@ -5,7 +5,6 @@
         <file>BodyType3.png</file>
         <file>CarBody.qml</file>
         <file>MainWindow.qml</file>
-        <file>ConveyorBelt_Old.qml</file>
     </qresource>
     <qresource prefix="/crane">
         <file>Bridge.png</file>
@@ -29,6 +28,7 @@
         <file>HorizontalRepeater.qml</file>
     </qresource>
     <qresource prefix="/conveyor">
+        <file>ConveyorBelt.png</file>
         <file>ConveyorBelt.qml</file>
         <file>Cell.qml</file>
     </qresource>

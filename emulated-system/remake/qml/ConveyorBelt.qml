@@ -30,7 +30,6 @@ Item {
     HorizontalRepeater {
         id: displayedImages
 
-        spacing: 5
         itemCount: 3
 
         Component.onCompleted: {
@@ -38,11 +37,11 @@ Item {
             cells.itemCount = itemCount
         }
 
-        Rectangle {
-            width: 250
-            height: 75
-            color: "gray"
-            border.color: "black"
+        AnimatedSprite {
+            running: (activeBelts >> index) & 1
+            frameCount: 6
+            frameDuration: 1000
+            source: "qrc:/conveyor/ConveyorBelt.png"
         }
     }
 
