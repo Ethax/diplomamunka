@@ -1,6 +1,5 @@
 import QtQuick 2.14
 import "qrc:/common"
-import "qrc:/"
 
 Item {
     id: conveyorBelt
@@ -9,20 +8,19 @@ Item {
     property int activeBelts: 0
 
     function tryConvey(animatedItem) {
-        for (var i = 0; i < cells.itemCount; ++i) {
-            if (animatedItem.overlaps(cells.itemAt(i))) {
-                animatedItem.attachTo(cells.itemAt(i))
-                break
-            }
+        var cell = cells.getItems().find(animatedItem.overlaps)
+
+        if (cell !== undefined) {
+            animatedItem.attachTo(cell)
         }
     }
 
     function tryLeave(animatedItem) {
-        for (var i = 0; i < cells.itemCount; ++i) {
-            if (animatedItem.attachedTo(cells.itemAt(i))) {
-                animatedItem.stop()
-                animatedItem.attachTo(scene)
-            }
+        var cell = cells.getItems().find(animatedItem.attachedTo)
+
+        if (cell !== undefined) {
+            animatedItem.stop()
+            animatedItem.attachTo(scene)
         }
     }
 
@@ -51,56 +49,12 @@ Item {
     HorizontalRepeater {
         id: cells
 
-        Item {
-            property Item nextCell: scene
-            property bool active: (activeBelts >> index) & 1
-            property var conveyedItems: []
+        Cell {
+            nextCell: scene
+            active: (activeBelts >> index) & 1
 
             height: displayedImages.itemAt(index).height
             width: displayedImages.itemAt(index).width
-
-            function onDestinationReached(item) {
-                item.attachTo(nextCell)
-            }
-
-            onChildrenChanged: {
-                var arrayOfChildren = Array.from(children)
-
-                var removedItems = conveyedItems.filter(function (item) {
-                    return !arrayOfChildren.includes(item)
-                })
-                removedItems.forEach(function (item) {
-                    console.log("Unregister")
-                    item.destinationReached.disconnect(onDestinationReached)
-                })
-
-                var addedItems = arrayOfChildren.filter(function (item) {
-                    return !conveyedItems.includes(item)
-                })
-                addedItems.forEach(function (item) {
-                    console.log("Register")
-                    item.destinationReached.connect(onDestinationReached)
-                })
-
-                conveyedItems = arrayOfChildren
-                activeChanged()
-            }
-
-            onActiveChanged: {
-                if (active) {
-                    conveyedItems.forEach(function (item) {
-                        console.log("Start!")
-                        console.log("[ x:", item.x, "| y:", item.y, "]")
-                        item.move(width - (item.width / 2))
-                    })
-                } else {
-                    conveyedItems.forEach(function (item) {
-                        console.log("Stop!")
-                        console.log("[ x:", item.x, "| y:", item.y, "]")
-                        item.stop()
-                    })
-                }
-            }
 
             Component.onCompleted: {
                 if (index > 0) {

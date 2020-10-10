@@ -30,5 +30,6 @@
     </qresource>
     <qresource prefix="/conveyor">
         <file>ConveyorBelt.qml</file>
+        <file>Cell.qml</file>
     </qresource>
 </RCC>

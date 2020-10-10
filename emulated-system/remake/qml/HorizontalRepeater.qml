@@ -8,6 +8,16 @@ Row {
         return repeater.itemAt(index)
     }
 
+    function getItems() {
+        var output = []
+
+        for (var i = 0; i < itemCount; ++i) {
+            output.push(itemAt(i))
+        }
+
+        return output
+    }
+
     Repeater {
         id: repeater
 
