@@ -8,14 +8,13 @@ Row {
         return repeater.itemAt(index)
     }
 
-    function getItems() {
-        var output = []
-
+    function getItem(predicate) {
         for (var i = 0; i < itemCount; ++i) {
-            output.push(itemAt(i))
+            if (predicate(itemAt(i))) {
+                return itemAt(i)
+            }
         }
-
-        return output
+        return undefined
     }
 
     Repeater {

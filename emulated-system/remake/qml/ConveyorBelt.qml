@@ -8,7 +8,7 @@ Item {
     property int activeBelts: 0
 
     function tryConvey(animatedItem) {
-        var cell = cells.getItems().find(animatedItem.overlaps)
+        var cell = cells.getItem(animatedItem.overlaps)
 
         if (cell !== undefined) {
             animatedItem.attachTo(cell)
@@ -16,7 +16,7 @@ Item {
     }
 
     function tryLeave(animatedItem) {
-        var cell = cells.getItems().find(animatedItem.attachedTo)
+        var cell = cells.getItem(animatedItem.attachedTo)
 
         if (cell !== undefined) {
             animatedItem.stop()
