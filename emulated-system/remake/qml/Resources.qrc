@@ -32,7 +32,5 @@
         <file>Belt.qml</file>
         <file>Cell.qml</file>
         <file>ConveyorBelt.qml</file>
-        <file>Destination.qml</file>
-        <file>Grid.png</file>
     </qresource>
 </RCC>
