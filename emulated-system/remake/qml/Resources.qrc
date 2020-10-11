@@ -33,6 +33,7 @@
         <file>Cell.qml</file>
         <file>ConveyorBelt.qml</file>
         <file>Destination.qml</file>
-        <file>Grid.png</file>
+        <file>SafetyGrid.png</file>
+        <file>SafetyGrid.qml</file>
     </qresource>
 </RCC>

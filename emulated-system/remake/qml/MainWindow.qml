@@ -32,17 +32,17 @@ Window {
 
         Button {
             text: qsTr("Remove")
-            onClicked: belt.tryLeave(carBody)
+            onClicked: conveyorBelt.tryLeave(carBody)
         }
 
         Button {
             text: qsTr("Place")
-            onClicked: belt.tryConvey(carBody)
+            onClicked: conveyorBelt.tryConvey(carBody)
         }
 
         Button {
             text: qsTr("Start/Stop")
-            onClicked: belt.activeBelts ^= 7
+            onClicked: conveyorBelt.activeBelts ^= 7
         }
     }
 
@@ -75,18 +75,12 @@ Window {
         }
     }
 
-    Image {
-        id: grid
-
-        source: "qrc:/conveyor/Grid.png"
-        anchors {
-            left: belt.left
-            verticalCenter: belt.verticalCenter
-        }
+    SafetyGrid {
+        base: conveyorBelt
     }
 
     ConveyorBelt {
-        id: belt
+        id: conveyorBelt
 
         x: 90
         y: 300
@@ -142,8 +136,8 @@ Window {
         id: carBody
 
         bodyType: CarBody.TypeOne
-        x: belt.x - carBody.width / 2
-        y: Math.abs(belt.height / 2 - height / 2) + belt.y
+        x: conveyorBelt.x - carBody.width / 2
+        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
 
         Connections {
             target: crane
