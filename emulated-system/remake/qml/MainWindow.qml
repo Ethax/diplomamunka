@@ -9,6 +9,7 @@ Window {
     id: window
 
     visible: true
+    color: "#dde1e4"
     minimumWidth: 1024
     minimumHeight: 768
 
@@ -74,12 +75,40 @@ Window {
         }
     }
 
+    Image {
+        id: grid
+
+        source: "qrc:/conveyor/Grid.png"
+        anchors {
+            left: belt.left
+            verticalCenter: belt.verticalCenter
+        }
+    }
+
     ConveyorBelt {
         id: belt
 
         x: 90
         y: 300
         beltCount: 3
+    }
+
+    Destination {
+        number: 1
+        x: 701
+        y: 120
+    }
+
+    Destination {
+        number: 2
+        x: 701
+        y: 211
+    }
+
+    Destination {
+        number: 3
+        x: 701
+        y: 394
     }
 
     Crane {
