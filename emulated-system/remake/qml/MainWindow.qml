@@ -22,78 +22,80 @@ Window {
         }
     }
 
-    ConveyorBelt {
-        id: belt
+    Row {
+        id: beltControls
+
         x: 10
         y: 10
-        cellCount: 3
+        spacing: 10
+
+        Button {
+            text: qsTr("Remove")
+            onClicked: belt.tryLeave(carBody)
+        }
+
+        Button {
+            text: qsTr("Place")
+            onClicked: belt.tryConvey(carBody)
+        }
+
+        Button {
+            text: qsTr("Start/Stop")
+            onClicked: belt.activeBelts ^= 7
+        }
     }
 
-    CarBody {
-        id: carBody2
+    Column {
+        id: craneControls
+
+        spacing: 10
+
         x: 10
-        y: Math.abs(belt.height / 2 - height / 2) + belt.y
+        y: beltControls.y + beltControls.height + 10
 
-        bodyType: CarBody.TypeTwo
+        Button {
+            text: qsTr("Destination 5")
+            onClicked: crane.position = 5
+        }
+
+        Button {
+            text: qsTr("Destination 3")
+            onClicked: crane.position = 3
+        }
+
+        Button {
+            text: qsTr("Destination 1")
+            onClicked: crane.position = 1
+        }
+
+        Button {
+            text: qsTr("Destination 7")
+            onClicked: crane.position = 7
+        }
     }
 
-    Button {
-        x: 10
-        y: 100
-        text: qsTr("Remove")
+    ConveyorBelt {
+        id: belt
 
-        onClicked: belt.tryLeave(carBody2)
-    }
-
-    Button {
-        x: 20 + width
-        y: 100
-        text: qsTr("Place")
-
-        onClicked: belt.tryConvey(carBody2)
-    }
-
-    Button {
-        x: 30 + 2 * width
-        y: 100
-        text: qsTr("Start/Stop")
-
-        onClicked: belt.activeBelts ^= 3
+        x: 90
+        y: 300
+        beltCount: 3
     }
 
     Crane {
         id: crane
-        x: 503
-        y: 57
+        x: 696
+        y: 98
         z: 1000
-    }
-
-    CarBody {
-        id: carBody
-
-        bodyType: CarBody.TypeOne
-        x: 531
-        y: 267
-
-        Connections {
-            target: crane
-            onGrappleOpenChanged: {
-                if (crane.grappleOpen) {
-                    crane.tryRelease(carBody)
-                } else {
-                    crane.tryCatch(carBody)
-                }
-            }
-        }
     }
 
     Button {
         x: 676
         y: 507
-        text: qsTr("Move crane")
+        text: qsTr("Move bridge")
 
         onClicked: {
-            crane.position++
+            crane.position ^= 1
         }
     }
 
@@ -107,31 +109,22 @@ Window {
         }
     }
 
-    Button {
-        x: 348
-        y: 171
-        text: qsTr("Destination 5")
-        onClicked: crane.position = 5
-    }
+    CarBody {
+        id: carBody
 
-    Button {
-        x: 348
-        y: 228
-        text: qsTr("Destination 3")
-        onClicked: crane.position = 3
-    }
+        bodyType: CarBody.TypeOne
+        x: belt.x - carBody.width / 2
+        y: Math.abs(belt.height / 2 - height / 2) + belt.y
 
-    Button {
-        x: 348
-        y: 283
-        text: qsTr("Destination 1")
-        onClicked: crane.position = 1
-    }
-
-    Button {
-        x: 348
-        y: 339
-        text: qsTr("Destination 7")
-        onClicked: crane.position = 7
+        Connections {
+            target: crane
+            onGrappleOpenChanged: {
+                if (crane.grappleOpen) {
+                    crane.tryRelease(carBody)
+                } else {
+                    crane.tryCatch(carBody)
+                }
+            }
+        }
     }
 }

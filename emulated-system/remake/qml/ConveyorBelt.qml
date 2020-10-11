@@ -6,7 +6,7 @@ Item {
 
     property Item scene: parent
     property int activeBelts: 0
-    property alias cellCount: belts.itemCount
+    property alias beltCount: belts.itemCount
 
     function tryConvey(animatedItem) {
         var cell = cells.getItem(animatedItem.overlaps)
