@@ -6,6 +6,7 @@ Item {
 
     property Item scene: parent
     property int activeBelts: 0
+    property alias cellCount: belts.itemCount
 
     function tryConvey(animatedItem) {
         var cell = cells.getItem(animatedItem.overlaps)
@@ -24,24 +25,19 @@ Item {
         }
     }
 
-    implicitHeight: displayedImages.height
-    implicitWidth: displayedImages.width
+    implicitHeight: belts.height
+    implicitWidth: belts.width
 
     HorizontalRepeater {
-        id: displayedImages
-
-        itemCount: 3
+        id: belts
 
         Component.onCompleted: {
             cells.spacing = spacing
             cells.itemCount = itemCount
         }
 
-        AnimatedSprite {
-            running: (activeBelts >> index) & 1
-            frameCount: 6
-            frameDuration: 1000
-            source: "qrc:/conveyor/ConveyorBelt.png"
+        Belt {
+            active: (activeBelts >> index) & 1
         }
     }
 
@@ -52,8 +48,8 @@ Item {
             nextCell: scene
             active: (activeBelts >> index) & 1
 
-            height: displayedImages.itemAt(index).height
-            width: displayedImages.itemAt(index).width
+            height: belts.itemAt(index).height
+            width: belts.itemAt(index).width
 
             Component.onCompleted: {
                 if (index > 0) {

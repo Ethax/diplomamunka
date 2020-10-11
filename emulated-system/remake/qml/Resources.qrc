@@ -23,13 +23,14 @@
     </qresource>
     <qresource prefix="/common">
         <file>AnimatedItem.qml</file>
+        <file>HorizontalRepeater.qml</file>
         <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
-        <file>HorizontalRepeater.qml</file>
     </qresource>
     <qresource prefix="/conveyor">
-        <file>ConveyorBelt.png</file>
-        <file>ConveyorBelt.qml</file>
+        <file>Belt.png</file>
+        <file>Belt.qml</file>
         <file>Cell.qml</file>
+        <file>ConveyorBelt.qml</file>
     </qresource>
 </RCC>

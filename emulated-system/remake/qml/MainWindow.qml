@@ -26,6 +26,7 @@ Window {
         id: belt
         x: 10
         y: 10
+        cellCount: 3
     }
 
     CarBody {
@@ -55,9 +56,9 @@ Window {
     Button {
         x: 30 + 2 * width
         y: 100
-        text: qsTr("Start")
+        text: qsTr("Start/Stop")
 
-        onClicked: belt.activeBelts = 3
+        onClicked: belt.activeBelts ^= 3
     }
 
     Crane {
@@ -134,4 +135,3 @@ Window {
         onClicked: crane.position = 7
     }
 }
-
