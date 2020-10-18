@@ -4,6 +4,7 @@ import QtQuick.Controls 2.14
 import "qrc:/crane"
 import "qrc:/common"
 import "qrc:/conveyor"
+import "qrc:/robot"
 
 Window {
     id: window
@@ -21,6 +22,11 @@ Window {
 
             return Math.min(widthRatio, heightRatio)
         }
+    }
+
+    WelderRobot {
+        x: 100
+        y: 10
     }
 
     Row {
