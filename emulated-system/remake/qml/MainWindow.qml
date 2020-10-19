@@ -26,8 +26,14 @@ Window {
 
     WelderRobot {
         id: robot
-        x: 100
-        y: 10
+        x: 150
+        y: 50
+
+        Rectangle {
+            color: "transparent"
+            border.color: "black"
+            anchors.fill: parent
+        }
     }
 
     Row {

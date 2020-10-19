@@ -4,17 +4,19 @@ Item {
 
     id: robot
 
-    Image {
-        id: welderBase
+    implicitHeight: robotArm.height
+    implicitWidth: robotBase.width
 
-        x: 120
-        y: 100
-        source: "WelderBase.png"
+    Image {
+        id: robotBase
+        anchors.centerIn: robot
+        source: "qrc:/robot/PainterBase.png"
     }
 
     RobotArm {
         id: robotArm
-        base: welderBase
+        base: robotBase
+        armType: RobotArm.Painter
     }
 
     state: "0"
@@ -26,7 +28,6 @@ Item {
             PropertyChanges {
                 target: robotArm
                 position: robotArm.height / 5.0
-                rotation: 0
                 toolActive: false
             }
         },
@@ -36,8 +37,7 @@ Item {
             PropertyChanges {
                 target: robotArm
                 position: 0
-                rotation: 45
-                toolActive: false
+                toolActive: true
             }
         }
     ]

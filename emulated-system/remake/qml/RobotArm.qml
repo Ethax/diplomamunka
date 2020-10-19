@@ -10,7 +10,7 @@ Item {
 
     property Item base: parent
     property int armType: RobotArm.Welder
-    property alias toolActive: toolAnimation.visible
+    property bool toolActive: false
     property real position: 0.0
 
     implicitHeight: lowerArm.armLenght * 2
@@ -53,7 +53,7 @@ Item {
             case RobotArm.Painter:
                 return "qrc:/robot/PainterArm.png"
             default:
-                console.exception("Invalid body type:", bodyType)
+                console.exception("Invalid arm type:", armType)
             }
         }
     }
@@ -63,6 +63,7 @@ Item {
 
         frameCount: 4
         frameDuration: 100
+        visible: toolActive
 
         anchors {
             verticalCenter: lowerArm.top
@@ -76,7 +77,14 @@ Item {
             case RobotArm.Painter:
                 return "qrc:/robot/Painting.png"
             default:
-                console.exception("Invalid body type:", bodyType)
+                console.exception("Invalid arm type:", armType)
+            }
+        }
+
+        onVisibleChanged: {
+            if (visible) {
+                paused = !paused
+                paused = !paused
             }
         }
     }
