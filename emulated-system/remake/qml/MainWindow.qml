@@ -24,18 +24,6 @@ Window {
         }
     }
 
-    WelderRobot {
-        id: robot
-        x: 150
-        y: 50
-
-        Rectangle {
-            color: "transparent"
-            border.color: "black"
-            anchors.fill: parent
-        }
-    }
-
     Row {
         id: beltControls
 
@@ -61,6 +49,16 @@ Window {
         Button {
             text: qsTr("Change State")
             onClicked: robot.state = "1"
+        }
+
+        Button {
+            text: qsTr("Change Speed")
+            onClicked: robot.accelerated ^= 1
+        }
+
+        Button {
+            text: qsTr("Pause/Resume")
+            onClicked: robot.suspended ^= 1
         }
     }
 
@@ -148,6 +146,12 @@ Window {
         onClicked: {
             crane.grappleOpen ^= 1
         }
+    }
+
+    WelderRobot {
+        id: robot
+        x: 432
+        y: 364
     }
 
     CarBody {

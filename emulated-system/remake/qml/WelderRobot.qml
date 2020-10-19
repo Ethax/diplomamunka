@@ -1,8 +1,10 @@
 import QtQuick 2.14
 
 Item {
-
     id: robot
+
+    property bool accelerated: true
+    property bool suspended: false
 
     implicitHeight: robotArm.height
     implicitWidth: robotBase.width
@@ -17,9 +19,23 @@ Item {
         id: robotArm
         base: robotBase
         armType: RobotArm.Painter
+
+        onPositionChanged: tempPosition = position
     }
 
     state: "0"
+
+    property string tempState
+    property int tempPosition
+
+    onSuspendedChanged: {
+        if (state === "pause") {
+            state = tempState
+        } else {
+            tempState = state
+            state = "pause"
+        }
+    }
 
     states: [
         State {
@@ -39,14 +55,22 @@ Item {
                 position: 0
                 toolActive: true
             }
+        },
+        State {
+            name: "pause"
+
+            PropertyChanges {
+                target: robotArm
+                position: tempPosition
+            }
         }
     ]
 
     transitions: [
         Transition {
-            NumberAnimation {
+            SmoothedAnimation {
                 properties: "rotation, position"
-                duration: 1000
+                velocity: accelerated ? 20 : 10
             }
         }
     ]
