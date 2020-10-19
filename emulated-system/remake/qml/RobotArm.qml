@@ -10,8 +10,10 @@ Item {
 
     property Item base: parent
     property int armType: RobotArm.Welder
+    property alias toolActive: toolAnimation.visible
+    property real position: 0.0
 
-    implicitHeight: lowerArm.height * 1.75
+    implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
 
     anchors {
@@ -21,24 +23,27 @@ Item {
     Rectangle {
         id: upperArm
 
-        height: lowerArm.height / 7 + lowerArm.anchors.topMargin
-        width: lowerArm.width * 0.6
-
+        width: Math.round(lowerArm.width * 0.6)
         color: "black"
 
         anchors {
-            horizontalCenter: robotArm.horizontalCenter
+            horizontalCenter: lowerArm.horizontalCenter
             top: robotArm.verticalCenter
-            topMargin: -lowerArm.height / 14
+            topMargin: -Math.round(lowerArm.elbowLength / 2)
+            bottom: lowerArm.bottom
+            bottomMargin: Math.round(lowerArm.elbowLength / 2)
         }
     }
 
     Image {
         id: lowerArm
 
+        readonly property int armLenght: Math.round(height * 0.875)
+        readonly property int elbowLength: height - armLenght
+
         anchors {
             top: robotArm.top
-            topMargin: 30
+            topMargin: Math.round(position)
         }
 
         source: {

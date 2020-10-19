@@ -25,6 +25,7 @@ Window {
     }
 
     WelderRobot {
+        id: robot
         x: 100
         y: 10
     }
@@ -49,6 +50,11 @@ Window {
         Button {
             text: qsTr("Start/Stop")
             onClicked: conveyorBelt.activeBelts ^= 7
+        }
+
+        Button {
+            text: qsTr("Change State")
+            onClicked: robot.state = "1"
         }
     }
 
