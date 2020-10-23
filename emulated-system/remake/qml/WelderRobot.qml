@@ -20,18 +20,13 @@ Item {
     RobotArm {
         id: robotArm
 
-        property bool accelerated: true
-        property bool suspended: false
-        property string animatedProperties: "position"
-
-        readonly property string pause: "pause"
-        readonly property string resume: state !== pause ? state : resume
+        property bool completed: true
 
         armType: RobotArm.Painter
         anchors.centerIn: robotBase
-
         state: robot.state
-        onSuspendedChanged: state = suspended ? pause : resume
+
+        onCompletedChanged: console.log(completed ? "Finished" : "Started")
 
         states: [
             State {
@@ -39,7 +34,7 @@ Item {
 
                 PropertyChanges {
                     target: robotArm
-                    position: robotArm.height / 5.0
+                    position: height / 5.0
                     toolActive: false
                 }
             },
@@ -64,33 +59,13 @@ Item {
         ]
 
         transitions: [
-            Transition {
-                SequentialAnimation {
-                    ScriptAction {
-                        script: console.log("Started")
-                    }
-                    SmoothedAnimation {
-                        properties: robotArm.animatedProperties
-                        velocity: robotArm.accelerated ? 20 : 10
-                    }
-                    ScriptAction {
-                        script: {
-                            if (robotArm.state === robotArm.pause) {
-                                console.log("Paused")
-                            } else {
-                                console.log("Finished")
-                            }
-                        }
-                    }
-                }
+            RobotArmTransition {
+                properties: "position"
+                useFastAnimation: robotArm.accelerated
+
+                onStarted: robotArm.completed = false
+                onStopped: robotArm.completed = !suspended
             }
         ]
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.75;height:480;width:640}
-}
-##^##*/
-

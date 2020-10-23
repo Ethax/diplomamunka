@@ -45,5 +45,6 @@
         <file>Welding.png</file>
         <file>WelderRobot.qml</file>
         <file>RobotArm.qml</file>
+        <file>RobotArmTransition.qml</file>
     </qresource>
 </RCC>

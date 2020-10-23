@@ -11,9 +11,16 @@ Item {
     property int armType: RobotArm.Welder
     property bool toolActive: false
     property real position: 0.0
+    property bool accelerated: true
+    property bool suspended: false
+
+    readonly property string pause: "pause"
+    readonly property string resume: state !== pause ? state : resume
 
     implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
+
+    onSuspendedChanged: state = suspended ? pause : resume
 
     Rectangle {
         id: upperArm
