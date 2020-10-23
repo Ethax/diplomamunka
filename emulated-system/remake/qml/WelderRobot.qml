@@ -17,25 +17,12 @@ Item {
 
     RobotArm {
         id: robotArm
-        base: robotBase
-        armType: RobotArm.Painter
 
-        onPositionChanged: tempPosition = position
+        armType: RobotArm.Painter
+        anchors.centerIn: robotBase
     }
 
     state: "0"
-
-    property string tempState
-    property int tempPosition
-
-    onSuspendedChanged: {
-        if (state === "pause") {
-            state = tempState
-        } else {
-            tempState = state
-            state = "pause"
-        }
-    }
 
     states: [
         State {
@@ -58,10 +45,19 @@ Item {
         },
         State {
             name: "pause"
+            id: pause
+
+            readonly property alias stateName: pause.name
+
+            property string pausedState: state === stateName ? pausedState : state
+            property bool paused: suspended
+
+            onPausedChanged: state = state === name ? pausedState : name
 
             PropertyChanges {
                 target: robotArm
-                position: tempPosition
+                position: position
+                toolActive: toolActive
             }
         }
     ]

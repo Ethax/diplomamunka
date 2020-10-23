@@ -8,17 +8,12 @@ Item {
         Painter
     }
 
-    property Item base: parent
     property int armType: RobotArm.Welder
     property bool toolActive: false
     property real position: 0.0
 
     implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
-
-    anchors {
-        centerIn: base
-    }
 
     Rectangle {
         id: upperArm
