@@ -20,7 +20,7 @@ Item {
     RobotArm {
         id: robotArm
 
-        property bool completed: true
+        readonly property bool completed: transition.stopped && !suspended
 
         armType: RobotArm.Painter
         anchors.centerIn: robotBase
@@ -60,11 +60,10 @@ Item {
 
         transitions: [
             RobotArmTransition {
+                id: transition
+
                 properties: "position"
                 useFastAnimation: robotArm.accelerated
-
-                onStarted: robotArm.completed = false
-                onStopped: robotArm.completed = !suspended
             }
         ]
     }

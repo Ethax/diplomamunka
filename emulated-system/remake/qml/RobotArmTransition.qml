@@ -1,25 +1,27 @@
 import QtQuick 2.14
 
 Transition {
-    id: transition
-
     property bool useFastAnimation: false
     property alias properties: animation.properties
-
-    signal started
-    signal stopped
+    readonly property alias stopped: sequence.animationStopped
 
     SequentialAnimation {
+        id: sequence
+
+        property bool animationStopped: true
+
         ScriptAction {
-            script: transition.started()
+            script: sequence.animationStopped = false
         }
+
         SmoothedAnimation {
             id: animation
 
-            velocity: transition.useFastAnimation ? 20 : 10
+            velocity: useFastAnimation ? 20 : 10
         }
+
         ScriptAction {
-            script: transition.stopped()
+            script: sequence.animationStopped = true
         }
     }
 }
