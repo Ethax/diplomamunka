@@ -3,16 +3,10 @@ import QtQuick 2.14
 Item {
     id: robotArm
 
-    enum ArmType {
-        Welder,
-        Painter
-    }
-
-    property int armType: RobotArm.Welder
-    property bool toolActive: false
-    property real position: 0.0
-    property bool accelerated: true
-    property bool suspended: false
+    property int robotType: RobotType.Painter
+    property bool paused: false
+    property alias position: lowerArm.position
+    property alias toolActive: toolAnimation.active
 
     readonly property string pause: "pause"
     readonly property string resume: state !== pause ? state : resume
@@ -20,74 +14,25 @@ Item {
     implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
 
-    onSuspendedChanged: state = suspended ? pause : resume
-
-    Rectangle {
+    UpperArm {
         id: upperArm
 
-        width: Math.round(lowerArm.width * 0.6)
-        color: "black"
-
-        anchors {
-            horizontalCenter: lowerArm.horizontalCenter
-            top: robotArm.verticalCenter
-            topMargin: -Math.round(lowerArm.elbowLength / 2)
-            bottom: lowerArm.bottom
-            bottomMargin: Math.round(lowerArm.elbowLength / 2)
-        }
+        base: robotArm
+        joint: lowerArm
+        offset: lowerArm.elbowLength / 2.0
     }
 
-    Image {
+    LowerArm {
         id: lowerArm
 
-        readonly property int armLenght: Math.round(height * 0.875)
-        readonly property int elbowLength: height - armLenght
-
-        anchors {
-            top: robotArm.top
-            topMargin: Math.round(position)
-        }
-
-        source: {
-            switch (armType) {
-            case RobotArm.Welder:
-                return "qrc:/robot/WelderArm.png"
-            case RobotArm.Painter:
-                return "qrc:/robot/PainterArm.png"
-            default:
-                console.exception("Invalid arm type:", armType)
-            }
-        }
+        base: robotArm
+        robotType: robotArm.robotType
     }
 
-    AnimatedSprite {
+    Tool {
         id: toolAnimation
 
-        frameCount: 4
-        frameDuration: 100
-        visible: toolActive
-
-        anchors {
-            verticalCenter: lowerArm.top
-            horizontalCenter: lowerArm.horizontalCenter
-        }
-
-        source: {
-            switch (armType) {
-            case RobotArm.Welder:
-                return "qrc:/robot/Welding.png"
-            case RobotArm.Painter:
-                return "qrc:/robot/Painting.png"
-            default:
-                console.exception("Invalid arm type:", armType)
-            }
-        }
-
-        onVisibleChanged: {
-            if (visible) {
-                paused = !paused
-                paused = !paused
-            }
-        }
+        base: lowerArm
+        robotType: robotArm.robotType
     }
 }

@@ -37,14 +37,18 @@
         <file>SafetyGrid.qml</file>
     </qresource>
     <qresource prefix="/robot">
+        <file>LowerArm.qml</file>
         <file>PainterArm.png</file>
         <file>PainterBase.png</file>
         <file>Painting.png</file>
-        <file>WelderArm.png</file>
-        <file>WelderBase.png</file>
-        <file>Welding.png</file>
-        <file>WelderRobot.qml</file>
         <file>RobotArm.qml</file>
         <file>RobotArmTransition.qml</file>
+        <file>RobotType.qml</file>
+        <file>Tool.qml</file>
+        <file>UpperArm.qml</file>
+        <file>WelderArm.png</file>
+        <file>WelderBase.png</file>
+        <file>WelderRobot.qml</file>
+        <file>Welding.png</file>
     </qresource>
 </RCC>

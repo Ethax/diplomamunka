@@ -4,7 +4,7 @@ Item {
     id: robot
 
     property alias accelerated: robotArm.accelerated
-    property alias suspended: robotArm.suspended
+    property alias suspended: robotArm.paused
 
     implicitHeight: robotArm.height
     implicitWidth: robotBase.width
@@ -20,13 +20,15 @@ Item {
     RobotArm {
         id: robotArm
 
-        readonly property bool completed: transition.stopped && !suspended
+        property bool accelerated: true
+        readonly property bool completed: transition.stopped && !paused
 
-        armType: RobotArm.Painter
+        robotType: RobotType.Welder
         anchors.centerIn: robotBase
         state: robot.state
 
         onCompletedChanged: console.log(completed ? "Finished" : "Started")
+        onPausedChanged: state = paused ? pause : resume
 
         states: [
             State {
