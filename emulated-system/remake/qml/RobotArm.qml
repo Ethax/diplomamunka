@@ -4,15 +4,15 @@ Item {
     id: robotArm
 
     property int robotType: RobotType.Painter
+    property int position: 0
     property bool paused: false
-    property alias position: lowerArm.position
     property alias toolActive: toolAnimation.active
-
-    readonly property string pause: "pause"
-    readonly property string resume: state !== pause ? state : resume
+    property alias retraction: lowerArm.position
 
     implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
+
+    state: paused ? "pause" : (position & 7)
 
     UpperArm {
         id: upperArm

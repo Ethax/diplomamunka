@@ -48,7 +48,7 @@ Window {
 
         Button {
             text: qsTr("Change State")
-            onClicked: robot.state = "1"
+            onClicked: robot.position++
         }
 
         Button {
@@ -148,10 +148,11 @@ Window {
         }
     }
 
-    WelderRobot {
+    PainterRobot {
         id: robot
         x: 432
         y: 364
+        position: 0
     }
 
     CarBody {

@@ -48,7 +48,8 @@
         <file>UpperArm.qml</file>
         <file>WelderArm.png</file>
         <file>WelderBase.png</file>
-        <file>WelderRobot.qml</file>
+        <file>PainterRobot.qml</file>
         <file>Welding.png</file>
+        <file>PainterArm.qml</file>
     </qresource>
 </RCC>

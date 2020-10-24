@@ -5,10 +5,10 @@ Item {
 
     property Item base: parent
     property int robotType: RobotType.Painter
-    property alias active: displayedImage.visible
+    property bool active: false
 
-    implicitHeight: displayedImage.height
-    implicitWidth: displayedImage.width
+    implicitHeight: displayedAnimation.height
+    implicitWidth: displayedAnimation.width
 
     anchors {
         verticalCenter: base.top
@@ -16,10 +16,11 @@ Item {
     }
 
     AnimatedSprite {
-        id: displayedImage
+        id: displayedAnimation
 
         frameCount: 4
         frameDuration: 100
+        visible: active
 
         source: {
             switch (robotType) {

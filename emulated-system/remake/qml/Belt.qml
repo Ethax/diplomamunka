@@ -6,11 +6,11 @@ Item {
 
     property bool active: false
 
-    implicitHeight: displayedImage.height
-    implicitWidth: displayedImage.width
+    implicitHeight: displayedAnimation.height
+    implicitWidth: displayedAnimation.width
 
     AnimatedSprite {
-        id: displayedImage
+        id: displayedAnimation
 
         running: active
         currentFrame: running ? currentFrame : 0
