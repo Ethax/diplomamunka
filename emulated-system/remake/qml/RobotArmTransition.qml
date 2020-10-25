@@ -5,23 +5,33 @@ Transition {
     property alias properties: animation.properties
     readonly property alias stopped: sequence.animationStopped
 
+    property real startTime: 0
+
     SequentialAnimation {
         id: sequence
 
         property bool animationStopped: true
 
         ScriptAction {
-            script: sequence.animationStopped = false
+            script: {
+                console.log("Transition entered")
+
+                startTime = Date.now()
+                sequence.animationStopped = false
+            }
         }
 
-        SmoothedAnimation {
+        NumberAnimation {
             id: animation
 
-            velocity: useFastAnimation ? 20 : 10
+            duration: useFastAnimation ? 500 : 4000
         }
 
         ScriptAction {
-            script: sequence.animationStopped = true
+            script: {
+                console.log("Transition leaved")
+                sequence.animationStopped = true
+            }
         }
     }
 }
