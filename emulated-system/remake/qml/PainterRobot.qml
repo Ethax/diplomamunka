@@ -14,7 +14,7 @@ Item {
         id: robotBase
 
         source: "qrc:/robot/PainterBase.png"
-        anchors.centerIn: painterRobot
+        anchors.verticalCenter: painterRobot.verticalCenter
     }
 
     PainterArm {

@@ -12,7 +12,6 @@ RobotArm {
     robotType: RobotType.Painter
 
     anchors {
-        verticalCenter: base.verticalCenter
         left: base.left
         leftMargin: Math.round(distance)
     }
@@ -86,13 +85,13 @@ RobotArm {
             id: pause
             name: "pause"
 
-            property real currentDistance: paused ? currentDistance : distance
-            property real currentRetraction: paused ? currentRetraction : retraction
+            readonly property real realDistance: !paused ? distance : realDistance
+            readonly property real realRetraction: !paused ? retraction : realRetraction
 
             PropertyChanges {
                 target: painterArm
-                retraction: pause.currentRetraction
-                distance: pause.currentDistance
+                retraction: pause.realRetraction
+                distance: pause.realDistance
             }
         }
     ]

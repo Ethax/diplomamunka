@@ -17,7 +17,7 @@ Transition {
         SmoothedAnimation {
             id: animation
 
-            velocity: useFastAnimation ? 20 : 10
+            velocity: useFastAnimation ? 60 : 20
         }
 
         ScriptAction {

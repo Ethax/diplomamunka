@@ -19,7 +19,7 @@ Item {
 
         base: robotArm
         joint: lowerArm
-        offset: lowerArm.elbowLength / 2.0
+        offset: lowerArm.elbowLength / 2
     }
 
     LowerArm {
