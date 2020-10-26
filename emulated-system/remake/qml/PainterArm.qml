@@ -83,12 +83,16 @@ RobotArm {
             }
         },
         State {
+            id: pause
             name: "pause"
+
+            property real currentDistance: paused ? currentDistance : distance
+            property real currentRetraction: paused ? currentRetraction : retraction
 
             PropertyChanges {
                 target: painterArm
-                retraction: retraction
-                distance: distance
+                retraction: pause.currentRetraction
+                distance: pause.currentDistance
             }
         }
     ]
@@ -99,6 +103,9 @@ RobotArm {
 
             properties: "retraction, distance"
             useFastAnimation: painterArm.accelerated
+        },
+        Transition {
+            to: "pause"
         }
     ]
 }
