@@ -17,12 +17,6 @@ RobotArm {
         leftMargin: Math.round(distance)
     }
 
-    onAcceleratedChanged: {
-        console.log("Accelerated:", accelerated)
-        paused = !paused
-        paused = !paused
-    }
-
     states: [
         State {
             name: "0" // HOME
@@ -105,34 +99,6 @@ RobotArm {
 
             properties: "retraction, distance"
             useFastAnimation: painterArm.accelerated
-        },
-        Transition {
-            id: pause
-
-            property real remainingTime: 0
-
-            to: "pause"
-            reversible: true
-
-            NumberAnimation {
-                properties: "retraction, distance"
-
-                duration: {
-                    if (state === "pause") {
-                        console.log("Pause entered")
-
-                        var desired = painterArm.accelerated ? 500 : 4000
-                        var elapsed = Date.now() - transition.startTime
-
-                        pause.remainingTime = Math.max(0, desired - elapsed)
-                        return 0
-                    } else {
-                        console.log("Pause leaved")
-
-                        return Math.round(pause.remainingTime)
-                    }
-                }
-            }
         }
     ]
 }
