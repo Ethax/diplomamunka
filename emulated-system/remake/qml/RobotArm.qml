@@ -4,10 +4,15 @@ Item {
     id: robotArm
 
     property int robotType: RobotType.Painter
-    property int position: 0
+
+    property bool accelerated: false
     property bool paused: false
-    property alias toolActive: toolAnimation.active
-    property alias retraction: lowerArm.position
+    property int position: 0
+    property bool toolActive: false
+    property bool completed: true
+
+    property real distance: 0.0
+    property real lowering: 0.0
 
     implicitHeight: lowerArm.armLenght * 2
     implicitWidth: lowerArm.width
@@ -27,6 +32,7 @@ Item {
 
         base: robotArm
         robotType: robotArm.robotType
+        lowering: robotArm.lowering
     }
 
     Tool {
@@ -34,5 +40,15 @@ Item {
 
         base: lowerArm
         robotType: robotArm.robotType
+        active: robotArm.toolActive
     }
+
+    transitions: [
+        RobotMotionTransition {
+            robotArm: robotArm
+        },
+        RobotPauseTransition {
+            robotArm: robotArm
+        }
+    ]
 }

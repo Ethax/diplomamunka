@@ -40,16 +40,16 @@
         <file>LowerArm.qml</file>
         <file>PainterArm.png</file>
         <file>PainterBase.png</file>
+        <file>PainterRobot.qml</file>
         <file>Painting.png</file>
         <file>RobotArm.qml</file>
-        <file>RobotArmTransition.qml</file>
+        <file>RobotMotionTransition.qml</file>
+        <file>RobotPauseTransition.qml</file>
         <file>RobotType.qml</file>
         <file>Tool.qml</file>
         <file>UpperArm.qml</file>
         <file>WelderArm.png</file>
         <file>WelderBase.png</file>
-        <file>PainterRobot.qml</file>
         <file>Welding.png</file>
-        <file>PainterArm.qml</file>
     </qresource>
 </RCC>

@@ -5,7 +5,7 @@ Item {
 
     property Item base: parent
     property int robotType: RobotType.Painter
-    property real position: 0.0
+    property real lowering: 0.0
 
     readonly property int armLenght: Math.round(height * 0.875)
     readonly property int elbowLength: height - armLenght
@@ -15,7 +15,7 @@ Item {
 
     anchors {
         top: base.top
-        topMargin: Math.round(position)
+        topMargin: Math.round(lowering)
     }
 
     Image {
