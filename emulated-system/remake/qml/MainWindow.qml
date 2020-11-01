@@ -48,17 +48,17 @@ Window {
 
         Button {
             text: qsTr("Change State")
-            onClicked: robot.position++
+            onClicked: robot2.position++
         }
 
         Button {
             text: qsTr("Change Speed")
-            onClicked: robot.accelerated ^= 1
+            onClicked: robot2.accelerated ^= 1
         }
 
         Button {
             text: qsTr("Pause/Resume")
-            onClicked: robot.suspended ^= 1
+            onClicked: robot2.suspended ^= 1
         }
     }
 
@@ -153,6 +153,19 @@ Window {
         x: 432
         y: 364
         position: 0
+    }
+
+    WelderRobot {
+        id: robot2
+        x: 208
+        y: 354
+        position: 0
+
+        //        Rectangle {
+        //            anchors.fill: parent
+        //            border.color: "black"
+        //            color: "transparent"
+        //        }
     }
 
     CarBody {

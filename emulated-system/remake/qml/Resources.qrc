@@ -50,6 +50,7 @@
         <file>UpperArm.qml</file>
         <file>WelderArm.png</file>
         <file>WelderBase.png</file>
+        <file>WelderRobot.qml</file>
         <file>Welding.png</file>
     </qresource>
 </RCC>
