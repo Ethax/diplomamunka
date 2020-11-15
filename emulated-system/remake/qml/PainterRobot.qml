@@ -3,6 +3,8 @@ import QtQuick 2.14
 Item {
     id: painterRobot
 
+    property int number: 0
+
     property alias accelerated: painterArm.accelerated
     property alias suspended: painterArm.paused
     property alias position: painterArm.position

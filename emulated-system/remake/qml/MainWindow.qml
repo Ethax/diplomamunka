@@ -48,17 +48,22 @@ Window {
 
         Button {
             text: qsTr("Change State")
-            onClicked: robot2.position++
+            onClicked: robotController.position++
         }
 
         Button {
             text: qsTr("Change Speed")
-            onClicked: robot2.accelerated ^= 1
+            onClicked: robotController.accelerated ^= 1
         }
 
         Button {
             text: qsTr("Pause/Resume")
-            onClicked: robot2.suspended ^= 1
+            onClicked: robotController.suspended ^= 1
+        }
+
+        Button {
+            text: qsTr("Enable")
+            onDownChanged: robotController.enabled = down
         }
     }
 
@@ -156,29 +161,22 @@ Window {
     RobotController {
         id: robotController
 
-        robots: [robot, robot2]
-
         onCompletedChanged: console.log("Completed", completed)
-    }
+        robotNumber: 1
 
-    PainterRobot {
-        id: robot
-        x: 432
-        y: 364
-        position: 0
-    }
+        WelderRobot {
+            number: 1
+            x: 208
+            y: 354
+            position: 0
+        }
 
-    WelderRobot {
-        id: robot2
-        x: 208
-        y: 354
-        position: 0
-
-        //        Rectangle {
-        //            anchors.fill: parent
-        //            border.color: "black"
-        //            color: "transparent"
-        //        }
+        PainterRobot {
+            number: 1
+            x: 432
+            y: 364
+            position: 0
+        }
     }
 
     CarBody {

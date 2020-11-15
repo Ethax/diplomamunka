@@ -3,6 +3,8 @@ import QtQuick 2.14
 Item {
     id: welderRobot
 
+    property int number: 0
+
     property alias accelerated: welderArm.accelerated
     property alias suspended: welderArm.paused
     property alias position: welderArm.position

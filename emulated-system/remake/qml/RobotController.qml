@@ -1,10 +1,9 @@
 import QtQuick 2.14
 
 Item {
-    property var robots: []
     property int robotNumber: 0
     property bool enabled: false
-    property real risingTime: 0
+    property real enableTime: 0
 
     property bool accelerated: false
     property bool suspended: false
@@ -24,18 +23,15 @@ Item {
     }
 
     onEnabledChanged: {
-        if (typeof robots[robotNumber] === undefined) {
-            console.exception("Invalid robot number:", robotNumber)
-            return
-        }
-
         if (enabled) {
-            risingTime = Date.now()
-        } else if (Date.now() - risingTime > 50) {
-            robots[robotNumber].accelerated = accelerated
-            robots[robotNumber].suspended = suspended
-            robots[robotNumber].position = position
-            robots[robotNumber].toolActive = toolActive
+            enableTime = Date.now()
+        } else if (Date.now() - enableTime > 50) {
+            getSelectedRobots().forEach(function (robot) {
+                robot.accelerated = accelerated
+                robot.suspended = suspended
+                robot.position = position
+                robot.toolActive = toolActive
+            })
         }
     }
 }
