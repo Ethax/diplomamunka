@@ -43,6 +43,7 @@
         <file>PainterRobot.qml</file>
         <file>Painting.png</file>
         <file>RobotArm.qml</file>
+        <file>RobotController.qml</file>
         <file>RobotMotionTransition.qml</file>
         <file>RobotPauseTransition.qml</file>
         <file>RobotType.qml</file>

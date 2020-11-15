@@ -103,22 +103,27 @@ Window {
         beltCount: 3
     }
 
-    Destination {
-        number: 1
-        x: 701
-        y: 120
+    Repeater {
+        id: destinations
+
+        model: [Qt.point(701, 120), Qt.point(701, 211), Qt.point(701, 394)]
+
+        Destination {
+            number: index + 1
+            x: modelData.x
+            y: modelData.y
+        }
     }
 
-    Destination {
-        number: 2
-        x: 701
-        y: 211
-    }
+    Repeater {
+        id: carBodies
 
-    Destination {
-        number: 3
-        x: 701
-        y: 394
+        model: [CarBody.TypeOne, CarBody.TypeTwo, CarBody.TypeThree]
+
+        CarBody {
+            bodyType: modelData
+            visible: false
+        }
     }
 
     Crane {
@@ -146,6 +151,14 @@ Window {
         onClicked: {
             crane.grappleOpen ^= 1
         }
+    }
+
+    RobotController {
+        id: robotController
+
+        robots: [robot, robot2]
+
+        onCompletedChanged: console.log("Completed", completed)
     }
 
     PainterRobot {

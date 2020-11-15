@@ -36,7 +36,7 @@ Item {
         robotType: RobotType.Painter
 
         anchors {
-            left: robotBase.left
+            left: painterRobot.left
             leftMargin: Math.round(painterArm.distance)
         }
 
