@@ -8,11 +8,14 @@ Item {
     property int activeBelts: 0
     property alias beltCount: belts.itemCount
 
+    readonly property alias lastBodyType: cells.lastBodyType
+
     function tryConvey(animatedItem) {
         var cell = cells.getItem(animatedItem.overlaps)
 
         if (cell !== undefined) {
             animatedItem.attachTo(cell)
+            cells.lastBodyType = animatedItem.bodyType
         }
     }
 
@@ -44,6 +47,10 @@ Item {
     HorizontalRepeater {
         id: cells
 
+        property int lastBodyType: BodyType.None
+        property int arrivalSensors: 0 // arrivals in cells vagy valami ilyen
+        property int destinationSensors: 0 // entrance and destination sensors
+
         Cell {
             nextCell: scene
             active: (activeBelts >> index) & 1
@@ -54,6 +61,20 @@ Item {
             Component.onCompleted: {
                 if (index > 0) {
                     cells.itemAt(index - 1).nextCell = this
+                }
+            }
+
+            Binding {
+                target: cells
+                property: "arrivalSensors"
+                value: {
+                    var bitMask = 1 << index
+
+                    if (arriving) {
+                        return cells.arrivalSensors | bitMask
+                    } else {
+                        return cells.arrivalSensors & ~bitMask
+                    }
                 }
             }
         }

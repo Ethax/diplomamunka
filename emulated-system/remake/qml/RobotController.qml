@@ -1,9 +1,11 @@
 import QtQuick 2.14
+import "qrc:/common"
 
 Item {
+    id: robotController
+
     property int robotNumber: 0
     property bool enabled: false
-    property real enableTime: 0
 
     property bool accelerated: false
     property bool suspended: false
@@ -24,8 +26,8 @@ Item {
 
     onEnabledChanged: {
         if (enabled) {
-            enableTime = Date.now()
-        } else if (Date.now() - enableTime > 50) {
+            stopwatch.reset()
+        } else if (stopwatch.hasExpired(50)) {
             getSelectedRobots().forEach(function (robot) {
                 robot.accelerated = accelerated
                 robot.suspended = suspended
@@ -33,5 +35,9 @@ Item {
                 robot.toolActive = toolActive
             })
         }
+    }
+
+    Stopwatch {
+        id: stopwatch
     }
 }

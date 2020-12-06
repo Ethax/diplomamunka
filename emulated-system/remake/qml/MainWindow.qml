@@ -123,7 +123,7 @@ Window {
     Repeater {
         id: carBodies
 
-        model: [CarBody.TypeOne, CarBody.TypeTwo, CarBody.TypeThree]
+        model: [BodyType.One, BodyType.Two, BodyType.Three]
 
         CarBody {
             bodyType: modelData
@@ -182,7 +182,7 @@ Window {
     CarBody {
         id: carBody
 
-        bodyType: CarBody.TypeOne
+        bodyType: BodyType.One
         x: conveyorBelt.x - carBody.width / 2
         y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
 
