@@ -48,8 +48,8 @@ Item {
         id: cells
 
         property int lastBodyType: BodyType.None
-        property int arrivalSensors: 0 // arrivals in cells vagy valami ilyen
-        property int destinationSensors: 0 // entrance and destination sensors
+        property int detectedEntries: 0
+        property int detectedArrivals: 0
 
         Cell {
             nextCell: scene
@@ -66,14 +66,28 @@ Item {
 
             Binding {
                 target: cells
-                property: "arrivalSensors"
+                property: "detectedEntries"
                 value: {
                     var bitMask = 1 << index
 
-                    if (arriving) {
-                        return cells.arrivalSensors | bitMask
+                    if (itemEntered) {
+                        return cells.detectedEntries | bitMask
                     } else {
-                        return cells.arrivalSensors & ~bitMask
+                        return cells.detectedEntries & ~bitMask
+                    }
+                }
+            }
+
+            Binding {
+                target: cells
+                property: "detectedArrivals"
+                value: {
+                    var bitMask = 1 << index
+
+                    if (itemArrived) {
+                        return cells.detectedArrivals | bitMask
+                    } else {
+                        return cells.detectedArrivals & ~bitMask
                     }
                 }
             }

@@ -6,7 +6,19 @@ Item {
 
     property Item nextCell: parent
     property bool active: false
+    property bool itemEntered: false
+    property bool itemArrived: false
     property var conveyedItems: []
+
+    function onPositionChanged() {
+        itemEntered = false
+        itemArrived = false
+
+        conveyedItems.forEach(function (item) {
+            itemEntered |= item.overlaps(/* entrySensor */ )
+            itemArrived |= item.overlaps(/* arrivalSensor */ )
+        })
+    }
 
     function onDestinationReached(item) {
         item.attachTo(nextCell)
@@ -18,6 +30,7 @@ Item {
         })
 
         addedItems.forEach(function (item) {
+            item.xChanged.connect(onPositionChanged)
             item.destinationReached.connect(onDestinationReached)
         })
     }
@@ -28,6 +41,7 @@ Item {
         })
 
         removedItems.forEach(function (item) {
+            item.xChanged.disconnect(onPositionChanged)
             item.destinationReached.disconnect(onDestinationReached)
         })
     }
