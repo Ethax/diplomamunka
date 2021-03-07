@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/">
+        <file>MainWindow.qml</file>
+    </qresource>
+    <qresource prefix="/body">
         <file>BodyType1.png</file>
         <file>BodyType2.png</file>
         <file>BodyType3.png</file>
         <file>CarBody.qml</file>
-        <file>MainWindow.qml</file>
         <file>BodyType.qml</file>
     </qresource>
     <qresource prefix="/crane">
@@ -37,6 +39,7 @@
         <file>Destination.qml</file>
         <file>SafetyGrid.png</file>
         <file>SafetyGrid.qml</file>
+        <file>Sensor.qml</file>
     </qresource>
     <qresource prefix="/robot">
         <file>LowerArm.qml</file>

@@ -1,6 +1,7 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
+import "qrc:/body"
 import "qrc:/crane"
 import "qrc:/common"
 import "qrc:/conveyor"

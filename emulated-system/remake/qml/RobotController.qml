@@ -13,27 +13,25 @@ Item {
     property bool toolActive: false
 
     readonly property bool completed: {
-        return getSelectedRobots().every(function (robot) {
-            return robot.completed
-        })
+        selectedRobots.every(robot => robot.completed)
     }
 
-    function getSelectedRobots() {
-        return Array.from(children).filter(function (robot) {
-            return robot.number === robotNumber
-        })
+    readonly property var selectedRobots: {
+        Array.from(children).filter(robot => robot.number === robotNumber)
+    }
+
+    function operate(robot) {
+        robot.accelerated = accelerated
+        robot.suspended = suspended
+        robot.position = position
+        robot.toolActive = toolActive
     }
 
     onEnabledChanged: {
         if (enabled) {
             stopwatch.reset()
         } else if (stopwatch.hasExpired(50)) {
-            getSelectedRobots().forEach(function (robot) {
-                robot.accelerated = accelerated
-                robot.suspended = suspended
-                robot.position = position
-                robot.toolActive = toolActive
-            })
+            selectedRobots.forEach(operate)
         }
     }
 

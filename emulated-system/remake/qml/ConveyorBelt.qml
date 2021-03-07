@@ -1,5 +1,6 @@
 import QtQuick 2.14
 import "qrc:/common"
+import "qrc:/body"
 
 Item {
     id: conveyorBelt
@@ -64,31 +65,23 @@ Item {
                 }
             }
 
-            Binding {
-                target: cells
-                property: "detectedEntries"
-                value: {
-                    var bitMask = 1 << index
+            onItemEnteredChanged: {
+                var bitMask = 1 << index
 
-                    if (itemEntered) {
-                        return cells.detectedEntries | bitMask
-                    } else {
-                        return cells.detectedEntries & ~bitMask
-                    }
+                if (itemEntered) {
+                    return cells.detectedEntries | bitMask
+                } else {
+                    return cells.detectedEntries & ~bitMask
                 }
             }
 
-            Binding {
-                target: cells
-                property: "detectedArrivals"
-                value: {
-                    var bitMask = 1 << index
+            onItemArrivedChanged: {
+                var bitMask = 1 << index
 
-                    if (itemArrived) {
-                        return cells.detectedArrivals | bitMask
-                    } else {
-                        return cells.detectedArrivals & ~bitMask
-                    }
+                if (itemArrived) {
+                    return cells.detectedArrivals | bitMask
+                } else {
+                    return cells.detectedArrivals & ~bitMask
                 }
             }
         }

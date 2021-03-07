@@ -3,7 +3,7 @@ import QtQuick 2.14
 Item {
     id: animatedItem
 
-    signal destinationReached(var sender)
+    signal moveEnded(var sender)
 
     function attachTo(item) {
         var mappedPosition = parent.mapToItem(item, x, y)
@@ -43,6 +43,6 @@ Item {
     NumberAnimation on x {
         id: animation
 
-        onFinished: destinationReached(animatedItem)
+        onFinished: moveEnded(animatedItem)
     }
 }

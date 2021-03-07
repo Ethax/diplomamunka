@@ -1,70 +1,76 @@
 import QtQuick 2.14
-import "qrc:/common"
+import "qrc:/body"
 
 Item {
     id: cell
 
     property Item nextCell: parent
     property bool active: false
-    property bool itemEntered: false
-    property bool itemArrived: false
     property var conveyedItems: []
 
-    function onPositionChanged() {
-        itemEntered = false
-        itemArrived = false
-
-        conveyedItems.forEach(function (item) {
-            itemEntered |= item.overlaps(/* entrySensor */ )
-            itemArrived |= item.overlaps(/* arrivalSensor */ )
-        })
+    property bool itemEntered: {
+        conveyedItems.some(item => entrySensor.detects(item))
     }
 
-    function onDestinationReached(item) {
+    property bool itemArrived: {
+        conveyedItems.some(item => arrivalSensor.detects(item))
+    }
+
+    function onMoveEnded(item) {
         item.attachTo(nextCell)
     }
 
-    function registerAddedItems(actualChildren) {
-        var addedItems = actualChildren.filter(function (item) {
-            return !conveyedItems.includes(item)
-        })
+    function registerAddedItems(items) {
+        var addedItems = items.filter(item => !conveyedItems.includes(item))
 
-        addedItems.forEach(function (item) {
-            item.xChanged.connect(onPositionChanged)
-            item.destinationReached.connect(onDestinationReached)
-        })
+        addedItems.forEach(item => item.moveEnded.connect(onMoveEnded))
     }
 
-    function unregisterRemovedItems(actualChildren) {
-        var removedItems = conveyedItems.filter(function (item) {
-            return !actualChildren.includes(item)
-        })
+    function unregisterRemovedItems(items) {
+        var removedItems = conveyedItems.filter(item => !items.includes(item))
 
-        removedItems.forEach(function (item) {
-            item.xChanged.disconnect(onPositionChanged)
-            item.destinationReached.disconnect(onDestinationReached)
-        })
+        removedItems.forEach(item => item.moveEnded.disconnect(onMoveEnded))
     }
 
     onChildrenChanged: {
-        var actualChildren = Array.from(children)
+        var items = Array.from(children).filter(item => item instanceof CarBody)
 
-        unregisterRemovedItems(actualChildren)
-        registerAddedItems(actualChildren)
+        unregisterRemovedItems(items)
+        registerAddedItems(items)
 
-        conveyedItems = actualChildren
+        conveyedItems = items
         activeChanged()
     }
 
     onActiveChanged: {
         if (active) {
-            conveyedItems.forEach(function (item) {
-                item.move(width - (item.width / 2))
-            })
+            conveyedItems.forEach(item => item.move(width - item.width / 2))
         } else {
-            conveyedItems.forEach(function (item) {
-                item.stop()
-            })
+            conveyedItems.forEach(item => item.stop())
+        }
+    }
+
+    Sensor {
+        id: entrySensor
+
+        active: itemEntered
+        activeColor: "yellow"
+
+        anchors {
+            left: cell.left
+            leftMargin: 10
+        }
+    }
+
+    Sensor {
+        id: arrivalSensor
+
+        active: itemArrived
+        activeColor: "green"
+
+        anchors {
+            horizontalCenter: cell.horizontalCenter
+            horizontalCenterOffset: 10
         }
     }
 }
