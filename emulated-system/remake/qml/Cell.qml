@@ -7,17 +7,11 @@ Item {
     property Item nextCell: parent
     property bool active: false
     property var conveyedItems: []
-
-    property bool itemEntered: {
-        conveyedItems.some(item => entrySensor.detects(item))
-    }
-
-    property bool itemArrived: {
-        conveyedItems.some(item => arrivalSensor.detects(item))
-    }
+    readonly property alias itemEntered: entrySensor.active
+    readonly property alias itemArrived: arrivalSensor.active
 
     function onMoveEnded(item) {
-        item.attachTo(nextCell)
+        item.attachTo(nextCell) // TODO: make undetectable before attaching
     }
 
     function registerAddedItems(items) {
@@ -53,24 +47,24 @@ Item {
     Sensor {
         id: entrySensor
 
-        active: itemEntered
         activeColor: "yellow"
+        active: conveyedItems.some(detects)
 
         anchors {
             left: cell.left
-            leftMargin: 10
+            leftMargin: Math.round(cell.width / 5.0)
         }
     }
 
     Sensor {
         id: arrivalSensor
 
-        active: itemArrived
         activeColor: "green"
+        active: conveyedItems.some(detects)
 
         anchors {
-            horizontalCenter: cell.horizontalCenter
-            horizontalCenterOffset: 10
+            right: cell.right
+            rightMargin: Math.round(cell.width / 4.0)
         }
     }
 }

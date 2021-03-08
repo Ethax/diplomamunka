@@ -69,20 +69,24 @@ Item {
                 var bitMask = 1 << index
 
                 if (itemEntered) {
-                    return cells.detectedEntries | bitMask
+                    cells.detectedEntries |= bitMask
                 } else {
-                    return cells.detectedEntries & ~bitMask
+                    cells.detectedEntries &= ~bitMask
                 }
+
+                console.log("Detected Entries:", cells.detectedEntries)
             }
 
             onItemArrivedChanged: {
                 var bitMask = 1 << index
 
                 if (itemArrived) {
-                    return cells.detectedArrivals | bitMask
+                    cells.detectedArrivals |= bitMask
                 } else {
-                    return cells.detectedArrivals & ~bitMask
+                    cells.detectedArrivals &= ~bitMask
                 }
+
+                //console.log("Detected Arrivals:", cells.detectedArrivals)
             }
         }
     }

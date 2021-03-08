@@ -1,7 +1,7 @@
 import QtQuick 2.14
 
 Item {
-    id: entrySensor
+    id: sensor
 
     property bool active: false
     property color activeColor: "red"
@@ -12,6 +12,7 @@ Item {
 
     implicitHeight: parent.height + 5
     implicitWidth: 5
+
     anchors.verticalCenter: parent.verticalCenter
 
     Rectangle {

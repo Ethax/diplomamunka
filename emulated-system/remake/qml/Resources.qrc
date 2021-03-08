@@ -25,7 +25,6 @@
         <file>Trolley.qml</file>
     </qresource>
     <qresource prefix="/common">
-        <file>AnimatedItem.qml</file>
         <file>HorizontalRepeater.qml</file>
         <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
