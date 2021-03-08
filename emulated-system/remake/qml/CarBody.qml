@@ -4,6 +4,7 @@ Item {
     id: carBody
 
     property int bodyType: BodyType.One
+    property bool detectable: true
 
     signal moveEnded(var sender)
 

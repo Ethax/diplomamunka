@@ -11,7 +11,9 @@ Item {
     readonly property alias itemArrived: arrivalSensor.active
 
     function onMoveEnded(item) {
-        item.attachTo(nextCell) // TODO: make undetectable before attaching
+        item.detectable = false
+        item.attachTo(nextCell)
+        item.detectable = true
     }
 
     function registerAddedItems(items) {

@@ -7,7 +7,7 @@ Item {
     property color activeColor: "red"
 
     function detects(item) {
-        return item.x < x + width && x < item.x + item.width
+        return item.detectable && item.x < x + width && x < item.x + item.width
     }
 
     implicitHeight: parent.height + 5
