@@ -29,13 +29,13 @@ Item {
 
     onEnabledChanged: {
         if (enabled) {
-            stopwatch.reset()
-        } else if (stopwatch.hasExpired(50)) {
+            elapsedTimer.reset()
+        } else if (elapsedTimer.hasExpired(50)) {
             selectedRobots.forEach(operate)
         }
     }
 
-    Stopwatch {
-        id: stopwatch
+    ElapsedTimer {
+        id: elapsedTimer
     }
 }

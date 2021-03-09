@@ -25,10 +25,11 @@
         <file>Trolley.qml</file>
     </qresource>
     <qresource prefix="/common">
+        <file>ElapsedTimer.qml</file>
         <file>HorizontalRepeater.qml</file>
         <file>Orientation.qml</file>
         <file>OrientedImage.qml</file>
-        <file>Stopwatch.qml</file>
+        <file>Ticker.qml</file>
     </qresource>
     <qresource prefix="/conveyor">
         <file>Belt.png</file>
@@ -39,6 +40,12 @@
         <file>SafetyGrid.png</file>
         <file>SafetyGrid.qml</file>
         <file>Sensor.qml</file>
+    </qresource>
+    <qresource prefix="/operator">
+        <file>MainWindow.qml</file>
+        <file>Operation.qml</file>
+        <file>Operator.png</file>
+        <file>Operator.qml</file>
     </qresource>
     <qresource prefix="/robot">
         <file>LowerArm.qml</file>

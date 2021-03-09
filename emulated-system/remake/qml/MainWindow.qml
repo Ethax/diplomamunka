@@ -6,6 +6,7 @@ import "qrc:/crane"
 import "qrc:/common"
 import "qrc:/conveyor"
 import "qrc:/robot"
+import "qrc:/operator"
 
 Window {
     id: window
@@ -77,6 +78,23 @@ Window {
         y: beltControls.y + beltControls.height + 10
 
         Button {
+            text: qsTr("Observe")
+            onClicked: operator.state = Operation.Observation
+        }
+
+        Button {
+            text: qsTr("Inspect")
+            onClicked: operator.state = Operation.Inspection
+        }
+
+        Button {
+            text: qsTr("Correct")
+            onClicked: operator.state = Operation.Correction
+        }
+
+
+        /*
+        Button {
             text: qsTr("Destination 5")
             onClicked: crane.position = 5
         }
@@ -95,6 +113,7 @@ Window {
             text: qsTr("Destination 7")
             onClicked: crane.position = 7
         }
+        */
     }
 
     SafetyGrid {
@@ -177,6 +196,31 @@ Window {
             x: 432
             y: 364
             position: 0
+        }
+    }
+
+    Operator {
+        id: operator
+
+        observationX: 632
+        observationY: 438
+
+        inspectionX: 632
+        inspectionY: 332
+
+        correctionX: 498
+        correctionY: 332
+
+        onOperationChanged: {
+            if (operation) {
+                timer.reset()
+            } else {
+                console.log("Tick", timer.elapsed(), "ms")
+            }
+        }
+
+        ElapsedTimer {
+            id: timer
         }
     }
 

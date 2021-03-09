@@ -1,14 +1,15 @@
 import QtQuick 2.14
 
-Row {
-    default property alias delegate: repeater.delegate
+Item {
     property int itemCount: 0
+    property alias spacing: row.spacing
+    default property alias delegate: repeater.delegate
 
     function itemAt(index) {
         return repeater.itemAt(index)
     }
 
-    function getItem(predicate) {
+    function findItem(predicate) {
         for (var i = 0; i < itemCount; ++i) {
             if (predicate(itemAt(i))) {
                 return itemAt(i)
@@ -17,9 +18,16 @@ Row {
         return undefined
     }
 
-    Repeater {
-        id: repeater
+    implicitHeight: row.height
+    implicitWidth: row.width
 
-        model: itemCount
+    Row {
+        id: row
+
+        Repeater {
+            id: repeater
+
+            model: itemCount
+        }
     }
 }

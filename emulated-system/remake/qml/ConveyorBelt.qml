@@ -12,7 +12,7 @@ Item {
     readonly property alias lastBodyType: cells.lastBodyType
 
     function tryConvey(animatedItem) {
-        var cell = cells.getItem(animatedItem.overlaps)
+        var cell = cells.findItem(animatedItem.overlaps)
 
         if (cell !== undefined) {
             animatedItem.attachTo(cell)
@@ -21,7 +21,7 @@ Item {
     }
 
     function tryLeave(animatedItem) {
-        var cell = cells.getItem(animatedItem.attachedTo)
+        var cell = cells.findItem(animatedItem.attachedTo)
 
         if (cell !== undefined) {
             animatedItem.stop()
