@@ -83,6 +83,8 @@ Window {
         x: 10
         y: beltControls.y + beltControls.height + 10
 
+
+        /*
         Button {
             text: qsTr("Observe")
             onClicked: operator.state = Operation.Observation
@@ -97,9 +99,7 @@ Window {
             text: qsTr("Correct")
             onClicked: operator.state = Operation.Correction
         }
-
-
-        /*
+        */
         Button {
             text: qsTr("Destination 5")
             onClicked: crane.position = 5
@@ -119,7 +119,6 @@ Window {
             text: qsTr("Destination 7")
             onClicked: crane.position = 7
         }
-        */
     }
 
     SafetyGrid {
@@ -252,8 +251,19 @@ Window {
     CarBody {
         id: carBody2
 
-        bodyType: BodyType.Two
-        x: conveyorBelt.x + 10 + carBody.width / 2
+        bodyType: BodyType.Three
+        x: conveyorBelt.x + 10 + carBody2.width / 2
         y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
+
+        Connections {
+            target: crane
+            onGrappleOpenChanged: {
+                if (crane.grappleOpen) {
+                    crane.tryRelease(carBody2)
+                } else {
+                    crane.tryCatch(carBody2)
+                }
+            }
+        }
     }
 }

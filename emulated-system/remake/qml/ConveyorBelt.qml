@@ -6,26 +6,28 @@ Item {
     id: conveyorBelt
 
     property Item scene: parent
-    property int activeBelts: 0
     property alias beltCount: belts.itemCount
 
+    property int activeBelts: 0
     readonly property alias lastBodyType: cells.lastBodyType
+    readonly property alias detectedEntries: cells.detectedEntries
+    readonly property alias detectedArrivals: cells.detectedArrivals
 
-    function tryConvey(animatedItem) {
-        var cell = cells.findItem(animatedItem.overlaps)
+    function tryConvey(carBody) {
+        var cell = cells.findItem(carBody.overlaps)
 
         if (cell !== undefined) {
-            animatedItem.attachTo(cell)
-            cells.lastBodyType = animatedItem.bodyType
+            carBody.attachTo(cell)
+            cells.lastBodyType = carBody.bodyType
         }
     }
 
-    function tryLeave(animatedItem) {
-        var cell = cells.findItem(animatedItem.attachedTo)
+    function tryLeave(carBody) {
+        var cell = cells.findItem(carBody.attachedTo)
 
         if (cell !== undefined) {
-            animatedItem.stop()
-            animatedItem.attachTo(scene)
+            carBody.stop()
+            carBody.attachTo(scene)
         }
     }
 
@@ -35,10 +37,7 @@ Item {
     HorizontalRepeater {
         id: belts
 
-        Component.onCompleted: {
-            cells.spacing = spacing
-            cells.itemCount = itemCount
-        }
+        Component.onCompleted: cells.itemCount = itemCount
 
         Belt {
             active: (activeBelts >> index) & 1
@@ -73,8 +72,6 @@ Item {
                 } else {
                     cells.detectedEntries &= ~bitMask
                 }
-
-                console.log("Detected Entries:", cells.detectedEntries)
             }
 
             onBodyArrivedChanged: {
@@ -85,8 +82,6 @@ Item {
                 } else {
                     cells.detectedArrivals &= ~bitMask
                 }
-
-                //console.log("Detected Arrivals:", cells.detectedArrivals)
             }
         }
     }

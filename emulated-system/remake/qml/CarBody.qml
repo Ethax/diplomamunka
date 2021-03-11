@@ -30,7 +30,7 @@ Item {
                 && mappedItem.y < mappedBody.y + mappedBody.height
     }
 
-    function move(destination) {
+    function moveTo(destination) {
         var duration = Math.abs(destination - x) * 10
 
         animation.stop()

@@ -8,8 +8,8 @@ Item {
     property bool active: false
     property var carBodies: []
 
-    readonly property alias bodyEntered: entrySensor.active
-    readonly property alias bodyArrived: arrivalSensor.active
+    readonly property bool bodyEntered: entrySensor.active
+    readonly property bool bodyArrived: arrivalSensor.active
 
     function onMoveFinished(body) {
         body.detectable = false
@@ -28,7 +28,7 @@ Item {
 
     onActiveChanged: {
         if (active) {
-            carBodies.forEach(body => body.move(width - body.width / 2))
+            carBodies.forEach(body => body.moveTo(width - body.width / 2))
         } else {
             carBodies.forEach(body => body.stop())
         }
@@ -38,7 +38,7 @@ Item {
         id: entrySensor
 
         activeColor: "yellow"
-        active: carBodies.some(detects)
+        active: carBodies.some(body => entrySensor.detects(body))
 
         anchors {
             left: cell.left
@@ -50,7 +50,7 @@ Item {
         id: arrivalSensor
 
         activeColor: "green"
-        active: carBodies.some(detects)
+        active: carBodies.some(body => arrivalSensor.detects(body))
 
         anchors {
             right: cell.right
