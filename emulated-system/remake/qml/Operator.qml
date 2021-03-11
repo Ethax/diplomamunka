@@ -77,14 +77,12 @@ Item {
         }
     ]
 
-    transitions: [
-        Transition {
-            NumberAnimation {
-                target: operator
-                properties: "x, y"
-                easing.type: Easing.InOutCubic
-                duration: 4000
-            }
+    transitions: Transition {
+        NumberAnimation {
+            target: operator
+            properties: "x, y"
+            easing.type: Easing.InOutCubic
+            duration: 4000
         }
-    ]
+    }
 }

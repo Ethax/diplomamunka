@@ -11,10 +11,13 @@ Item {
 
     function findItem(predicate) {
         for (var i = 0; i < itemCount; ++i) {
-            if (predicate(itemAt(i))) {
-                return itemAt(i)
+            var currentItem = itemAt(i)
+
+            if (predicate(currentItem)) {
+                return currentItem
             }
         }
+
         return undefined
     }
 

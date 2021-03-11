@@ -6,43 +6,35 @@ Item {
 
     property Item nextCell: parent
     property bool active: false
-    property var conveyedItems: []
-    readonly property alias itemEntered: entrySensor.active
-    readonly property alias itemArrived: arrivalSensor.active
+    property var conveyedBodies: []
 
-    function onMoveEnded(item) {
-        item.detectable = false
-        item.attachTo(nextCell)
-        item.detectable = true
-    }
+    readonly property alias bodyEntered: entrySensor.active
+    readonly property alias bodyArrived: arrivalSensor.active
 
-    function registerAddedItems(items) {
-        var addedItems = items.filter(item => !conveyedItems.includes(item))
-
-        addedItems.forEach(item => item.moveEnded.connect(onMoveEnded))
-    }
-
-    function unregisterRemovedItems(items) {
-        var removedItems = conveyedItems.filter(item => !items.includes(item))
-
-        removedItems.forEach(item => item.moveEnded.disconnect(onMoveEnded))
+    function onMoveFinished(body) {
+        body.detectable = false
+        body.attachTo(nextCell)
+        body.detectable = true
     }
 
     onChildrenChanged: {
-        var items = Array.from(children).filter(item => item instanceof CarBody)
+        var currentBodies = Array.from(children).filter(
+                    child => child instanceof CarBody)
 
-        unregisterRemovedItems(items)
-        registerAddedItems(items)
+        currentBodies.filter(body => !conveyedBodies.includes(body)).forEach(
+                    body => body.moveFinished.connect(onMoveFinished))
+        conveyedBodies.filter(body => !currentBodies.includes(body)).forEach(
+                    body => body.moveFinished.disconnect(onMoveFinished))
 
-        conveyedItems = items
+        conveyedBodies = currentBodies
         activeChanged()
     }
 
     onActiveChanged: {
         if (active) {
-            conveyedItems.forEach(item => item.move(width - item.width / 2))
+            conveyedBodies.forEach(body => body.move(width - body.width / 2))
         } else {
-            conveyedItems.forEach(item => item.stop())
+            conveyedBodies.forEach(body => body.stop())
         }
     }
 
@@ -50,7 +42,7 @@ Item {
         id: entrySensor
 
         activeColor: "yellow"
-        active: conveyedItems.some(detects)
+        active: conveyedBodies.some(detects)
 
         anchors {
             left: cell.left
@@ -62,7 +54,7 @@ Item {
         id: arrivalSensor
 
         activeColor: "green"
-        active: conveyedItems.some(detects)
+        active: conveyedBodies.some(detects)
 
         anchors {
             right: cell.right

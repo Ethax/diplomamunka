@@ -11,6 +11,7 @@ Item {
         property bool clockSignal: false
 
         repeat: true
+        triggeredOnStart: true
 
         onTriggered: clockSignal = !clockSignal
         onRunningChanged: clockSignal = running ? clockSignal : false

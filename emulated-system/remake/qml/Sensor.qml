@@ -1,4 +1,5 @@
 import QtQuick 2.14
+import "qrc:/body"
 
 Item {
     id: sensor
@@ -6,8 +7,8 @@ Item {
     property bool active: false
     property color activeColor: "red"
 
-    function detects(item) {
-        return item.detectable && item.x < x + width && x < item.x + item.width
+    function detects(body) {
+        return body.detectable && body.x < x + width && x < body.x + body.width
     }
 
     implicitHeight: parent.height + 5

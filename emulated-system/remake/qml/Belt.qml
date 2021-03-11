@@ -1,5 +1,4 @@
 import QtQuick 2.14
-import "qrc:/common"
 
 Item {
     id: belt

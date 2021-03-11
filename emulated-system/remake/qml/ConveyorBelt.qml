@@ -68,7 +68,7 @@ Item {
             onItemEnteredChanged: {
                 var bitMask = 1 << index
 
-                if (itemEntered) {
+                if (bodyEntered) {
                     cells.detectedEntries |= bitMask
                 } else {
                     cells.detectedEntries &= ~bitMask
@@ -80,7 +80,7 @@ Item {
             onItemArrivedChanged: {
                 var bitMask = 1 << index
 
-                if (itemArrived) {
+                if (bodyArrived) {
                     cells.detectedArrivals |= bitMask
                 } else {
                     cells.detectedArrivals &= ~bitMask

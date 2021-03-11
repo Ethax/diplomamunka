@@ -3,10 +3,11 @@ import QtQuick 2.14
 Item {
     id: carBody
 
-    property int bodyType: BodyType.One
+    required property int bodyType
+
     property bool detectable: true
 
-    signal moveEnded(var sender)
+    signal moveFinished(var sender)
 
     function attachTo(item) {
         var mappedPosition = parent.mapToItem(item, x, y)
@@ -21,13 +22,13 @@ Item {
     }
 
     function overlaps(item) {
-        var thisRect = mapToItem(null, 0, 0, width, height)
-        var otherRect = item.mapToItem(null, 0, 0, item.width, item.height)
+        var mappedBody = mapToItem(null, 0, 0, width, height)
+        var mappedItem = item.mapToItem(null, 0, 0, item.width, item.height)
 
-        return thisRect.x < otherRect.x + otherRect.width
-                && otherRect.x < thisRect.x + thisRect.width
-                && thisRect.y < otherRect.y + otherRect.height
-                && otherRect.y < thisRect.y + thisRect.height
+        return mappedBody.x < mappedItem.x + mappedItem.width
+                && mappedItem.x < mappedBody.x + mappedBody.width
+                && mappedBody.y < mappedItem.y + mappedItem.height
+                && mappedItem.y < mappedBody.y + mappedBody.height
     }
 
     function move(destination) {
@@ -66,6 +67,6 @@ Item {
     NumberAnimation on x {
         id: animation
 
-        onFinished: moveEnded(carBody)
+        onFinished: moveFinished(carBody)
     }
 }
