@@ -65,7 +65,7 @@ Item {
                 }
             }
 
-            onItemEnteredChanged: {
+            onBodyEnteredChanged: {
                 var bitMask = 1 << index
 
                 if (bodyEntered) {
@@ -77,7 +77,7 @@ Item {
                 console.log("Detected Entries:", cells.detectedEntries)
             }
 
-            onItemArrivedChanged: {
+            onBodyArrivedChanged: {
                 var bitMask = 1 << index
 
                 if (bodyArrived) {

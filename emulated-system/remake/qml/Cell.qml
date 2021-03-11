@@ -6,7 +6,7 @@ Item {
 
     property Item nextCell: parent
     property bool active: false
-    property var conveyedBodies: []
+    property var carBodies: []
 
     readonly property alias bodyEntered: entrySensor.active
     readonly property alias bodyArrived: arrivalSensor.active
@@ -18,23 +18,19 @@ Item {
     }
 
     onChildrenChanged: {
-        var currentBodies = Array.from(children).filter(
-                    child => child instanceof CarBody)
+        carBodies.forEach(body => body.moveFinished.disconnect(onMoveFinished))
 
-        currentBodies.filter(body => !conveyedBodies.includes(body)).forEach(
-                    body => body.moveFinished.connect(onMoveFinished))
-        conveyedBodies.filter(body => !currentBodies.includes(body)).forEach(
-                    body => body.moveFinished.disconnect(onMoveFinished))
+        carBodies = Array.from(children).filter(item => item instanceof CarBody)
+        carBodies.forEach(body => body.moveFinished.connect(onMoveFinished))
 
-        conveyedBodies = currentBodies
         activeChanged()
     }
 
     onActiveChanged: {
         if (active) {
-            conveyedBodies.forEach(body => body.move(width - body.width / 2))
+            carBodies.forEach(body => body.move(width - body.width / 2))
         } else {
-            conveyedBodies.forEach(body => body.stop())
+            carBodies.forEach(body => body.stop())
         }
     }
 
@@ -42,7 +38,7 @@ Item {
         id: entrySensor
 
         activeColor: "yellow"
-        active: conveyedBodies.some(detects)
+        active: carBodies.some(detects)
 
         anchors {
             left: cell.left
@@ -54,7 +50,7 @@ Item {
         id: arrivalSensor
 
         activeColor: "green"
-        active: conveyedBodies.some(detects)
+        active: carBodies.some(detects)
 
         anchors {
             right: cell.right

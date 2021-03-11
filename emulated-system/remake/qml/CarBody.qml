@@ -3,8 +3,7 @@ import QtQuick 2.14
 Item {
     id: carBody
 
-    required property int bodyType
-
+    property int bodyType: BodyType.One
     property bool detectable: true
 
     signal moveFinished(var sender)

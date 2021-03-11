@@ -35,12 +35,18 @@ Window {
 
         Button {
             text: qsTr("Remove")
-            onClicked: conveyorBelt.tryLeave(carBody)
+            onClicked: {
+                conveyorBelt.tryLeave(carBody)
+                conveyorBelt.tryLeave(carBody2)
+            }
         }
 
         Button {
             text: qsTr("Place")
-            onClicked: conveyorBelt.tryConvey(carBody)
+            onClicked: {
+                conveyorBelt.tryConvey(carBody)
+                conveyorBelt.tryConvey(carBody2)
+            }
         }
 
         Button {
@@ -241,5 +247,13 @@ Window {
                 }
             }
         }
+    }
+
+    CarBody {
+        id: carBody2
+
+        bodyType: BodyType.Two
+        x: conveyorBelt.x + 10 + carBody.width / 2
+        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
     }
 }
