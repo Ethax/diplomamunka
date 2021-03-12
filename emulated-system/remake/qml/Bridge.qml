@@ -6,6 +6,11 @@ Item {
     property Item base: parent
     property int position: 0
 
+    readonly property real destinationHome: 2.0 * destinationThree / 3.0
+    readonly property real destinationOne: 0.0
+    readonly property real destinationTwo: destinationThree / 3.0
+    readonly property real destinationThree: base.height - height
+
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
@@ -26,22 +31,22 @@ Item {
         BridgeState {
             name: "0"
             bridge: bridge
-            distance: 2.0 * (base.height - height) / 3.0
+            distance: destinationHome
         },
         BridgeState {
             name: "1"
             bridge: bridge
-            distance: (base.height - height) / 3.0
+            distance: destinationTwo
         },
         BridgeState {
             name: "2"
             bridge: bridge
-            distance: 0.0
+            distance: destinationOne
         },
         BridgeState {
             name: "3"
             bridge: bridge
-            distance: base.height - height
+            distance: destinationThree
         }
     ]
 

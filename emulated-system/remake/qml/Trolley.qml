@@ -6,12 +6,15 @@ Item {
     property Item base: parent
     property bool raised: false
 
+    readonly property int raisedPosition: Math.round(base.width / 6.0)
+    readonly property int loweredPosition: -raisedPosition
+
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
     anchors {
         centerIn: base
-        horizontalCenterOffset: raised ? base.width / 6 : -base.width / 6
+        horizontalCenterOffset: raised ? raisedPosition : loweredPosition
     }
 
     Behavior on anchors.horizontalCenterOffset {

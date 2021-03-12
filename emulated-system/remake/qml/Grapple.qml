@@ -8,6 +8,9 @@ Item {
     property alias orientation: displayedImage.orientation
     property bool open: false
 
+    readonly property int upwardOffset: Math.round(base.height / 2.0)
+    readonly property int downwardOffset: -upwardOffset
+
     implicitHeight: displayedImage.height
     implicitWidth: displayedImage.width
 
@@ -16,7 +19,7 @@ Item {
 
         Binding on verticalCenterOffset {
             when: orientation === Orientation.Upward
-            value: open ? base.height / 2 : 0
+            value: open ? upwardOffset : 0
         }
 
         Binding on verticalCenter {
@@ -26,7 +29,7 @@ Item {
 
         Binding on verticalCenterOffset {
             when: orientation === Orientation.Downward
-            value: open ? -base.height / 2 : 0
+            value: open ? downwardOffset : 0
         }
 
         Binding on verticalCenter {

@@ -1,6 +1,6 @@
 import QtQuick 2.14
-import "qrc:/common"
 import "qrc:/body"
+import "qrc:/common"
 
 Item {
     id: conveyorBelt

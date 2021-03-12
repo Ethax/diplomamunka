@@ -1,4 +1,5 @@
 import QtQuick 2.14
+import "qrc:/body"
 import "qrc:/common"
 
 Item {
@@ -11,15 +12,15 @@ Item {
     implicitHeight: runwayBeam.height
     implicitWidth: bridge.width
 
-    function tryCatch(animatedItem) {
-        if (animatedItem.overlaps(hook)) {
-            animatedItem.attachTo(hook)
+    function tryCatch(carBody) {
+        if (carBody.overlaps(hook)) {
+            carBody.attachTo(hook)
         }
     }
 
-    function tryRelease(animatedItem) {
-        if (animatedItem.attachedTo(hook)) {
-            animatedItem.attachTo(scene)
+    function tryRelease(carBody) {
+        if (carBody.attachedTo(hook)) {
+            carBody.attachTo(scene)
         }
     }
 
