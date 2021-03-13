@@ -36,7 +36,7 @@ Window {
         Button {
             text: qsTr("Remove")
             onClicked: {
-                conveyorBelt.tryLeave(carBody)
+                conveyorBelt.tryLeave(carBody1)
                 conveyorBelt.tryLeave(carBody2)
             }
         }
@@ -44,7 +44,7 @@ Window {
         Button {
             text: qsTr("Place")
             onClicked: {
-                conveyorBelt.tryConvey(carBody)
+                conveyorBelt.tryConvey(carBody1)
                 conveyorBelt.tryConvey(carBody2)
             }
         }
@@ -151,8 +151,22 @@ Window {
         model: [BodyType.One, BodyType.Two, BodyType.Three]
 
         CarBody {
+            id: carBody
+
             bodyType: modelData
             visible: false
+
+            Connections {
+                target: crane
+
+                onGrappleOpenChanged: {
+                    if (crane.grappleOpen) {
+                        crane.tryRelease(carBody)
+                    } else {
+                        crane.tryCatch(carBody)
+                    }
+                }
+            }
         }
     }
 
@@ -230,19 +244,19 @@ Window {
     }
 
     CarBody {
-        id: carBody
+        id: carBody1
 
         bodyType: BodyType.One
-        x: conveyorBelt.x - carBody.width / 2
+        x: conveyorBelt.x - carBody1.width / 2
         y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
 
         Connections {
             target: crane
             onGrappleOpenChanged: {
                 if (crane.grappleOpen) {
-                    crane.tryRelease(carBody)
+                    crane.tryRelease(carBody1)
                 } else {
-                    crane.tryCatch(carBody)
+                    crane.tryCatch(carBody1)
                 }
             }
         }

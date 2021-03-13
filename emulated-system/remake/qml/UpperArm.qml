@@ -3,19 +3,19 @@ import QtQuick 2.14
 Item {
     id: upperArm
 
-    property Item base: parent
-    property Item joint: parent
+    property Item shoulder: parent
+    property Item elbow: parent
     property real offset: 0.0
 
-    implicitWidth: Math.round(joint.width * 0.6)
+    implicitWidth: Math.round(elbow.width * 0.6)
 
     anchors {
-        horizontalCenter: base.horizontalCenter
+        horizontalCenter: shoulder.horizontalCenter
 
-        top: base.verticalCenter
+        top: shoulder.verticalCenter
         topMargin: -Math.round(offset)
 
-        bottom: joint.bottom
+        bottom: elbow.bottom
         bottomMargin: Math.round(offset)
     }
 

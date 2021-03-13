@@ -6,7 +6,7 @@ Item {
     property Item base: parent
     property int position: 0
 
-    readonly property real destinationHome: 2.0 * destinationThree / 3.0
+    readonly property real destinationHome: destinationThree * 2.0 / 3.0
     readonly property real destinationOne: 0.0
     readonly property real destinationTwo: destinationThree / 3.0
     readonly property real destinationThree: base.height - height

@@ -17,7 +17,7 @@ Transition {
 
     PropertyAction {
         target: robotArm
-        properties: "lowering"
+        property: "lowering"
         value: lowering
     }
 

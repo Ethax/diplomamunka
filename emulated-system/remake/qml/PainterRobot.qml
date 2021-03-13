@@ -32,7 +32,7 @@ Item {
 
         readonly property real homePosition: 0.0
         readonly property real firstPosition: painterArm.thirdPosition / 3.0
-        readonly property real secondPosition: 2.0 * painterArm.thirdPosition / 3.0
+        readonly property real secondPosition: painterArm.thirdPosition * 2.0 / 3.0
         readonly property real thirdPosition: robotBase.width - painterArm.width
 
         robotType: RobotType.Painter

@@ -3,7 +3,7 @@ import QtQuick 2.14
 Item {
     id: tool
 
-    property Item base: parent
+    property Item wrist: parent
     property int robotType: RobotType.Painter
     property bool active: false
 
@@ -11,8 +11,8 @@ Item {
     implicitWidth: displayedAnimation.width
 
     anchors {
-        verticalCenter: base.top
-        horizontalCenter: base.horizontalCenter
+        verticalCenter: wrist.top
+        horizontalCenter: wrist.horizontalCenter
     }
 
     AnimatedSprite {
@@ -29,7 +29,7 @@ Item {
             case RobotType.Welder:
                 return "qrc:/robot/Welding.png"
             default:
-                console.exception("Invalid robot type:", robotType)
+                throw "Invalid robot type: " + robotType
             }
         }
 

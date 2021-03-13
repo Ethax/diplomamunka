@@ -28,7 +28,7 @@ Item {
             case RobotType.Welder:
                 return "qrc:/robot/WelderArm.png"
             default:
-                console.exception("Invalid robot type:", robotType)
+                throw "Invalid robot type: " + robotType
             }
         }
     }

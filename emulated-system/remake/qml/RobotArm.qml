@@ -22,8 +22,8 @@ Item {
     UpperArm {
         id: upperArm
 
-        base: robotArm
-        joint: lowerArm
+        shoulder: robotArm
+        elbow: lowerArm
         offset: lowerArm.elbowLength / 2
     }
 
@@ -38,7 +38,7 @@ Item {
     Tool {
         id: toolAnimation
 
-        base: lowerArm
+        wrist: lowerArm
         robotType: robotArm.robotType
         active: robotArm.toolActive
     }

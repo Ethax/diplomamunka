@@ -42,7 +42,6 @@
         <file>Sensor.qml</file>
     </qresource>
     <qresource prefix="/operator">
-        <file>MainWindow.qml</file>
         <file>Operation.qml</file>
         <file>Operator.png</file>
         <file>Operator.qml</file>

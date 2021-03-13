@@ -58,7 +58,7 @@ Item {
             case BodyType.Three:
                 return "qrc:/body/BodyType3.png"
             default:
-                console.exception("Invalid body type:", bodyType)
+                throw "Invalid body type: " + bodyType
             }
         }
     }
