@@ -36,57 +36,78 @@ Window {
 
         AssemblyLine {
             id: assemblyLine
+
+            onInputChanged: console.log("Input",
+                                        input.toString(2).padStart(16, '0'))
         }
     }
 
-    //    Row {
-    //        id: beltControls
+    Row {
 
-    //        x: 10
-    //        y: 600
-    //        spacing: 10
+        //        id: beltControls
+        x: 10
+        y: 600
 
-    //        Button {
-    //            text: qsTr("Remove")
-    //            onClicked: {
-    //                conveyorBelt.tryLeave(carBody1)
-    //                conveyorBelt.tryLeave(carBody2)
-    //            }
-    //        }
+        //        spacing: 10
 
-    //        Button {
-    //            text: qsTr("Place")
-    //            onClicked: {
-    //                conveyorBelt.tryConvey(carBody1)
-    //                conveyorBelt.tryConvey(carBody2)
-    //            }
-    //        }
+        //        Button {
+        //            text: qsTr("Remove")
+        //            onClicked: {
+        //                conveyorBelt.tryLeave(carBody1)
+        //                conveyorBelt.tryLeave(carBody2)
+        //            }
+        //        }
 
-    //        Button {
-    //            text: qsTr("Start/Stop")
-    //            onClicked: conveyorBelt.activeBelts ^= 7
-    //        }
+        //        Button {
+        //            text: qsTr("Place")
+        //            onClicked: {
+        //                conveyorBelt.tryConvey(carBody1)
+        //                conveyorBelt.tryConvey(carBody2)
+        //            }
+        //        }
 
-    //        Button {
-    //            text: qsTr("Change State")
-    //            onClicked: robotController.position++
-    //        }
+        //        Button {
+        //            text: qsTr("Start/Stop")
+        //            onClicked: conveyorBelt.activeBelts ^= 7
+        //        }
+        Button {
+            text: qsTr("Select Robot")
+            onClicked: assemblyLine.input |= 2
+        }
 
-    //        Button {
-    //            text: qsTr("Change Speed")
-    //            onClicked: robotController.accelerated ^= 1
-    //        }
+        Button {
+            text: qsTr("Change State")
+            onClicked: {
+                var state = (assemblyLine.input >> 4) & 7
 
-    //        Button {
-    //            text: qsTr("Pause/Resume")
-    //            onClicked: robotController.suspended ^= 1
-    //        }
+                assemblyLine.input &= ~(7 << 4)
+                assemblyLine.input |= (state + 1 & 7) << 4
+            }
+        }
 
-    //        Button {
-    //            text: qsTr("Enable")
-    //            onDownChanged: robotController.enabled = down
-    //        }
-    //    }
+        Button {
+            text: qsTr("Change Speed")
+            onClicked: assemblyLine.input ^= 1 << 2
+        }
+
+        Button {
+            text: qsTr("Pause/Resume")
+            onClicked: assemblyLine.input ^= 1 << 3
+        }
+
+        Button {
+            text: qsTr("Enable")
+            onDownChanged: {
+                var bitMask = 1 << 8
+
+                if (down) {
+                    assemblyLine.input |= bitMask
+                } else {
+                    assemblyLine.input &= ~bitMask
+                }
+            }
+        }
+    }
 
     //    Column {
     //        id: craneControls
@@ -131,30 +152,31 @@ Window {
     //            onClicked: crane.position = 7
     //        }
     //    }
-    Repeater {
-        id: carBodies
 
-        model: [BodyType.One, BodyType.Two, BodyType.Three]
+    //    Repeater {
+    //        id: carBodies
 
-        CarBody {
-            id: carBody
+    //        model: [BodyType.One, BodyType.Two, BodyType.Three]
 
-            bodyType: modelData
-            visible: false
+    //        CarBody {
+    //            id: carBody
 
-            Connections {
-                target: crane
+    //            bodyType: modelData
+    //            visible: false
 
-                onGrappleOpenChanged: {
-                    if (crane.grappleOpen) {
-                        crane.tryRelease(carBody)
-                    } else {
-                        crane.tryCatch(carBody)
-                    }
-                }
-            }
-        }
-    }
+    //            Connections {
+    //                target: crane
+
+    //                onGrappleOpenChanged: {
+    //                    if (crane.grappleOpen) {
+    //                        crane.tryRelease(carBody)
+    //                    } else {
+    //                        crane.tryCatch(carBody)
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
 
     //    Button {
     //        x: 676

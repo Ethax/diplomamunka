@@ -16,15 +16,15 @@ Item {
     readonly property int output: {
         var result = 0
 
-        result |= conveyorBelt.lastBodyType
-        result |= conveyorBelt.detectedEntries << 2
-        result |= conveyorBelt.detectedArrivals << 5
+        result |= (conveyorBelt.lastBodyType & 3) << 0
+        result |= (conveyorBelt.detectedEntries & 7) << 2
+        result |= (conveyorBelt.detectedArrivals & 7) << 5
 
-        result |= operator.operation << 8
-        result |= robotController.completions << 9
-        result |= factoryReset.checked << 12
-        result |= acknowledge.checked << 13
-        result |= emergencyStop.checked << 14
+        result |= (operator.operation & 1) << 8
+        result |= (robotController.completions & 14) << 8
+        result |= (factoryReset.checked & 1) << 12
+        result |= (acknowledge.checked & 1) << 13
+        result |= (emergencyStop.checked & 1) << 14
 
         return result
     }
@@ -121,16 +121,6 @@ Item {
     RobotController {
         id: robotController
 
-        readonly property int completions: {
-            var result = 0
-
-            result |= welderOne.completed
-            result |= welderTwo.completed << 1
-            result |= (painterOne.completed && painterTwo.completed) << 2
-
-            return result
-        }
-
         robotNumber: (input >> 0) & 3
         enabled: (input >> 8) & 1
 
@@ -140,32 +130,24 @@ Item {
         toolActive: (input >> 7) & 1
 
         WelderRobot {
-            id: welderOne
-
             number: 1
             x: 208
             y: 354
         }
 
         WelderRobot {
-            id: welderTwo
-
             number: 2
             x: 208
             y: 354
         }
 
         PainterRobot {
-            id: painterOne
-
             number: 3
             x: 432
             y: 364
         }
 
         PainterRobot {
-            id: painterTwo
-
             number: 3
             x: 432
             y: 364
