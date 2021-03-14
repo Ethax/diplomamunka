@@ -26,125 +26,111 @@ Window {
         }
     }
 
-    Row {
-        id: beltControls
-
-        x: 10
-        y: 10
-        spacing: 10
-
-        Button {
-            text: qsTr("Remove")
-            onClicked: {
-                conveyorBelt.tryLeave(carBody1)
-                conveyorBelt.tryLeave(carBody2)
-            }
-        }
-
-        Button {
-            text: qsTr("Place")
-            onClicked: {
-                conveyorBelt.tryConvey(carBody1)
-                conveyorBelt.tryConvey(carBody2)
-            }
-        }
-
-        Button {
-            text: qsTr("Start/Stop")
-            onClicked: conveyorBelt.activeBelts ^= 7
-        }
-
-        Button {
-            text: qsTr("Change State")
-            onClicked: robotController.position++
-        }
-
-        Button {
-            text: qsTr("Change Speed")
-            onClicked: robotController.accelerated ^= 1
-        }
-
-        Button {
-            text: qsTr("Pause/Resume")
-            onClicked: robotController.suspended ^= 1
-        }
-
-        Button {
-            text: qsTr("Enable")
-            onDownChanged: robotController.enabled = down
-        }
-    }
-
     Column {
-        id: craneControls
+        ProjectTitle {
+            id: projectTitle
 
-        spacing: 10
-
-        x: 10
-        y: beltControls.y + beltControls.height + 10
-
-
-        /*
-        Button {
-            text: qsTr("Observe")
-            onClicked: operator.state = Operation.Observation
+            title: "Karosszéria gyártósor"
+            author: "Miklós Árpád"
         }
 
-        Button {
-            text: qsTr("Inspect")
-            onClicked: operator.state = Operation.Inspection
-        }
-
-        Button {
-            text: qsTr("Correct")
-            onClicked: operator.state = Operation.Correction
-        }
-        */
-        Button {
-            text: qsTr("Destination 5")
-            onClicked: crane.position = 5
-        }
-
-        Button {
-            text: qsTr("Destination 3")
-            onClicked: crane.position = 3
-        }
-
-        Button {
-            text: qsTr("Destination 1")
-            onClicked: crane.position = 1
-        }
-
-        Button {
-            text: qsTr("Destination 7")
-            onClicked: crane.position = 7
+        AssemblyLine {
+            id: assemblyLine
         }
     }
 
-    SafetyGrid {
-        base: conveyorBelt
-    }
+    //    Row {
+    //        id: beltControls
 
-    ConveyorBelt {
-        id: conveyorBelt
+    //        x: 10
+    //        y: 600
+    //        spacing: 10
 
-        x: 90
-        y: 300
-        beltCount: 3
-    }
+    //        Button {
+    //            text: qsTr("Remove")
+    //            onClicked: {
+    //                conveyorBelt.tryLeave(carBody1)
+    //                conveyorBelt.tryLeave(carBody2)
+    //            }
+    //        }
 
-    Repeater {
-        id: destinations
+    //        Button {
+    //            text: qsTr("Place")
+    //            onClicked: {
+    //                conveyorBelt.tryConvey(carBody1)
+    //                conveyorBelt.tryConvey(carBody2)
+    //            }
+    //        }
 
-        model: [Qt.point(701, 120), Qt.point(701, 211), Qt.point(701, 394)]
+    //        Button {
+    //            text: qsTr("Start/Stop")
+    //            onClicked: conveyorBelt.activeBelts ^= 7
+    //        }
 
-        Destination {
-            number: index + 1
-            x: modelData.x
-            y: modelData.y
-        }
-    }
+    //        Button {
+    //            text: qsTr("Change State")
+    //            onClicked: robotController.position++
+    //        }
 
+    //        Button {
+    //            text: qsTr("Change Speed")
+    //            onClicked: robotController.accelerated ^= 1
+    //        }
+
+    //        Button {
+    //            text: qsTr("Pause/Resume")
+    //            onClicked: robotController.suspended ^= 1
+    //        }
+
+    //        Button {
+    //            text: qsTr("Enable")
+    //            onDownChanged: robotController.enabled = down
+    //        }
+    //    }
+
+    //    Column {
+    //        id: craneControls
+
+    //        spacing: 10
+
+    //        x: 10
+    //        y: beltControls.y + beltControls.height + 10
+
+    //        Button {
+    //            text: qsTr("Observe")
+    //            onClicked: operator.state = Operation.Observation
+    //        }
+
+    //        Button {
+    //            text: qsTr("Inspect")
+    //            onClicked: operator.state = Operation.Inspection
+    //        }
+
+    //        Button {
+    //            text: qsTr("Correct")
+    //            onClicked: operator.state = Operation.Correction
+    //        }
+
+    //        Button {
+    //            text: qsTr("Destination 5")
+    //            onClicked: crane.position = 5
+    //        }
+
+    //        Button {
+    //            text: qsTr("Destination 3")
+    //            onClicked: crane.position = 3
+    //        }
+
+    //        Button {
+    //            text: qsTr("Destination 1")
+    //            onClicked: crane.position = 1
+    //        }
+
+    //        Button {
+    //            text: qsTr("Destination 7")
+    //            onClicked: crane.position = 7
+    //        }
+    //    }
     Repeater {
         id: carBodies
 
@@ -170,114 +156,61 @@ Window {
         }
     }
 
-    Crane {
-        id: crane
-        x: 696
-        y: 98
-        z: 1000
-    }
+    //    Button {
+    //        x: 676
+    //        y: 507
+    //        text: qsTr("Move bridge")
 
-    Button {
-        x: 676
-        y: 507
-        text: qsTr("Move bridge")
+    //        onClicked: {
+    //            crane.position ^= 1
+    //        }
+    //    }
 
-        onClicked: {
-            crane.position ^= 1
-        }
-    }
+    //    Button {
+    //        x: 536
+    //        y: 507
+    //        text: qsTr("Open/Close")
 
-    Button {
-        x: 536
-        y: 507
-        text: qsTr("Open/Close")
+    //        onClicked: {
+    //            crane.grappleOpen ^= 1
+    //        }
+    //    }
 
-        onClicked: {
-            crane.grappleOpen ^= 1
-        }
-    }
+    //    CarBody {
+    //        id: carBody1
 
-    RobotController {
-        id: robotController
+    //        bodyType: BodyType.One
+    //        x: conveyorBelt.x - carBody1.width / 2
+    //        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
 
-        onCompletedChanged: console.log("Completed", completed)
-        robotNumber: 1
+    //        Connections {
+    //            target: crane
+    //            onGrappleOpenChanged: {
+    //                if (crane.grappleOpen) {
+    //                    crane.tryRelease(carBody1)
+    //                } else {
+    //                    crane.tryCatch(carBody1)
+    //                }
+    //            }
+    //        }
+    //    }
 
-        WelderRobot {
-            number: 1
-            x: 208
-            y: 354
-            position: 0
-        }
+    //    CarBody {
+    //        id: carBody2
 
-        PainterRobot {
-            number: 1
-            x: 432
-            y: 364
-            position: 0
-        }
-    }
+    //        bodyType: BodyType.Three
+    //        x: conveyorBelt.x + 10 + carBody2.width / 2
+    //        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
 
-    Operator {
-        id: operator
-
-        observationX: 632
-        observationY: 438
-
-        inspectionX: 632
-        inspectionY: 332
-
-        correctionX: 498
-        correctionY: 332
-
-        onOperationChanged: {
-            if (operation) {
-                timer.reset()
-            } else {
-                console.log("Tick", timer.elapsed(), "ms")
-            }
-        }
-
-        ElapsedTimer {
-            id: timer
-        }
-    }
-
-    CarBody {
-        id: carBody1
-
-        bodyType: BodyType.One
-        x: conveyorBelt.x - carBody1.width / 2
-        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
-
-        Connections {
-            target: crane
-            onGrappleOpenChanged: {
-                if (crane.grappleOpen) {
-                    crane.tryRelease(carBody1)
-                } else {
-                    crane.tryCatch(carBody1)
-                }
-            }
-        }
-    }
-
-    CarBody {
-        id: carBody2
-
-        bodyType: BodyType.Three
-        x: conveyorBelt.x + 10 + carBody2.width / 2
-        y: Math.abs(conveyorBelt.height / 2 - height / 2) + conveyorBelt.y
-
-        Connections {
-            target: crane
-            onGrappleOpenChanged: {
-                if (crane.grappleOpen) {
-                    crane.tryRelease(carBody2)
-                } else {
-                    crane.tryCatch(carBody2)
-                }
-            }
-        }
-    }
+    //        Connections {
+    //            target: crane
+    //            onGrappleOpenChanged: {
+    //                if (crane.grappleOpen) {
+    //                    crane.tryRelease(carBody2)
+    //                } else {
+    //                    crane.tryCatch(carBody2)
+    //                }
+    //            }
+    //        }
+    //    }
 }

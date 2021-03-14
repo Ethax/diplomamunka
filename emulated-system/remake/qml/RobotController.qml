@@ -12,10 +12,6 @@ Item {
     property int position: 0
     property bool toolActive: false
 
-    readonly property bool completed: {
-        selectedRobots.every(robot => robot.completed)
-    }
-
     readonly property var selectedRobots: {
         Array.from(children).filter(robot => robot.number === robotNumber)
     }
