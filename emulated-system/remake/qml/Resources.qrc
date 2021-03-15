@@ -3,6 +3,7 @@
         <file>AssemblyLine.qml</file>
         <file>MainWindow.qml</file>
         <file>ProjectTitle.qml</file>
+        <file>UserControls.qml</file>
     </qresource>
     <qresource prefix="/body">
         <file>BodyType1.png</file>

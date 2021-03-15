@@ -26,9 +26,9 @@ Item {
         result |= (welderOne.completed ? 1 : 0) << 9
         result |= (welderTwo.completed ? 1 : 0) << 10
         result |= (painterOne.completed && painterTwo.completed ? 1 : 0) << 11
-        result |= (factoryReset.checked ? 1 : 0) << 12
-        result |= (acknowledge.checked ? 1 : 0) << 13
-        result |= (emergencyStop.checked ? 1 : 0) << 14
+        result |= (userControls.factoryResetInitiated ? 1 : 0) << 12
+        result |= (userControls.acknowledged ? 1 : 0) << 13
+        result |= (userControls.emergencyStopActive ? 0 : 1) << 14
 
         return result
     }
@@ -36,47 +36,11 @@ Item {
     implicitHeight: 515
     implicitWidth: 1024
 
-    Row {
+    UserControls {
         id: userControls
 
         x: 342
         y: 418
-        spacing: 10
-
-        UserButton {
-            id: factoryReset
-
-            text: qsTr("Reset")
-            activeColor: "#0040ff"
-            activeShadowColor: "#668cff"
-
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        UserButton {
-            id: emergencyStop
-
-            text: qsTr("Stop")
-            checkable: true
-
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        UserButton {
-            id: acknowledge
-
-            text: qsTr("Nyugta")
-            activeColor: "#00ff00"
-            activeShadowColor: "#66ff66"
-
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        OperationSelector {
-            id: operation
-
-            anchors.verticalCenter: parent.verticalCenter
-        }
     }
 
     ConveyorBelt {
@@ -112,7 +76,7 @@ Item {
         correctionX: 485
         correctionY: 234
 
-        operation: operation.selection
+        operation: userControls.selectedOperation
     }
 
     Crane {
