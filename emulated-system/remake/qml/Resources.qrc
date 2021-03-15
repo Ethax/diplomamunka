@@ -45,8 +45,10 @@
     </qresource>
     <qresource prefix="/operator">
         <file>Operation.qml</file>
+        <file>OperationSelector.qml</file>
         <file>Operator.png</file>
         <file>Operator.qml</file>
+        <file>UserButton.qml</file>
     </qresource>
     <qresource prefix="/robot">
         <file>LowerArm.qml</file>

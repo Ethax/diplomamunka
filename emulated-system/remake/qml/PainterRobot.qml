@@ -30,10 +30,10 @@ Item {
         readonly property real raised: 0.0
         readonly property real lowered: painterArm.height / 5.0
 
-        readonly property real homePosition: 0.0
-        readonly property real firstPosition: painterArm.thirdPosition / 3.0
-        readonly property real secondPosition: painterArm.thirdPosition * 2.0 / 3.0
-        readonly property real thirdPosition: robotBase.width - painterArm.width
+        readonly property real positionHome: 0.0
+        readonly property real positionOne: painterArm.positionThree / 3.0
+        readonly property real positionTwo: painterArm.positionThree * 2.0 / 3.0
+        readonly property real positionThree: robotBase.width - painterArm.width
 
         robotType: RobotType.Painter
 
@@ -49,7 +49,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: lowered
-                    distance: homePosition
+                    distance: positionHome
                 }
             },
             State {
@@ -58,7 +58,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: raised
-                    distance: firstPosition
+                    distance: positionOne
                 }
             },
             State {
@@ -67,7 +67,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: raised
-                    distance: secondPosition
+                    distance: positionTwo
                 }
             },
             State {
@@ -76,7 +76,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: raised
-                    distance: thirdPosition
+                    distance: positionThree
                 }
             },
             State {
@@ -85,7 +85,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: lowered
-                    distance: firstPosition
+                    distance: positionOne
                 }
             },
             State {
@@ -94,7 +94,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: lowered
-                    distance: secondPosition
+                    distance: positionTwo
                 }
             },
             State {
@@ -103,7 +103,7 @@ Item {
                 PropertyChanges {
                     target: painterArm
                     lowering: lowered
-                    distance: thirdPosition
+                    distance: positionThree
                 }
             }
         ]

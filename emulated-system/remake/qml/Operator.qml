@@ -4,7 +4,8 @@ import "qrc:/common"
 Item {
     id: operator
 
-    readonly property alias operation: ticker.tick
+    property alias operation: operator.state
+    readonly property alias motion: ticker.tick
 
     property real observationX: 0
     property real observationY: 0
@@ -77,12 +78,34 @@ Item {
         }
     ]
 
-    transitions: Transition {
-        NumberAnimation {
-            target: operator
-            properties: "x, y"
-            easing.type: Easing.InOutCubic
-            duration: 4000
+    transitions: [
+        Transition {
+            NumberAnimation {
+                target: operator
+                properties: "x, y"
+                easing.type: Easing.InOutCubic
+                duration: 4000
+            }
+        },
+        Transition {
+            from: Operation.Observation
+            to: Operation.Correction
+            reversible: true
+
+            SequentialAnimation {
+                NumberAnimation {
+                    target: operator
+                    property: "y"
+                    easing.type: Easing.InOutCubic
+                    duration: 4000
+                }
+                NumberAnimation {
+                    target: operator
+                    property: "x"
+                    easing.type: Easing.InOutCubic
+                    duration: 4000
+                }
+            }
         }
-    }
+    ]
 }

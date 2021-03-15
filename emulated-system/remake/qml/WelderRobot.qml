@@ -31,10 +31,10 @@ Item {
         readonly property real centered: welderArm.height / 15.0
         readonly property real lowered: welderArm.height / 5.0
 
-        readonly property real homePosition: -90.0
-        readonly property real firstPosition: -30.0
-        readonly property real secondPosition: 0.0
-        readonly property real thirdPosition: 30.0
+        readonly property real positionHome: -90.0
+        readonly property real positionOne: -30.0
+        readonly property real positionTwo: 0.0
+        readonly property real positionThree: 30.0
 
         robotType: RobotType.Welder
 
@@ -49,7 +49,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: lowered
-                    rotation: homePosition
+                    rotation: positionHome
                 }
             },
             State {
@@ -58,7 +58,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: raised
-                    rotation: firstPosition
+                    rotation: positionOne
                 }
             },
             State {
@@ -67,7 +67,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: centered
-                    rotation: secondPosition
+                    rotation: positionTwo
                 }
             },
             State {
@@ -76,7 +76,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: raised
-                    rotation: thirdPosition
+                    rotation: positionThree
                 }
             },
             State {
@@ -85,7 +85,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: lowered
-                    rotation: firstPosition
+                    rotation: positionOne
                 }
             },
             State {
@@ -94,7 +94,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: lowered
-                    rotation: secondPosition
+                    rotation: positionTwo
                 }
             },
             State {
@@ -103,7 +103,7 @@ Item {
                 PropertyChanges {
                     target: welderArm
                     lowering: lowered
-                    rotation: thirdPosition
+                    rotation: positionThree
                 }
             }
         ]

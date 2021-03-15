@@ -37,73 +37,107 @@ Window {
         AssemblyLine {
             id: assemblyLine
 
-            onInputChanged: console.log("Input",
-                                        input.toString(2).padStart(16, '0'))
-        }
-    }
+            onInputChanged: {
+                console.log("Input", input.toString(2).padStart(16, '0'))
+            }
 
-    Row {
-
-        //        id: beltControls
-        x: 10
-        y: 600
-
-        //        spacing: 10
-
-        //        Button {
-        //            text: qsTr("Remove")
-        //            onClicked: {
-        //                conveyorBelt.tryLeave(carBody1)
-        //                conveyorBelt.tryLeave(carBody2)
-        //            }
-        //        }
-
-        //        Button {
-        //            text: qsTr("Place")
-        //            onClicked: {
-        //                conveyorBelt.tryConvey(carBody1)
-        //                conveyorBelt.tryConvey(carBody2)
-        //            }
-        //        }
-
-        //        Button {
-        //            text: qsTr("Start/Stop")
-        //            onClicked: conveyorBelt.activeBelts ^= 7
-        //        }
-        Button {
-            text: qsTr("Select Robot")
-            onClicked: assemblyLine.input |= 2
-        }
-
-        Button {
-            text: qsTr("Change State")
-            onClicked: {
-                var state = (assemblyLine.input >> 4) & 7
-
-                assemblyLine.input &= ~(7 << 4)
-                assemblyLine.input |= (state + 1 & 7) << 4
+            onOutputChanged: {
+                console.log("Output", output.toString(2).padStart(16, '0'))
             }
         }
+        Row {
+            visible: true
+            //        id: beltControls
 
-        Button {
-            text: qsTr("Change Speed")
-            onClicked: assemblyLine.input ^= 1 << 2
-        }
+            //        spacing: 10
 
-        Button {
-            text: qsTr("Pause/Resume")
-            onClicked: assemblyLine.input ^= 1 << 3
-        }
+            //        Button {
+            //            text: qsTr("Remove")
+            //            onClicked: {
+            //                conveyorBelt.tryLeave(carBody1)
+            //                conveyorBelt.tryLeave(carBody2)
+            //            }
+            //        }
 
-        Button {
-            text: qsTr("Enable")
-            onDownChanged: {
-                var bitMask = 1 << 8
+            //        Button {
+            //            text: qsTr("Place")
+            //            onClicked: {
+            //                conveyorBelt.tryConvey(carBody1)
+            //                conveyorBelt.tryConvey(carBody2)
+            //            }
+            //        }
 
-                if (down) {
-                    assemblyLine.input |= bitMask
-                } else {
-                    assemblyLine.input &= ~bitMask
+            //        Button {
+            //            text: qsTr("Start/Stop")
+            //            onClicked: conveyorBelt.activeBelts ^= 7
+            //        }
+            Button {
+                text: qsTr("Select Robot")
+                onClicked: assemblyLine.input |= 2
+            }
+
+            Button {
+                text: qsTr("Change State")
+                onClicked: {
+                    var state = (assemblyLine.input >> 4) & 7
+
+                    assemblyLine.input &= ~(7 << 4)
+                    assemblyLine.input |= (state + 1 & 7) << 4
+                }
+            }
+
+            Button {
+                text: qsTr("Change Speed")
+                onClicked: assemblyLine.input ^= 1 << 2
+            }
+
+            Button {
+                text: qsTr("Pause/Resume")
+                onClicked: assemblyLine.input ^= 1 << 3
+            }
+
+            Button {
+                text: qsTr("Enable")
+                onDownChanged: {
+                    var bitMask = 1 << 8
+
+                    if (down) {
+                        assemblyLine.input |= bitMask
+                    } else {
+                        assemblyLine.input &= ~bitMask
+                    }
+                }
+            }
+
+            Button {
+                text: qsTr("Destination 5")
+                onClicked: {
+                    assemblyLine.input &= ~(7 << 12)
+                    assemblyLine.input |= 5 << 12
+                }
+            }
+
+            Button {
+                text: qsTr("Destination 3")
+                onClicked: {
+                    assemblyLine.input &= ~(7 << 12)
+                    assemblyLine.input |= 3 << 12
+                }
+            }
+
+            Button {
+                text: qsTr("Destination 1")
+                onClicked: {
+                    assemblyLine.input &= ~(7 << 12)
+                    assemblyLine.input |= 1 << 12
+                }
+            }
+
+            Button {
+                text: qsTr("Destination 7")
+                onClicked: {
+                    assemblyLine.input &= ~(7 << 12)
+                    assemblyLine.input |= 7 << 12
                 }
             }
         }

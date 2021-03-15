@@ -13,24 +13,7 @@ Item {
     property bool toolActive: false
 
     readonly property var selectedRobots: {
-        Array.from(children).filter(item => item.number === robotNumber)
-    }
-
-    readonly property int completions: {
-        Array.from(children).reduce(groupByNumber, []).reduce(setCompletion, 0)
-    }
-
-    function groupByNumber(groups, item) {
-        var number = item.number
-
-        groups[number] = groups[number] || []
-        groups[number].push(item)
-
-        return groups
-    }
-
-    function setCompletion(accumulator, robots, index) {
-        return accumulator | robots.every(robot => robot.completed) << index
+        Array.from(children).filter(robot => robot.number === robotNumber)
     }
 
     function operate(robot) {
