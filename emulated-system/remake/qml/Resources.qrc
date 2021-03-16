@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>AssemblyLine.qml</file>
         <file>MainWindow.qml</file>
+        <file>PortController.qml</file>
         <file>ProjectTitle.qml</file>
     </qresource>
     <qresource prefix="/body">

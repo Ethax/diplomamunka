@@ -17,15 +17,15 @@ int main(int argc, char* argv[]) {
     IOPortPtr ioPort = VirtualPort::create();
     BorisController boris(ioPort, CyclicTimer::create());
 
-    engine.rootContext()->setContextProperty("ioPort", ioPort.get());
+    engine.rootContext()->setContextProperty("debugPort", ioPort.get());
     engine.rootContext()->setContextProperty("boris", &boris);
-    engine.load(QUrl("qrc:/MainWindow.qml"));
 #else
     BorisController boris;
 
+    engine.rootContext()->setContextProperty("debugPort", nullptr);
     engine.rootContext()->setContextProperty("boris", &boris);
-    engine.load(QUrl("qrc:/MainWindow.qml"));
 #endif
+    engine.load(QUrl("qrc:/MainWindow.qml"));
 
     return application.exec();
 }
