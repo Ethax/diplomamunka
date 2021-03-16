@@ -3,14 +3,14 @@
         <file>AssemblyLine.qml</file>
         <file>MainWindow.qml</file>
         <file>ProjectTitle.qml</file>
-        <file>UserControls.qml</file>
     </qresource>
     <qresource prefix="/body">
+        <file>BodyType.qml</file>
         <file>BodyType1.png</file>
         <file>BodyType2.png</file>
         <file>BodyType3.png</file>
         <file>CarBody.qml</file>
-        <file>BodyType.qml</file>
+        <file>CarBodyInserter.qml</file>
     </qresource>
     <qresource prefix="/crane">
         <file>Bridge.png</file>
@@ -49,7 +49,8 @@
         <file>OperationSelector.qml</file>
         <file>Operator.png</file>
         <file>Operator.qml</file>
-        <file>UserButton.qml</file>
+        <file>OperatorButton.qml</file>
+        <file>OperatorControls.qml</file>
     </qresource>
     <qresource prefix="/robot">
         <file>LowerArm.qml</file>

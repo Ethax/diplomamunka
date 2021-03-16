@@ -27,6 +27,8 @@ Window {
     }
 
     Column {
+        spacing: 10
+
         ProjectTitle {
             id: projectTitle
 
@@ -45,6 +47,7 @@ Window {
                 console.log("Output", output.toString(2).padStart(16, '0'))
             }
         }
+
         Row {
             visible: true
             //        id: beltControls

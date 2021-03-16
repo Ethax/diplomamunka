@@ -1,14 +1,9 @@
 import QtQuick 2.14
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Extras 1.4
-import QtQuick.Controls 1.4
-
 import "qrc:/body"
-import "qrc:/crane"
-import "qrc:/common"
 import "qrc:/conveyor"
-import "qrc:/robot"
+import "qrc:/crane"
 import "qrc:/operator"
+import "qrc:/robot"
 
 Item {
     id: assemblyLine
@@ -26,9 +21,9 @@ Item {
         result |= (welderOne.completed ? 1 : 0) << 9
         result |= (welderTwo.completed ? 1 : 0) << 10
         result |= (painterOne.completed && painterTwo.completed ? 1 : 0) << 11
-        result |= (userControls.factoryResetInitiated ? 1 : 0) << 12
-        result |= (userControls.acknowledged ? 1 : 0) << 13
-        result |= (userControls.emergencyStopActive ? 0 : 1) << 14
+        result |= (operatorControls.factoryResetInitiated ? 1 : 0) << 12
+        result |= (operatorControls.acknowledged ? 1 : 0) << 13
+        result |= (operatorControls.emergencyStopActive ? 0 : 1) << 14
 
         return result
     }
@@ -36,15 +31,10 @@ Item {
     implicitHeight: 515
     implicitWidth: 1024
 
-    UserControls {
-        id: userControls
-
-        x: 342
-        y: 418
-    }
-
     ConveyorBelt {
         id: conveyorBelt
+
+        readonly property int beltLength: width / beltCount
 
         x: 77
         y: 202
@@ -53,8 +43,6 @@ Item {
     }
 
     Repeater {
-        id: destinations
-
         model: [Qt.point(688, 22), Qt.point(688, 113), Qt.point(688, 296)]
 
         Destination {
@@ -76,7 +64,14 @@ Item {
         correctionX: 485
         correctionY: 234
 
-        operation: userControls.selectedOperation
+        operation: operatorControls.selectedOperation
+    }
+
+    OperatorControls {
+        id: operatorControls
+
+        x: 342
+        y: 418
     }
 
     Crane {
@@ -90,8 +85,6 @@ Item {
     }
 
     RobotController {
-        id: robotController
-
         robotNumber: (input >> 0) & 3
         enabled: (input >> 8) & 1
 
@@ -137,5 +130,64 @@ Item {
 
     SafetyGrid {
         base: conveyorBelt
+    }
+
+    Row {
+        x: 68
+
+        CarBodyInserter {
+            id: bodyOneInserter
+
+            bodyType: BodyType.One
+        }
+
+        CarBodyInserter {
+            id: bodyTwoInserter
+
+            bodyType: BodyType.Two
+        }
+
+        CarBodyInserter {
+            id: bodyThreeInserter
+
+            bodyType: BodyType.Three
+        }
+    }
+
+    Repeater {
+        model: [bodyOneInserter, bodyTwoInserter, bodyThreeInserter]
+
+        CarBody {
+            id: carBody
+
+            bodyType: modelData.bodyType
+            visible: false
+
+            Connections {
+                target: crane
+
+                onGrappleOpenChanged: {
+                    if (crane.grappleOpen) {
+                        crane.tryRelease(carBody)
+                    } else {
+                        crane.tryCatch(carBody)
+                    }
+                }
+            }
+
+            Connections {
+                target: modelData
+
+                onDestinationSelected: {
+                    attachTo(assemblyLine)
+
+                    x = conveyorBelt.x + conveyorBelt.beltLength * destination
+                    y = conveyorBelt.y + conveyorBelt.height / 2 - height / 2
+                    visible = true
+
+                    conveyorBelt.tryConvey(carBody)
+                }
+            }
+        }
     }
 }
