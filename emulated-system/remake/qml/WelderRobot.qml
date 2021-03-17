@@ -80,7 +80,7 @@ Item {
                 }
             },
             State {
-                name: "4"
+                name: "5"
 
                 PropertyChanges {
                     target: welderArm
@@ -89,7 +89,7 @@ Item {
                 }
             },
             State {
-                name: "5"
+                name: "6"
 
                 PropertyChanges {
                     target: welderArm
@@ -98,7 +98,7 @@ Item {
                 }
             },
             State {
-                name: "6"
+                name: "7"
 
                 PropertyChanges {
                     target: welderArm
