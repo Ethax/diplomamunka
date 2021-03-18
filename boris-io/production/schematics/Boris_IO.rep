@@ -1,0 +1,30 @@
+CSV text has been written to file : IO-01.csv
+
+Library Component Count : 23
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+10Axxx              
+78L05               
+ATmega32A-AU        8-bit AVR Microcontroller, 2.7-5.5V, 16MHz, 32KB Flash, 1KB EEPROM, 2KB SRAM, 44-pin TQFP, Industrial Grade (-40°C to 85°C)
+BC327               PNP General Purpose Amplifier
+Cap                 Capacitor
+Cap Pol1            Polarized Capacitor (Radial)
+Fuse 1              Fuse
+Header 10           Header, 10-Pin
+Header 14           Header, 14-Pin
+Header 2            Header, 1-Pin
+Header 6            Header, 6-Pin
+Header ISP          Header, 3-Pin, Dual row
+Inductor Iron       Magnetic-Core Inductor
+Jumper2             
+Jumper3             
+KBU6G               
+MAX488CSA           
+MDB                 MDB
+RJ-45_MI            
+Res2                Resistor
+SIL_10k             
+XTAL                Crystal Oscillator
+assr                

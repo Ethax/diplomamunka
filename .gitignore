@@ -42,16 +42,64 @@ CMakeLists.txt.user*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Visual Paradigm
-.vpprefdata/
-*.vpp.lck
-*.vpp~*
-*.vpp.bak_*
-*.vpp.working
-*.vpp.working-journal
-*.lock
-tmp/*
+#MicroC
+*.pdsbak
+*.workspace
+*.log
+*.bmk
+*.brk
+*.cfg
+*.dbg
+*.dct
+*.dlt
+*.hex
+*.lst
+*.dic
+*_callertable.txt
+*.user.dic
+*.asm
+*.c.ini
+*.h.ini
+*.cp
+*.mcl
+
+#IAR Embedded Workbench
+*.ewt
+*.ewd
+*.eww
+**/settings/*.crun
+**/settings/*.dbgdt
+**/settings/*.cspy
+**/settings/*.cspy.*
+**/settings/*.xcl
+**/settings/*.dni
+**/settings/*.wsdt
+**/settings/*.wspos
+**/Debug/Exe/
+**/Debug/List
+**/Obj/*.pbd
+**/Obj/*.pbd.*
+**/Obj/*.pbi
+**/Obj/*.pbi.*
+**.log
+Backup*
+*.dep
+*.bin
+*.elf
+*.hex
+*.map
+*.bak
+*.h.old
+
+#Altium Designer
+**/__Previews/
+**/History/*
+Project\ Logs*/
+Project\ Outputs*/
+*.PcbDoc.htm
+**/*.ldb
 
 # diplomamunka
 multimedia
 !emulated-system/remake/libs/**
+*.TMP

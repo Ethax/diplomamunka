@@ -1,0 +1,4 @@
+﻿A képek az elkészült helyettesítő eszközön folytatott mérések eredményeit ábrázolják.
+
+1-es csatorna (sárga): a mikrovezérlő felőli oldal
+2-es csatorna (kék): a felhasználó felőli oldal

@@ -1,0 +1,18 @@
+CSV text has been written to file : IO-01_1.csv
+
+Library Component Count : 11
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+Cap                 Capacitor
+Cap Pol1            Polarized Capacitor (Radial)
+FT232RL-Reel        USB UART Asynchronous Serial Data Transfer Chip, SSOP-28, Tape and Reel
+Header 4            Header, -Pin
+Inductor Iron       Magnetic-Core Inductor
+LED_SMD_Green_0805_6mcdLED, 0805 SMD, Green
+LED_SMD_Red_0805_6mcdLED 0805 SMD Red 6mcd 621nm
+LM317MBSTT3         Three-Terminal Adjustable Output Positive Voltage Regulator
+Res2                Resistor
+STM32F103VBT6       STM32 ARM-based 32-bit MCU with 64 Kbytes Flash, 100-pin LQFP, Industrial Temperature
+XTAL                Crystal Oscillator
