@@ -103,3 +103,4 @@ Project\ Outputs*/
 multimedia
 !emulated-system/remake/libs/**
 *.TMP
+~$*
