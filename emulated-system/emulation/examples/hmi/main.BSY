@@ -2,7 +2,7 @@
 7.1.1.313
 [File Access]
 0   
-44320
+44321
 ! 
 ! 
 ! 
@@ -38,13 +38,13 @@ BUTTON	0	12632256	8	-1	0	0	DOWNLEFT		25	502	35	35	6	8	0	D:\Diplomamunka\old-vers
 BUTTON	0	12632256	9	-1	0	0	DOWN		65	502	35	35	4	9	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_down.bmp	1	8	1
 BUTTON	0	12632256	10	-1	0	0	DOWNRIGHT		105	502	35	35	5	10	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\btn_down_right.bmp	1	8	1
 SEPARATOR	255	16777215	1	-1	0	0	===================================
-RECTLED	0	65280	1	-1	0	0	UP_LED	183	410	1	(O1 / 8) - (2 * INT((O1 / 8) / 2))
+RECTLED	0	65280	1	-1	0	0	UP_LED	183	410	1	(O1 / 8) - (2 * INT(O1 / 16))
 LABEL	0	16777215	1	-1	0	0	UP_CAPTION	211	410	10	ARIAL	Increasing Y-Coordinate	0	1
-RECTLED	0	65280	1	-1	0	0	DOWN_LED	183	438	1	(O1 / 4) - (2 * INT((O1 / 4) / 2))
+RECTLED	0	65280	1	-1	0	0	DOWN_LED	183	438	1	(O1 / 4) - (2 * INT(O1 / 8))
 LABEL	0	16777215	1	-1	0	0	DOWN_CAPTION	211	438	10	ARIAL	Decreasing Y-Coordinate	0	1
 RECTLED	0	65280	1	-1	0	0	RIGHT_LED	183	466	1	O1 - (2 * INT(O1 / 2))
 LABEL	0	16777215	1	-1	0	0	RIGHT_CAPTION	211	466	10	ARIAL	Increasing X-Coordinate	0	1
-RECTLED	0	65280	1	-1	0	0	LEFT_LED	183	494	1	(O1 / 2) - (2 * INT((O1 / 2) / 2))
+RECTLED	0	65280	1	-1	0	0	LEFT_LED	183	494	1	(O1 / 2) - (2 * INT(O1 / 4))
 LABEL	0	16777215	1	-1	0	0	LEFT_CAPTION	211	494	10	ARIAL	Decreasing X-Coordinate	0	1
 SEPARATOR	255	16777215	1	-1	0	0	===================================
 BITMAP	0	16777215	1	-1	0	0	CNC_BASE	25	362	337	337	0	D:\Diplomamunka\old-version\Emulated System\Emulation\examples\hmi\images\cnc_base.bmp
@@ -94,45 +94,45 @@ COMMAND
  0.00000000000000E+0000
  0.00000000000000E+0000
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
  0.00000000000000E+0000
-     
+      
 1
 0
 1
