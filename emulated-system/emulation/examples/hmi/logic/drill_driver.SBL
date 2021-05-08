@@ -2,7 +2,7 @@
 7.1.1.313
 [File Access]
 0   
-43561
+44323
 ! 
 ! 
 ! 
@@ -56,7 +56,7 @@ COUNT_B1
 0   0   1
 [Block #4]
 344   FCT1
-COUNT %= 3
+COUNT % 3
 225 25 296 76  100
 1
 1
@@ -65,7 +65,7 @@ COUNT %= 3
 x - (3 * int(x / 3))
 [Block #5]
 344   FCT1
-++COUNT
+COUNT + 1
 350 25 421 76  100
 1
 1
