@@ -1,0 +1,33 @@
+@startuml BorisAccessComponentLevel
+
+skinparam defaultTextAlignment center
+
+package Diplomamunka {
+    interface "Exposed\nAttributes" as ExposedAttributes
+
+    component "BORIS Access" as BorisAccess {
+        port "QML" as QML
+        component "BORIS\nController" as BorisController
+        interface "Timer" as Timer
+        interface "I/O Port" as IOPort
+
+        BorisController -up- QML
+        BorisController --( Timer
+        BorisController -right-( IOPort
+
+        component "Cyclic Timer" as CyclicTimer
+
+        Timer -- CyclicTimer
+
+        component "Serial Port" as SerialPort
+        component "Echo Port" as EchoPort
+        component "Virtual Port" as VirtualPort
+
+        IOPort - SerialPort
+        IOPort -- EchoPort
+        IOPort --- VirtualPort
+    }
+
+    ExposedAttributes -- QML
+}
+@enduml
